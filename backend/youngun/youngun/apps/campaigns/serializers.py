@@ -1,5 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 
+from youngun.apps.authentication.serializers import OrganisationSerializer
 from youngun.apps.content.serializers import *
 from .models import LiveCampaign, Campaign
 
@@ -23,6 +24,18 @@ class LiveCampaignDataSerializer(ModelSerializer):
 
 
 class LiveCampaignFeedSerilaizer(ModelSerializer):
-    instagram = InstagramPostDisplaySerializer(many=True, read_only=True)
-    facebook = FacebookPostDisplaySerializer(many=True, read_only=True)
-    twitter = TwitterPostDisplaySerializer(many=True, read_only=True)
+    # posts = InstagramPostDisplaySerializer(many=True, read_only=True)
+    organisation = OrganisationSerializer(read_only=True)
+
+    instagram_posts = InstagramPostDisplaySerializer(many=True, read_only=True)
+    facebook_posts = FacebookPostDisplaySerializer(many=True, read_only=True)
+    twitter_posts = TwitterPostDisplaySerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Campaign
+        fields = [
+            'name', 'organisation', 'hashtag', 'status',
+            'instagram_posts',
+            'facebook_posts',
+            'twitter_posts',
+        ]

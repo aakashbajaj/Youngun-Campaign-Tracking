@@ -52,7 +52,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_("Email"), db_index=True, unique=True)
     username = models.CharField(
         _("Username"), max_length=255, unique=True)
-    organisation = models.ForeignKey("Organisation", verbose_name=_(
+    organisation = models.ForeignKey(Organisation, verbose_name=_(
         "organisation"), on_delete=models.CASCADE, null=True)
     mainUser = models.BooleanField(_("Main User"), default=False)
 

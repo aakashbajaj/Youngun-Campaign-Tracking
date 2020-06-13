@@ -2,6 +2,8 @@ from django.db import models
 
 from django.template.defaultfilters import slugify
 from django.utils.translation import gettext as _
+
+from youngun.apps.authentication.models import Organisation
 # Create your models here.
 
 
@@ -12,7 +14,7 @@ class Status(models.TextChoices):
 
 class Campaign(models.Model):
     name = models.CharField(_("Name"), max_length=255)
-    organisation = models.ForeignKey("authentication.Organisation", verbose_name=_(
+    organisation = models.ForeignKey(Organisation, verbose_name=_(
         "Organisation"), related_name="campaigns", on_delete=models.CASCADE, null=True)
     hashtag = models.CharField(_("Hashtag"), max_length=100)
     status = models.CharField(_("Campaign Status"),
@@ -32,6 +34,18 @@ class Campaign(models.Model):
     @property
     def slug(self):
         return slugify(self.name)
+
+    @property
+    def instagram_posts(self):
+        return self.posts.filter(platform="in")
+
+    @property
+    def facebook_posts(self):
+        return self.posts.filter(platform="fb")
+
+    @property
+    def twitter_posts(self):
+        return self.posts.filter(platform="tw")
 
     def __str__(self):
         return self.name

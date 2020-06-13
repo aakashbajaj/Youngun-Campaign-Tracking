@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext as _
 
+from youngun.apps.campaigns.models import Campaign
+
 # Create your models here.
 
 
@@ -14,7 +16,7 @@ class Post(models.Model):
     url = models.URLField(_("post url"), max_length=255)
     platform = models.CharField(
         _("platform"), max_length=50, choices=Platform.choices)
-    campaign = models.ForeignKey("campaigns.Campaign", verbose_name=_(
+    campaign = models.ForeignKey(Campaign, verbose_name=_(
         "campaign"), related_name="posts", on_delete=models.CASCADE)
     likes = models.IntegerField(_("likes"), default=0)
     comments = models.IntegerField(_("comments"), default=0)
@@ -35,7 +37,7 @@ class Post(models.Model):
 
 
 class Story(models.Model):
-    campaign = models.ForeignKey("campaigns.Campaign", verbose_name=_(
+    campaign = models.ForeignKey(Campaign, verbose_name=_(
         "campaign"), on_delete=models.CASCADE)
     platform = models.CharField(
         _("platform"), max_length=50, choices=Platform.choices)
