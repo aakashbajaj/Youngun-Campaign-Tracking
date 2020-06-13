@@ -44,7 +44,6 @@ INSTALLED_APPS = [
 
     'youngun.apps.authentication',
     'youngun.apps.campaigns',
-    'youngun.apps.profiles',
     'youngun.apps.content',
 ]
 

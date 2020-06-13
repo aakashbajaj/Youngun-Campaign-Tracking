@@ -25,13 +25,25 @@ class Post(models.Model):
 
     embed_code = models.TextField(_("embed code"), null=True, blank=True)
     post_type = models.CharField(
-        _("post_type"), max_length=50, choices=[("p", "post"), ("v", "video")], null=True, blank=True)
+        _("post_type"), max_length=50, choices=[("p", "Post"), ("v", "Video")], null=True, blank=True)
 
     def __str__(self):
         return self.url
 
     class Meta:
         verbose_name_plural = "All Posts"
+
+
+class Story(models.Model):
+    campaign = models.ForeignKey("campaigns.Campaign", verbose_name=_(
+        "campaign"), on_delete=models.CASCADE)
+    platform = models.CharField(
+        _("platform"), max_length=50, choices=Platform.choices)
+    story_views = models.IntegerField(_("Story Views"), default=0)
+    date = models.DateField(_("posted date"), auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = "All Stories"
 
 
 class InstagramPostManager(models.Manager):
