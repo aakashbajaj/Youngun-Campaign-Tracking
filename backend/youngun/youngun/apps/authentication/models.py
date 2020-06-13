@@ -45,10 +45,13 @@ class Organisation(models.Model):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    name = models.CharField(_("Name"), max_length=255, blank=True, default="")
+    first_name = models.CharField(
+        _("First Name"), max_length=255, blank=True, default="")
+    last_name = models.CharField(
+        _("Last Name"), max_length=255, blank=True, default="")
     email = models.EmailField(_("Email"), db_index=True, unique=True)
     username = models.CharField(
-        _("Username"), db_index=True, max_length=255, unique=True)
+        _("Username"), max_length=255, unique=True)
     organisation = models.ForeignKey("Organisation", verbose_name=_(
         "organisation"), on_delete=models.CASCADE, null=True)
     mainUser = models.BooleanField(_("Main User"), default=False)
@@ -71,10 +74,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self._generate_token()
 
     def get_full_name(self):
-        return self.username
+        return self.first_name + " " + self.last_name
 
     def get_short_name(self):
-        return self.username
+        return self.first_name
 
     def _generate_token(self):
         token, _ = Token.objects.get_or_create(user=self)

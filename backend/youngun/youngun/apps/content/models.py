@@ -15,7 +15,7 @@ class Post(models.Model):
     platform = models.CharField(
         _("platform"), max_length=50, choices=Platform.choices)
     campaign = models.ForeignKey("campaigns.Campaign", verbose_name=_(
-        "campaign"), on_delete=models.CASCADE)
+        "campaign"), related_name="posts", on_delete=models.CASCADE)
     likes = models.IntegerField(_("likes"), default=0)
     comments = models.IntegerField(_("comments"), default=0)
     post_shares = models.IntegerField(_("post_shares"), default=0)

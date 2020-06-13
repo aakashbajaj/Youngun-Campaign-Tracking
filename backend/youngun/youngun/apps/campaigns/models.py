@@ -13,7 +13,7 @@ class Status(models.TextChoices):
 class Campaign(models.Model):
     name = models.CharField(_("Name"), max_length=255)
     organisation = models.ForeignKey("authentication.Organisation", verbose_name=_(
-        "Organisation"), on_delete=models.CASCADE, null=True)
+        "Organisation"), related_name="campaigns", on_delete=models.CASCADE, null=True)
     hashtag = models.CharField(_("Hashtag"), max_length=100)
     status = models.CharField(_("Campaign Status"),
                               choices=Status.choices, max_length=50, default=Status.ACTIVE)
