@@ -31,20 +31,22 @@ class Campaign(models.Model):
     reports_google_sheet = models.URLField(
         _("Reports Google Sheet"), max_length=200, default="example.com")
 
-    @property
-    def slug(self):
-        return slugify(self.name)
+    slug = models.SlugField(_("Slug"), blank=True)
+
+    # @property
+    # def slug(self):
+    #     return slugify(self.organisation.name + "-" + self.name)
 
     @property
-    def instagram_posts(self):
+    def get_instagram_posts(self):
         return self.posts.filter(platform="in")
 
     @property
-    def facebook_posts(self):
+    def get_facebook_posts(self):
         return self.posts.filter(platform="fb")
 
     @property
-    def twitter_posts(self):
+    def get_twitter_posts(self):
         return self.posts.filter(platform="tw")
 
     def __str__(self):

@@ -13,6 +13,8 @@ class CampaignAdmin(admin.ModelAdmin):
         'status',
         'start_date',
         'end_date',
+        # 'posts',
+        # 'instagram_posts'
     )
 
     list_filter = ['organisation', 'status']

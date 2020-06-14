@@ -1,3 +1,4 @@
+from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
 from youngun.apps.authentication.serializers import OrganisationSerializer
@@ -5,7 +6,17 @@ from youngun.apps.content.serializers import *
 from .models import LiveCampaign, Campaign
 
 
-class LiveCampaignDataSerializer(ModelSerializer):
+class CampaignDataSerializer(ModelSerializer):
+    class Meta:
+        model = LiveCampaign
+        fields = [
+            'name', 'organisation', 'hashtag', 'status',
+            'start_date', 'end_date',
+            'slide_url', 'live_google_sheet', 'slug',
+        ]
+
+
+class LiveCampaignMetricsSerializer(ModelSerializer):
     class Meta:
         model = LiveCampaign
         fields = [
@@ -27,15 +38,18 @@ class LiveCampaignFeedSerilaizer(ModelSerializer):
     # posts = InstagramPostDisplaySerializer(many=True, read_only=True)
     organisation = OrganisationSerializer(read_only=True)
 
-    instagram_posts = InstagramPostDisplaySerializer(many=True, read_only=True)
-    facebook_posts = FacebookPostDisplaySerializer(many=True, read_only=True)
-    twitter_posts = TwitterPostDisplaySerializer(many=True, read_only=True)
+    instagram = InstagramPostDisplaySerializer(
+        source='get_instagram_posts', many=True, read_only=True)
+    facebook = FacebookPostDisplaySerializer(
+        source='get_facebook_posts', many=True, read_only=True)
+    twitter = TwitterPostDisplaySerializer(
+        source='get_twitter_posts', many=True, read_only=True)
 
     class Meta:
         model = Campaign
         fields = [
-            'name', 'organisation', 'hashtag', 'status',
-            'instagram_posts',
-            'facebook_posts',
-            'twitter_posts',
+            'name', 'organisation', 'hashtag', 'status', 'slug',
+            'instagram',
+            'facebook',
+            'twitter',
         ]
