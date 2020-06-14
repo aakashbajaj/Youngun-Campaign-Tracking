@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'rest_framework',
     'rest_framework.authtoken',
+    'drfpasswordless',
 
     'youngun.apps.authentication',
     'youngun.apps.campaigns',
@@ -66,6 +67,13 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated', )
+}
+
+PASSWORDLESS_AUTH = {
+    'PASSWORDLESS_AUTH_TYPES': ['EMAIL'],
+    'PASSWORDLESS_EMAIL_NOREPLY_ADDRESS': 'noreply@youngun.in',
+    'PASSWORDLESS_REGISTER_NEW_USERS': False,
+    'PASSWORDLESS_AUTH_PREFIX': 'otpauth/'
 }
 
 AUTH_USER_MODEL = 'authentication.User'
