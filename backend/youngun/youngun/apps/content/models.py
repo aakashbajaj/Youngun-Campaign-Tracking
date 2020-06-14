@@ -12,6 +12,11 @@ class Platform(models.TextChoices):
     TWITTER = "tw"
 
 
+class PostVisibility(models.Choices):
+    PUBLIC = 'public'
+    PRIVATE = 'private'
+
+
 class Post(models.Model):
     url = models.URLField(_("post url"), max_length=255)
     platform = models.CharField(
@@ -26,6 +31,9 @@ class Post(models.Model):
     date = models.DateField(_("posted date"), auto_now_add=True)
 
     embed_code = models.TextField(_("embed code"), null=True, blank=True)
+    visibility = models.CharField(
+        _("post visibility"), choices=PostVisibility.choices, max_length=50, default=PostVisibility.PUBLIC)
+
     post_type = models.CharField(
         _("post_type"), max_length=50, choices=[("p", "Post"), ("v", "Video")], null=True, blank=True)
 
