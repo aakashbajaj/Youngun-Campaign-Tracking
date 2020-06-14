@@ -7,3 +7,16 @@ class OrganisationSerializer(ModelSerializer):
     class Meta:
         model = Organisation
         fields = ['name']
+
+
+class UserInfoSerializer(ModelSerializer):
+    organisation = OrganisationSerializer(read_only=True)
+
+    class Meta:
+        model = User
+        fields = [
+            'full_name',
+            'email',
+            'organisation',
+            'token'
+        ]

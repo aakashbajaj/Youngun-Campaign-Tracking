@@ -73,6 +73,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     def token(self):
         return self._generate_token()
 
+    @property
+    def full_name(self):
+        return self.get_full_name
+
     def get_full_name(self):
         return self.first_name + " " + self.last_name
 
