@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'youngun.apps.authentication',
     'youngun.apps.campaigns',
     'youngun.apps.content',
+    'youngun.apps.core',
 ]
 
 REST_FRAMEWORK = {
