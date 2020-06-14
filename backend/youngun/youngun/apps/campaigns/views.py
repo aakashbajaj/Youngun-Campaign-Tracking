@@ -24,6 +24,22 @@ class CampignListRetrieveAPIView(RetrieveAPIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+class CampignDataRetrieveAPIView(RetrieveAPIView):
+    permission_classes = (IsAuthenticated, )
+    serializer_class = CampaignDataSerializer
+    renderer_classes = (CampaignDataJSONRenderer, )
+
+    def retrieve(self, request, slug, *args, **kwargs):
+        try:
+            campaign = request.user.organisation.campaigns.all().get(slug=slug)
+        except Campaign.DoesNotExist:
+            raise
+
+        serializer = self.serializer_class(campaign)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
 class LiveCampaignFeedAPIView(RetrieveAPIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = LiveCampaignFeedSerilaizer
