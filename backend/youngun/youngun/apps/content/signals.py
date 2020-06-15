@@ -7,6 +7,7 @@ from .models import Post, PostVisibility, InstagramPost
 
 
 @receiver(pre_save, sender=InstagramPost)
+@receiver(pre_save, sender=Post)
 def fetch_insta_embed_code(sender, instance, *args, **kwargs):
     if instance and instance.platform == "in":
         if not instance.embed_code.startswith("<blockquote"):

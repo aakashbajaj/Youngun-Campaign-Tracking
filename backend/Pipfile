@@ -13,6 +13,7 @@ djangorestframework = "*"
 drfpasswordless = "*"
 django-extensions = "*"
 requests = "*"
+django-cors-headers = "*"
 
 [requires]
 python_version = "3.7"
