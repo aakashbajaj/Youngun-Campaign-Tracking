@@ -2,11 +2,11 @@ import React from "react";
 
 export default React.createContext({
   user: null,
-  authDetails: null,
+  userEmail: null,
   isAuthenticated: false,
   isAuthInProgress: false,
-  errors: [],
-  campaigns: [],
+  errors: {},
+  campaigns: {},
   liveCampaignData: {},
   campaignReportData: {},
 
