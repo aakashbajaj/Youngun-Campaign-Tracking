@@ -5,6 +5,7 @@ import AppRoutes from "./AppRoutes";
 import Navbar from "./shared/Navbar";
 import Sidebar from "./shared/Sidebar";
 import Footer from "./shared/Footer";
+import GlobalState from "./data/GlobalState";
 
 class App extends Component {
   state = {};
@@ -16,18 +17,20 @@ class App extends Component {
     let sidebarComponent = !this.state.isFullPageLayout ? <Sidebar /> : "";
     let footerComponent = !this.state.isFullPageLayout ? <Footer /> : "";
     return (
-      <div className="container-scroller">
-        {navbarComponent}
-        <div className="container-fluid page-body-wrapper">
-          {sidebarComponent}
-          <div className="main-panel">
-            <div className="content-wrapper">
-              <AppRoutes />
+      <GlobalState>
+        <div className="container-scroller">
+          {navbarComponent}
+          <div className="container-fluid page-body-wrapper">
+            {sidebarComponent}
+            <div className="main-panel">
+              <div className="content-wrapper">
+                <AppRoutes />
+              </div>
+              {footerComponent}
             </div>
-            {footerComponent}
           </div>
         </div>
-      </div>
+      </GlobalState>
     );
   }
 
@@ -41,8 +44,8 @@ class App extends Component {
     console.log("ROUTE CHANGED");
     window.scrollTo(0, 0);
     const fullPageLayoutRoutes = [
-      "/user-pages/login-1",
-      "/user-pages/login-2",
+      "/login",
+      "/verify",
       "/user-pages/register-1",
       "/user-pages/register-2",
       "/user-pages/lockscreen",

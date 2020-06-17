@@ -16,6 +16,11 @@ export class Login extends Component {
 
   onSendOTPBtnClick = (evt) => {
     evt.preventDefault();
+    const { email } = this.state;
+    console.log(email);
+    this.context.login(email, () => {
+      this.props.history.push("/verify");
+    });
   };
 
   render() {
@@ -45,6 +50,9 @@ export class Login extends Component {
                       onChange={this.onChangeHandler}
                     />
                   </Form.Group>
+                  {this.context.sendingOTP ? (
+                    <h7 className="font-weight-light">Sending OTP....</h7>
+                  ) : null}
 
                   <div className="mt-3">
                     <Button
@@ -54,7 +62,8 @@ export class Login extends Component {
                       SEND OTP
                     </Button>
                   </div>
-                  <div className="my-2 d-flex justify-content-between align-items-center">
+                  <div className="my-2 d-flex justify-content-between align-items-center"></div>
+                  {/* <div className="my-2 d-flex justify-content-between align-items-center">
                     <div className="form-check">
                       <label className="form-check-label text-muted">
                         <input type="checkbox" className="form-check-input" />
@@ -62,7 +71,7 @@ export class Login extends Component {
                         Keep me signed in
                       </label>
                     </div>
-                  </div>
+                  </div> */}
                 </Form>
               </div>
             </div>
