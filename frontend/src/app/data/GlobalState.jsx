@@ -11,9 +11,12 @@ export default class GlobalState extends Component {
     errors: [],
     campaigns: [],
     liveCampaignData: {},
+    liveCampaignFeed: {},
     campaignReportData: {},
     currentCampaignInVIew: null,
   };
+
+  componentDidMount() {}
 
   login = async (email, cb) => {
     try {
@@ -29,7 +32,7 @@ export default class GlobalState extends Component {
       this.setState(newState);
 
       console.log(formData);
-      const resp = await API.post("/otpauth/email/", formData);
+      const resp = await API.agent.post("/otpauth/email/", formData);
 
       console.log(resp);
 
@@ -50,7 +53,7 @@ export default class GlobalState extends Component {
       formData.append("email", this.state.userEmail);
       formData.append("token", otptoken);
 
-      const resp = await API.post("/otpauth/token/", formData);
+      const resp = await API.agent.post("/otpauth/token/", formData);
       console.log(resp);
       // set token in localStorage
       localStorage.setItem("campaigntoken", resp.data["token"]);
@@ -85,6 +88,7 @@ export default class GlobalState extends Component {
       errors: [],
       campaigns: [],
       liveCampaignData: {},
+      liveCampaignFeed: {},
       campaignReportData: {},
       currentCampaignInVIew: null,
     };

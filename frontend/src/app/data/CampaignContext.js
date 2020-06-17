@@ -8,6 +8,7 @@ export default React.createContext({
   errors: {},
   campaigns: {},
   liveCampaignData: {},
+  liveCampaignFeed: {},
   campaignReportData: {},
 
   login: () => {},
