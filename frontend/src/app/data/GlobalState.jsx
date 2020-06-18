@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import API from "../utils/api";
+import API, { setAuthTokenHeader } from "../utils/api";
 import CampaignContext from "./CampaignContext";
 
 export default class GlobalState extends Component {
@@ -8,12 +8,22 @@ export default class GlobalState extends Component {
     userEmail: null,
     isAuthenticated: false,
     isAuthInProgress: false,
+    sendingOTP: false,
     errors: [],
     campaigns: [],
     liveCampaignData: {},
+    liveCampaignFeed: {},
     campaignReportData: {},
     currentCampaignInVIew: null,
   };
+
+  componentDidMount() {}
+
+  async fetchAllData() {
+    const resp = await API.get("/api/campaigns/");
+
+    console.log(resp);
+  }
 
   login = async (email, cb) => {
     try {
@@ -25,6 +35,7 @@ export default class GlobalState extends Component {
         userEmail: email,
         isAuthenticated: false,
         isAuthInProgress: true,
+        sendingOTP: true,
       };
       this.setState(newState);
 
@@ -37,6 +48,16 @@ export default class GlobalState extends Component {
     } catch (err) {
       console.log("ERROR");
       console.log(err.response);
+      window.alert(err.response);
+
+      const newState = {
+        ...this.state,
+        userEmail: email,
+        isAuthenticated: false,
+        isAuthInProgress: false,
+        sendingOTP: false,
+      };
+      this.setState(newState);
       // var errors = err.response.data["non_field_errors"];
       // this.setState({ errors: errors });
     }
@@ -49,11 +70,14 @@ export default class GlobalState extends Component {
       var formData = new FormData();
       formData.append("email", this.state.userEmail);
       formData.append("token", otptoken);
+      this.setState({ sendingOTP: false });
 
       const resp = await API.post("/otpauth/token/", formData);
       console.log(resp);
+      console.log(resp.data["token"]);
       // set token in localStorage
       localStorage.setItem("campaigntoken", resp.data["token"]);
+      setAuthTokenHeader(resp.data["token"]);
 
       // setting authenticated user field in global state
       const newState = {
@@ -66,7 +90,7 @@ export default class GlobalState extends Component {
         isAuthInProgress: false,
       };
       this.setState(newState);
-
+      this.fetchAllData();
       cb();
     } catch (err) {
       console.log("ERROR");
@@ -85,24 +109,18 @@ export default class GlobalState extends Component {
       errors: [],
       campaigns: [],
       liveCampaignData: {},
+      liveCampaignFeed: {},
       campaignReportData: {},
       currentCampaignInVIew: null,
     };
 
     //delete token from LS
+    setAuthTokenHeader(null);
     localStorage.removeItem("campaigntoken");
 
     this.setState({ state: newState });
 
     cb();
-  }
-
-  isAuthInProgress() {
-    return this.state.isAuthInProgress;
-  }
-
-  isAuthenticated() {
-    return this.state.isAuthenticated;
   }
 
   render() {
