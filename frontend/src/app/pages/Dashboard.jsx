@@ -277,7 +277,7 @@ export class Dashboard extends Component {
 
   render() {
     return (
-      <div>
+      <div class="overflow-auto">
         <div className="row">
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6 grid-margin stretch-card">
             <div className="card card-statistics">

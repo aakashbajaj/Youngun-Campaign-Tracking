@@ -15,7 +15,6 @@ import { ProtectedRoute } from "./ProtectedRoute";
 
 // const ChartJs = lazy(() => import("./charts/ChartJs"));
 
-// const Error404 = lazy(() => import("./user-pages/Error404"));
 // const Error500 = lazy(() => import("./user-pages/Error500"));
 
 // const BlankPage = lazy(() => import("./user-pages/BlankPage"));
@@ -23,18 +22,19 @@ import { ProtectedRoute } from "./ProtectedRoute";
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Login = lazy(() => import("./pages/Login"));
 const VerifyOtp = lazy(() => import("./pages/VerifyOtp"));
+const Error404 = lazy(() => import("./shared/Error404"));
 
 class AppRoutes extends Component {
   render() {
     return (
       <Suspense fallback={<Spinner />}>
         <Switch>
-          <ProtectedRoute exact path="/dashboard" component={Dashboard} />
+          <Route exact path="/" component={Dashboard} />
 
           <Route exact path="/login" component={Login} />
           <Route exact path="/verify" component={VerifyOtp} />
 
-          <Route path="*" component={() => "404 Not Found"} />
+          <Route path="/404" component={Error404} />
 
           {/* <Route path="/basic-ui/buttons" component={Buttons} />
           <Route path="/basic-ui/dropdowns" component={Dropdowns} />
@@ -56,7 +56,7 @@ class AppRoutes extends Component {
 
           <Route path="/user-pages/blank-page" component={BlankPage} /> */}
 
-          <Redirect to="/dashboard" />
+          <Redirect to="/404" />
         </Switch>
       </Suspense>
     );

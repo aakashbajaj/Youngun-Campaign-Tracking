@@ -24,7 +24,7 @@ export class VerifyOtp extends Component {
   onSignInBtnClick = (evt) => {
     evt.preventDefault();
     this.context.verify(this.state.otptoken, () => {
-      this.props.history.push("/dashboard");
+      this.props.history.push("/");
     });
   };
 

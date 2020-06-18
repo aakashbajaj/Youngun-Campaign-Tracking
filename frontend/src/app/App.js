@@ -46,7 +46,7 @@ class App extends Component {
     const fullPageLayoutRoutes = [
       "/login",
       "/verify",
-      "/user-pages/register-1",
+      "/404",
       "/user-pages/register-2",
       "/user-pages/lockscreen",
       "/error-pages/error-404",

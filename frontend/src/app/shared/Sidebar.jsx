@@ -35,9 +35,16 @@ class Sidebar extends Component {
     return (
       <nav className="sidebar sidebar-offcanvas" id="sidebar">
         <div className="text-center sidebar-brand-wrapper d-flex align-items-center">
-          <a className="sidebar-brand brand-logo" href="index.html">
+          {/* <a className="sidebar-brand brand-logo" href="index.html">
             <img src={require("../../assets/images/Y_logo.png")} alt="logo" />
-          </a>
+          </a> */}
+          <div className="brand-logo text-center mt-5">
+            <img
+              src={require("../../assets/images/youngun-logo.png")}
+              alt="logo"
+              style={{ width: "50%", height: "31%" }}
+            />
+          </div>
           <a className="sidebar-brand brand-logo-mini pt-3" href="index.html">
             <img
               src={require("../../assets/images/logo-mini.svg")}
@@ -45,7 +52,7 @@ class Sidebar extends Component {
             />
           </a>
         </div>
-        <ul className="nav mt-5">
+        <ul className="nav mt-5 pt-5">
           <li
             className={
               this.isPathActive("/dashboard") ? "nav-item active" : "nav-item"
