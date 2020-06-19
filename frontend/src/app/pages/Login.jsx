@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Form, Button } from "react-bootstrap";
+import { Redirect } from "react-router-dom";
+
 import CampaignContext from "../data/CampaignContext";
 
 export class Login extends Component {
@@ -24,6 +26,9 @@ export class Login extends Component {
   };
 
   render() {
+    if (!this.context.isAuthInProgress && this.context.isAuthenticated) {
+      return <Redirect to="/" />;
+    }
     return (
       <div>
         <div className="d-flex align-items-center auth px-0">

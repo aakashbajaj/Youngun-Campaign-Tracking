@@ -10,19 +10,89 @@ export default class GlobalState extends Component {
     isAuthInProgress: false,
     sendingOTP: false,
     errors: [],
-    campaigns: [],
+    campaigns: {},
     liveCampaignData: {},
     liveCampaignFeed: {},
     campaignReportData: {},
     currentCampaignInVIew: null,
   };
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.loadTempCredentials();
+  }
 
   async fetchAllData() {
     const resp = await API.get("/api/campaigns/");
 
-    console.log(resp);
+    console.log(resp.data.campaigns);
+    const campaigns = resp.data.campaigns;
+    var campData = {};
+
+    campaigns.forEach((campaign) => {
+      campData[campaign.slug] = campaign;
+      API.get(`/api/campaigns/${campaign.slug}/metrics`)
+        .then((resp) => {
+          console.log(resp.data);
+          this.addLiveCampaignData(campaign.slug, resp.data.campaign);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+
+      API.get(`/api/campaigns/${campaign.slug}/feed`)
+        .then((resp) => {
+          console.log(resp.data);
+          this.addLiveCampaignFeed(campaign.slug, resp.data.campaign);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    });
+
+    this.setState({ campaigns: campData });
+  }
+
+  addLiveCampaignData(slug, data) {
+    const newLiveCampData = {
+      ...this.state.liveCampaignData,
+      [slug]: data,
+    };
+    const newState = {
+      ...this.state,
+      liveCampaignData: newLiveCampData,
+    };
+    this.setState(newState);
+  }
+
+  addLiveCampaignFeed(slug, data) {
+    const newLiveCampFeed = {
+      ...this.state.liveCampaignFeed,
+      [slug]: data,
+    };
+    const newState = {
+      ...this.state,
+      liveCampaignFeed: newLiveCampFeed,
+    };
+    this.setState(newState);
+  }
+
+  loadTempCredentials() {
+    const token = "07b833d53b38f85517dcb922b94e1a7ff841c950";
+    const userEmail = "aakashbajaj2007@gmail.com";
+
+    setAuthTokenHeader(token);
+    const newState = {
+      ...this.state,
+      userEmail: userEmail,
+      user: {
+        email: userEmail,
+        token: token,
+      },
+      isAuthenticated: true,
+    };
+
+    this.setState(newState);
+    this.fetchAllData();
   }
 
   login = async (email, cb) => {

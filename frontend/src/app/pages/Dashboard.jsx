@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import { Line, Doughnut, Bar } from "react-chartjs-2";
 import { Sparklines, SparklinesBars } from "react-sparklines";
 import { ProgressBar, Dropdown } from "react-bootstrap";
+import CampaignContext from "../data/CampaignContext";
 
 // import DatePicker from 'react-datepicker';
 // import { Dropdown } from 'react-bootstrap';
 
 export class Dashboard extends Component {
+  static contextType = CampaignContext;
   constructor(props) {
     super(props);
     this.state = {
@@ -277,7 +279,7 @@ export class Dashboard extends Component {
 
   render() {
     return (
-      <div class="overflow-auto">
+      <div>
         <div className="row">
           <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6 grid-margin stretch-card">
             <div className="card card-statistics">

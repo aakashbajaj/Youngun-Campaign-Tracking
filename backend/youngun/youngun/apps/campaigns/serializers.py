@@ -7,6 +7,8 @@ from .models import LiveCampaign, Campaign
 
 
 class CampaignDataSerializer(ModelSerializer):
+    organisation = OrganisationSerializer(read_only=True)
+
     class Meta:
         model = LiveCampaign
         fields = [
@@ -17,6 +19,8 @@ class CampaignDataSerializer(ModelSerializer):
 
 
 class LiveCampaignMetricsSerializer(ModelSerializer):
+    organisation = OrganisationSerializer(read_only=True)
+
     class Meta:
         model = LiveCampaign
         fields = [
