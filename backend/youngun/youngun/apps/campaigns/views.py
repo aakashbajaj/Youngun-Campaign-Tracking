@@ -59,6 +59,7 @@ class LiveCampaignFeedAPIView(RetrieveAPIView):
 class LiveCampaignMetricsAPIView(RetrieveAPIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = LiveCampaignMetricsSerializer
+    renderer_classes = (LiveCampaignMetricJSONRenderer, )
 
     def retrieve(self, request, slug, *args, **kwargs):
         try:
