@@ -29,12 +29,12 @@ class AppRoutes extends Component {
     return (
       <Suspense fallback={<Spinner />}>
         <Switch>
-          <Route exact path="/" component={Dashboard} />
+          <ProtectedRoute exact path="/" component={Dashboard} />
 
           <Route exact path="/login" component={Login} />
           <Route exact path="/verify" component={VerifyOtp} />
 
-          <Route path="/404" component={Error404} />
+          <ProtectedRoute path="/404" component={Error404} />
 
           {/* <Route path="/basic-ui/buttons" component={Buttons} />
           <Route path="/basic-ui/dropdowns" component={Dropdowns} />
