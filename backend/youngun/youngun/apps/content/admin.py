@@ -51,7 +51,7 @@ class FacebookPostAdmin(admin.ModelAdmin):
 
 @admin.register(TwitterPost)
 class TwitterPostAdmin(admin.ModelAdmin):
-    exclude = ('platform', 'embed_code', 'post_type')
+    exclude = ('platform', 'post_type')
     list_display = ('url', 'campaign', 'date', 'likes', 'comments',
                     'post_shares', 'post_saves', 'post_reach')
 

@@ -24,6 +24,8 @@ const Login = lazy(() => import("./pages/Login"));
 const VerifyOtp = lazy(() => import("./pages/VerifyOtp"));
 const Error404 = lazy(() => import("./shared/Error404"));
 const InstaFeed = lazy(() => import("./pages/InstaFeed"));
+const FBFeed = lazy(() => import("./pages/FBFeed"));
+const TwitterFeed = lazy(() => import("./pages/TwitterFeed"));
 
 class AppRoutes extends Component {
   render() {
@@ -34,7 +36,9 @@ class AppRoutes extends Component {
 
           <Route exact path="/login" component={Login} />
           <Route exact path="/verify" component={VerifyOtp} />
-          <ProtectedRoute exact path="/feed" component={InstaFeed} />
+          <ProtectedRoute exact path="/instafeed" component={InstaFeed} />
+          <ProtectedRoute exact path="/fbfeed" component={FBFeed} />
+          <ProtectedRoute exact path="/twitterfeed" component={TwitterFeed} />
 
           <ProtectedRoute path="/404" component={Error404} />
 

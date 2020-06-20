@@ -3,7 +3,7 @@ from django.dispatch import receiver
 
 import requests
 
-from .models import Post, PostVisibility, InstagramPost
+from .models import Post, PostVisibility, InstagramPost, TwitterPost, FacebookPost
 
 
 @receiver(pre_save, sender=InstagramPost)
@@ -13,6 +13,25 @@ def fetch_insta_embed_code(sender, instance, *args, **kwargs):
         if not instance.embed_code.startswith("<blockquote"):
             post_url = instance.url
             fetch_url = "https://api.instagram.com/oembed"
+            params = {
+                'url': post_url
+            }
+
+            res = requests.get(fetch_url, params=params)
+            if res.status_code == 404:
+                instance.visibility = PostVisibility.PRIVATE
+
+            elif res.status_code == 200:
+                instance.embed_code = res.json()["html"]
+
+
+@receiver(pre_save, sender=TwitterPost)
+@receiver(pre_save, sender=Post)
+def fetch_twitter_embed_code(sender, instance, *args, **kwargs):
+    if instance and instance.platform == "tw":
+        if not instance.embed_code.startswith("<blockquote"):
+            post_url = instance.url
+            fetch_url = "https://publish.twitter.com/oembed"
             params = {
                 'url': post_url
             }
