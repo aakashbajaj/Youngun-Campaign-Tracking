@@ -10,11 +10,11 @@ export default class TwitterFeed extends Component {
   }
   componentDidMount() {
     console.log("in FB CDM");
-    window.twttr.widgets.load(document.getElementById("twitter-post"));
+    window.twttr.widgets.load();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    window.twttr.widgets.load(document.getElementById("twitter-post"));
+    window.twttr.widgets.load();
   }
 
   render() {
