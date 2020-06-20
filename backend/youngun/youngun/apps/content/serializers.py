@@ -18,7 +18,7 @@ class FacebookPostDisplaySerializer(ModelSerializer):
 class TwitterPostDisplaySerializer(ModelSerializer):
     class Meta:
         model = Post
-        fields = ['url']
+        fields = ['url', 'embed_code']
 
 
 class InstagramPostReportSerializer(ModelSerializer):
