@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import { Bar } from "react-chartjs-2";
 
 import CampaignContext from "../data/CampaignContext";
 import StoryMetric from "../components/StoryMetric";
 import CardDoughnut from "../components/CardDoughnut";
 import Spinner from "../shared/Spinner";
-import ContentSlideCard from "../components/ContentSlideCard";
+// import ContentSlideCard from "../components/ContentSlideCard";
 // import DatePicker from 'react-datepicker';
 // import { Dropdown } from 'react-bootstrap';
 
