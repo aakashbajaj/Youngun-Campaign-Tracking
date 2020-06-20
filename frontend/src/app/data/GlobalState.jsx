@@ -14,22 +14,33 @@ export default class GlobalState extends Component {
     liveCampaignData: {},
     liveCampaignFeed: {},
     campaignReportData: {},
-    currentCampaignInVIew: null,
+    currentCampaignInView: null,
   };
+
+  // constructor(props) {
+  //   super(props);
+  // }
 
   componentDidMount() {
     this.loadTempCredentials();
   }
-
+  //#region fetchData
   async fetchAllData() {
+    const userInfo = await API.get("/api/users/");
+    console.log(userInfo.data);
+    this.setState({ user: userInfo.data.user });
+
     const resp = await API.get("/api/campaigns/");
 
     console.log(resp.data.campaigns);
     const campaigns = resp.data.campaigns;
     var campData = {};
+    var firstCampaign = null;
 
     campaigns.forEach((campaign) => {
       campData[campaign.slug] = campaign;
+      if (firstCampaign === null) firstCampaign = campaign.slug;
+
       API.get(`/api/campaigns/${campaign.slug}/metrics`)
         .then((resp) => {
           console.log(resp.data);
@@ -49,7 +60,10 @@ export default class GlobalState extends Component {
         });
     });
 
-    this.setState({ campaigns: campData });
+    this.setState({
+      campaigns: campData,
+      currentCampaignInView: firstCampaign,
+    });
   }
 
   addLiveCampaignData(slug, data) {
@@ -75,7 +89,16 @@ export default class GlobalState extends Component {
     };
     this.setState(newState);
   }
+  //#endregion
 
+  //#region Event Handler
+  setCurrentCampaign = (evt) => {
+    console.log(evt.target.id);
+    this.setState({ currentCampaignInView: evt.target.id });
+  };
+  //#endregion
+
+  //#region utility functions
   loadTempCredentials() {
     const token = "07b833d53b38f85517dcb922b94e1a7ff841c950";
     const userEmail = "aakashbajaj2007@gmail.com";
@@ -94,7 +117,9 @@ export default class GlobalState extends Component {
     this.setState(newState);
     this.fetchAllData();
   }
+  //#endregion
 
+  //#region user login, logout
   login = async (email, cb) => {
     try {
       var formData = new FormData();
@@ -181,7 +206,7 @@ export default class GlobalState extends Component {
       liveCampaignData: {},
       liveCampaignFeed: {},
       campaignReportData: {},
-      currentCampaignInVIew: null,
+      currentCampaignInView: null,
     };
 
     //delete token from LS
@@ -192,15 +217,21 @@ export default class GlobalState extends Component {
 
     cb();
   }
+  //#endregion
+
+  function_collection = {
+    login: this.login,
+    logout: this.logout,
+    verify: this.verify,
+    setCurrentCampaign: this.setCurrentCampaign,
+  };
 
   render() {
     return (
       <CampaignContext.Provider
         value={{
           ...this.state,
-          login: this.login,
-          logout: this.logout,
-          verify: this.verify,
+          ...this.function_collection,
         }}
       >
         {this.props.children}
