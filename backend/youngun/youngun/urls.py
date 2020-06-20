@@ -20,5 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/", include('youngun.apps.campaigns.urls', namespace="campaigns")),
     path("api/", include('youngun.apps.authentication.urls', namespace="users")),
+    path("api/", include('youngun.apps.content.urls', namespace="content")),
     path('', include('drfpasswordless.urls')),
 ]

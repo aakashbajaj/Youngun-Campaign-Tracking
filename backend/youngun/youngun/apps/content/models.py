@@ -18,7 +18,7 @@ class PostVisibility(models.Choices):
 
 
 class Post(models.Model):
-    url = models.URLField(_("post url"), max_length=255)
+    url = models.URLField(_("post url"), max_length=255, unique=True)
     platform = models.CharField(
         _("platform"), max_length=50, choices=Platform.choices)
     campaign = models.ForeignKey(Campaign, verbose_name=_(
