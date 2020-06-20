@@ -1,3 +1,4 @@
+from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
 from .models import Organisation, User
@@ -11,6 +12,7 @@ class OrganisationSerializer(ModelSerializer):
 
 class UserInfoSerializer(ModelSerializer):
     organisation = OrganisationSerializer(read_only=True)
+    token = serializers.CharField(source='token_string')
 
     class Meta:
         model = User
@@ -18,5 +20,5 @@ class UserInfoSerializer(ModelSerializer):
             'full_name',
             'email',
             'organisation',
-            'token_string'
+            'token'
         ]

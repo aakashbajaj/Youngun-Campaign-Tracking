@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { Dropdown } from "react-bootstrap";
+import CampaignContext from "../data/CampaignContext";
 
 class Navbar extends Component {
+  static contextType = CampaignContext;
+
   toggleOffcanvas() {
     document.querySelector(".sidebar-offcanvas").classList.toggle("active");
   }
@@ -27,35 +30,40 @@ class Navbar extends Component {
             <i className="mdi mdi-menu"></i>
           </button>
           <ul className="navbar-nav navbar-nav-left header-links">
-            <li className="nav-item active d-none d-xl-flex">
-              <a
-                href="!#"
-                onClick={(evt) => evt.preventDefault()}
-                className="nav-link"
-              >
-                <i className="mdi mdi-elevation-rise"></i>Reports
-              </a>
-            </li>
-            <li className="nav-item d-none d-lg-flex">
-              <a
-                href="!#"
-                onClick={(evt) => evt.preventDefault()}
-                className="nav-link"
-              >
-                <i className="mdi mdi-bookmark-plus-outline"></i>Score
-              </a>
-            </li>
+            {Object.keys(this.context.campaigns).map((keyName, i) => {
+              var classes = "nav-item d-none d-xl-flex nav-link";
+              if (this.context.currentCampaignInView === keyName) {
+                classes = classes + " active";
+              }
+              return (
+                <li className={classes} key={keyName}>
+                  <a
+                    href="#"
+                    onClick={this.context.setCurrentCampaign}
+                    id={keyName}
+                    className="nav-link"
+                  >
+                    <i className="mdi mdi-elevation-rise"></i>
+                    {this.context.campaigns[keyName].name}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
           <ul className="navbar-nav navbar-nav-right ml-lg-auto">
             <li className="nav-item  nav-profile border-0">
               <Dropdown alignRight>
                 <Dropdown.Toggle className="nav-link count-indicator bg-transparent">
-                  <span className="profile-text">Richard V.Welsh !</span>
-                  <img
+                  <span className="profile-text">
+                    {this.context.user
+                      ? this.context.user.full_name
+                      : this.context.userEmail}
+                  </span>
+                  {/* <img
                     className="img-xs rounded-circle"
                     src={require("../../assets/images/faces/face8.jpg")}
                     alt="Profile"
-                  />
+                  /> */}
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="preview-list navbar-dropdown pb-3">
                   <Dropdown.Item
