@@ -43,7 +43,10 @@ export default class FBFeed extends Component {
         <div className="row">
           {fbposts.map((post, idx) => {
             return (
-              <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 grid-margin stretch-card">
+              <div
+                key={idx}
+                className="col-xl-6 col-lg-6 col-md-6 col-sm-6 grid-margin stretch-card"
+              >
                 <div
                   className="fb-post"
                   data-href={`${post.url}`}

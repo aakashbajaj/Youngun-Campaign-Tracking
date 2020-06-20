@@ -10,41 +10,42 @@ export default class TwitterFeed extends Component {
   }
   componentDidMount() {
     console.log("in FB CDM");
-    window.instgrm.Embeds.process();
+    window.twttr.widgets.load(document.getElementById("twitter-post"));
   }
 
   componentDidUpdate(prevProps, prevState) {
-    window.instgrm.Embeds.process();
+    window.twttr.widgets.load(document.getElementById("twitter-post"));
   }
 
   render() {
-    var instaposts = [];
+    var twitterposts = [];
     if (
       this.context.currentCampaignInView !== null &&
       this.context.liveCampaignFeed[this.context.currentCampaignInView] !==
         null &&
       this.context.liveCampaignFeed[this.context.currentCampaignInView]
-        .instagram !== null
+        .twitter !== null
     ) {
-      instaposts = this.context.liveCampaignFeed[
+      twitterposts = this.context.liveCampaignFeed[
         this.context.currentCampaignInView
-      ].instagram;
+      ].twitter;
     }
 
-    if (!instaposts) {
+    if (!twitterposts) {
       return <Spinner />;
     }
     return (
       <div>
         <div className="page-header">
-          <h3 className="page-title">Instagram/Facebook/Twitter</h3>
+          <h3 className="page-title">Twitter</h3>
         </div>
         <div className="row">
-          {instaposts.map((post, idx) => {
+          {twitterposts.map((post, idx) => {
             if (post.embed_code !== "") {
               return (
-                <div className="col-xl-4 col-lg-6 col-md-6 col-sm-6 grid-margin stretch-card">
+                <div key={idx}>
                   <div
+                    className="col-xl-6 col-lg-6 col-md-6 col-sm-12 grid-margin stretch-card"
                     dangerouslySetInnerHTML={this.createMarkup(post.embed_code)}
                   />
                 </div>
