@@ -10,47 +10,47 @@ export default class FBFeed extends Component {
   }
   componentDidMount() {
     console.log("in FB CDM");
-    window.instgrm.Embeds.process();
+    window.fbAsyncInit();
   }
 
   componentDidUpdate(prevProps, prevState) {
     window.instgrm.Embeds.process();
+    window.fbAsyncInit();
   }
 
   render() {
-    var instaposts = [];
+    var fbposts = [];
     if (
       this.context.currentCampaignInView !== null &&
       this.context.liveCampaignFeed[this.context.currentCampaignInView] !==
         null &&
       this.context.liveCampaignFeed[this.context.currentCampaignInView]
-        .instagram !== null
+        .facebook !== null
     ) {
-      instaposts = this.context.liveCampaignFeed[
+      fbposts = this.context.liveCampaignFeed[
         this.context.currentCampaignInView
-      ].instagram;
+      ].facebook;
     }
 
-    if (!instaposts) {
+    if (!fbposts) {
       return <Spinner />;
     }
     return (
       <div>
         <div className="page-header">
-          <h3 className="page-title">Instagram/Facebook/Twitter</h3>
+          <h3 className="page-title">Facebook</h3>
         </div>
         <div className="row">
-          {instaposts.map((post, idx) => {
-            if (post.embed_code !== "") {
-              return (
-                <div className="col-xl-4 col-lg-6 col-md-6 col-sm-6 grid-margin stretch-card">
-                  <div
-                    dangerouslySetInnerHTML={this.createMarkup(post.embed_code)}
-                  />
-                </div>
-              );
-            }
-            return null;
+          {fbposts.map((post, idx) => {
+            return (
+              <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 grid-margin stretch-card">
+                <div
+                  className="fb-post"
+                  data-href={`${post.url}`}
+                  data-width="100"
+                ></div>
+              </div>
+            );
           })}
         </div>
       </div>
