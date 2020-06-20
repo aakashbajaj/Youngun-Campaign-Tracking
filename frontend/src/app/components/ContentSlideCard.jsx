@@ -6,7 +6,7 @@ export default class ContentSlideCard extends Component {
       <div className="card card-statistics">
         <div className="card-body">
           <div className="clearfix">
-            <div className="float-left">
+            <div className="ml-3 float-left">
               <i className="mdi mdi-receipt text-warning icon-lg"></i>
             </div>
             <div className="float-right">
