@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import API, { setAuthTokenHeader } from "../utils/api";
 import CampaignContext from "./CampaignContext";
+import Cookie from "js-cookie";
 
 export default class GlobalState extends Component {
   state = {
@@ -22,8 +23,10 @@ export default class GlobalState extends Component {
   // }
 
   componentDidMount() {
-    this.loadTempCredentials();
+    // this.loadTempCredentials();
+    this.loadTokenFromCookie();
   }
+
   //#region fetchData
   async fetchAllData() {
     const userInfo = await API.get("/api/users/");
@@ -117,6 +120,27 @@ export default class GlobalState extends Component {
     this.setState(newState);
     this.fetchAllData();
   }
+
+  loadTokenFromCookie() {
+    const token = Cookie.get("djangotoken") ? Cookie.get("djangotoken") : null;
+    if (token) {
+      setAuthTokenHeader(token);
+      const newState = {
+        ...this.state,
+        user: {
+          email: "",
+          token: token,
+        },
+        isAuthenticated: true,
+      };
+
+      this.setState(newState, this.fetchAllData);
+    }
+  }
+
+  resetToken() {
+    Cookie.remove("djangotoken");
+  }
   //#endregion
 
   //#region user login, logout
@@ -171,7 +195,8 @@ export default class GlobalState extends Component {
       console.log(resp);
       console.log(resp.data["token"]);
       // set token in localStorage
-      localStorage.setItem("campaigntoken", resp.data["token"]);
+      // localStorage.setItem("campaigntoken", resp.data["token"]);
+      Cookie.set("djangotoken", resp.data["token"]);
       setAuthTokenHeader(resp.data["token"]);
 
       // setting authenticated user field in global state
@@ -195,7 +220,7 @@ export default class GlobalState extends Component {
     }
   };
 
-  logout(cb) {
+  logout = (cb) => {
     const newState = {
       user: null,
       userEmail: null,
@@ -211,12 +236,13 @@ export default class GlobalState extends Component {
 
     //delete token from LS
     setAuthTokenHeader(null);
-    localStorage.removeItem("campaigntoken");
+    Cookie.remove("djangotoken");
+    // localStorage.removeItem("campaigntoken");
 
-    this.setState({ state: newState });
+    this.setState(newState);
 
     cb();
-  }
+  };
   //#endregion
 
   function_collection = {

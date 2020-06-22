@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
+import CampaignContext from "../data/CampaignContext";
 // import { Collapse } from "react-bootstrap";
 // import { Dropdown } from "react-bootstrap";
 
 class Sidebar extends Component {
+  static contextType = CampaignContext;
   state = {};
 
   toggleMenuState(menuState) {

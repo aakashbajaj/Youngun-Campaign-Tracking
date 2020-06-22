@@ -8,6 +8,14 @@ class Navbar extends Component {
   toggleOffcanvas() {
     document.querySelector(".sidebar-offcanvas").classList.toggle("active");
   }
+
+  onSignOutBtnClick = (evt) => {
+    evt.preventDefault();
+    this.context.logout(() => {
+      this.props.history.push("/login");
+    });
+  };
+
   render() {
     return (
       <nav className="navbar col-lg-12 col-12 p-lg-0 fixed-top d-flex flex-row">
@@ -68,7 +76,7 @@ class Navbar extends Component {
                 <Dropdown.Menu className="preview-list navbar-dropdown pb-3">
                   <Dropdown.Item
                     className="dropdown-item preview-item d-flex align-items-center border-0 mt-2"
-                    onClick={(evt) => evt.preventDefault()}
+                    onClick={this.onSignOutBtnClick}
                   >
                     Sign Out
                   </Dropdown.Item>
