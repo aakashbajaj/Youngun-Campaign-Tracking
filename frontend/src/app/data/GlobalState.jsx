@@ -196,7 +196,7 @@ export default class GlobalState extends Component {
       console.log(resp.data["token"]);
       // set token in localStorage
       // localStorage.setItem("campaigntoken", resp.data["token"]);
-      Cookie.set("djangotoken", resp.data["token"]);
+      Cookie.set("djangotoken", resp.data["token"], { expires: 1 });
       setAuthTokenHeader(resp.data["token"]);
 
       // setting authenticated user field in global state
@@ -220,7 +220,7 @@ export default class GlobalState extends Component {
     }
   };
 
-  logout = (cb) => {
+  logout = () => {
     const newState = {
       user: null,
       userEmail: null,
@@ -240,8 +240,6 @@ export default class GlobalState extends Component {
     // localStorage.removeItem("campaigntoken");
 
     this.setState(newState);
-
-    cb();
   };
   //#endregion
 
