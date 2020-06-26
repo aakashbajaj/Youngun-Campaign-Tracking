@@ -50,7 +50,7 @@ class Story(models.Model):
     platform = models.CharField(
         _("platform"), max_length=50, choices=Platform.choices)
     story_views = models.IntegerField(_("Story Views"), default=0)
-    date = models.DateField(_("posted date"), auto_now_add=True)
+    date = models.DateTimeField(_("posted timestamp"), auto_now_add=True)
 
     class Meta:
         verbose_name_plural = "All Stories"
