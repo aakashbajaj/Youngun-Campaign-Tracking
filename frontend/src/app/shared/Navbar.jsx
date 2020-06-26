@@ -11,9 +11,7 @@ class Navbar extends Component {
 
   onSignOutBtnClick = (evt) => {
     evt.preventDefault();
-    this.context.logout(() => {
-      this.props.history.push("/login");
-    });
+    this.context.logout();
   };
 
   render() {
