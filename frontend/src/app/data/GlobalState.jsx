@@ -29,9 +29,13 @@ export default class GlobalState extends Component {
 
   //#region fetchData
   async fetchAllData() {
-    const userInfo = await API.get("/api/users/");
-    console.log(userInfo.data);
-    this.setState({ user: userInfo.data.user });
+    try {
+      const userInfo = await API.get("/api/profile/");
+      console.log(userInfo.data);
+      this.setState({ user: userInfo.data.profile });
+    } catch (error) {
+      console.log(error.response);
+    }
 
     const resp = await API.get("/api/campaigns/");
 
