@@ -1,30 +1,30 @@
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
-from youngun.apps.authentication.serializers import OrganisationSerializer
-from youngun.apps.content.serializers import *
+from youngun.apps.usermanager.serializers import BrandSerializer
+from youngun.apps.content.serializers import InstagramPostDisplaySerializer, FacebookPostDisplaySerializer, TwitterPostDisplaySerializer
 from .models import LiveCampaign, Campaign
 
 
 class CampaignDataSerializer(ModelSerializer):
-    organisation = OrganisationSerializer(read_only=True)
+    brand = BrandSerializer(read_only=True)
 
     class Meta:
         model = LiveCampaign
         fields = [
-            'name', 'organisation', 'hashtag', 'status',
+            'name', 'brand', 'hashtag', 'status',
             'start_date', 'end_date',
             'slide_url', 'live_google_sheet', 'slug',
         ]
 
 
 class LiveCampaignMetricsSerializer(ModelSerializer):
-    organisation = OrganisationSerializer(read_only=True)
+    brand = BrandSerializer(read_only=True)
 
     class Meta:
         model = LiveCampaign
         fields = [
-            'name', 'organisation', 'hashtag', 'status',
+            'name', 'brand', 'hashtag', 'status',
             'start_date', 'end_date',
             'slide_url', 'live_google_sheet', 'slug',
             'particaipating_profiles', 'unique_content_pieces', 'approved_content_pieces', 'remaining_content_pieces',
@@ -40,7 +40,7 @@ class LiveCampaignMetricsSerializer(ModelSerializer):
 
 class LiveCampaignFeedSerilaizer(ModelSerializer):
     # posts = InstagramPostDisplaySerializer(many=True, read_only=True)
-    organisation = OrganisationSerializer(read_only=True)
+    brand = BrandSerializer(read_only=True)
 
     instagram = InstagramPostDisplaySerializer(
         source='get_instagram_posts', many=True, read_only=True)
@@ -52,7 +52,7 @@ class LiveCampaignFeedSerilaizer(ModelSerializer):
     class Meta:
         model = Campaign
         fields = [
-            'name', 'organisation', 'hashtag', 'status', 'slug',
+            'name', 'brand', 'hashtag', 'status', 'slug',
             'instagram',
             'facebook',
             'twitter',

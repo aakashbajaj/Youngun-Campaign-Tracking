@@ -8,7 +8,7 @@ from .models import Campaign, LiveCampaign, CampaignReport
 class CampaignAdmin(admin.ModelAdmin):
     list_display = (
         'name',
-        'organisation',
+        'brand',
         'hashtag',
         'status',
         'start_date',
@@ -17,14 +17,14 @@ class CampaignAdmin(admin.ModelAdmin):
         # 'instagram_posts'
     )
 
-    list_filter = ['organisation', 'status']
+    list_filter = ['brand', 'status']
 
 
 @admin.register(LiveCampaign)
 class LiveCampaignAdmin(admin.ModelAdmin):
     list_display = (
         'name',
-        'organisation',
+        'brand',
         'status',
         'particaipating_profiles',
         'unique_content_pieces',
@@ -44,14 +44,14 @@ class LiveCampaignAdmin(admin.ModelAdmin):
         'live_tw_stories',
     )
 
-    list_filter = ['organisation', 'status']
+    list_filter = ['brand', 'status']
 
 
 @admin.register(CampaignReport)
 class CampaignReportAdmin(admin.ModelAdmin):
     list_display = (
         'name',
-        'organisation',
+        'brand',
         'status',
         'num_content_pieces',
         'num_posts',
@@ -68,4 +68,4 @@ class CampaignReportAdmin(admin.ModelAdmin):
         'total_campaign_reach',
     )
 
-    list_filter = ['organisation', 'status']
+    list_filter = ['brand', 'status']

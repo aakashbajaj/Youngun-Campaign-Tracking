@@ -8,5 +8,5 @@ from .models import Campaign
 @receiver(pre_save, sender=Campaign)
 def slugify_campaign_if_not_exists(sender, instance, *args, **kwargs):
     if instance:
-        slug = slugify(instance.organisation.name + "-" + instance.name)
+        slug = slugify(instance.brand.name + "-" + instance.name)
         instance.slug = slug

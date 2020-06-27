@@ -6,6 +6,7 @@ verify_ssl = true
 [dev-packages]
 pylint = "*"
 autopep8 = "*"
+werkzeug = "*"
 
 [packages]
 django = "*"
@@ -14,6 +15,7 @@ drfpasswordless = "*"
 django-extensions = "*"
 requests = "*"
 django-cors-headers = "*"
+pylint-django = "*"
 
 [requires]
 python_version = "3.7"

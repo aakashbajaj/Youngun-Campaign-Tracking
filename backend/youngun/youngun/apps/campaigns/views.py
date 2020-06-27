@@ -7,8 +7,7 @@ from rest_framework.response import Response
 
 from .serializers import CampaignDataSerializer, LiveCampaignMetricsSerializer, LiveCampaignFeedSerilaizer
 from .renderers import LiveCampaignMetricJSONRenderer, CampaignDataJSONRenderer
-from .models import Campaign, Organisation
-
+from .models import Campaign
 # Create your views here.
 
 
@@ -18,7 +17,7 @@ class CampignListRetrieveAPIView(RetrieveAPIView):
     renderer_classes = (CampaignDataJSONRenderer, )
 
     def retrieve(self, request, *args, **kwargs):
-        user_campaigns = request.user.organisation.campaigns.all()
+        user_campaigns = request.user.profile.campaigns.all()
         serializer = self.serializer_class(user_campaigns, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -31,7 +30,7 @@ class CampignDataRetrieveAPIView(RetrieveAPIView):
 
     def retrieve(self, request, slug, *args, **kwargs):
         try:
-            campaign = request.user.organisation.campaigns.all().get(slug=slug)
+            campaign = request.user.profile.campaigns.all().get(slug=slug)
         except Campaign.DoesNotExist:
             raise
 
@@ -47,7 +46,7 @@ class LiveCampaignFeedAPIView(RetrieveAPIView):
 
     def retrieve(self, request, slug, *args, **kwargs):
         try:
-            campaign = request.user.organisation.campaigns.all().get(slug=slug)
+            campaign = request.user.profile.campaigns.all().get(slug=slug)
         except Campaign.DoesNotExist:
             raise
 
@@ -63,7 +62,7 @@ class LiveCampaignMetricsAPIView(RetrieveAPIView):
 
     def retrieve(self, request, slug, *args, **kwargs):
         try:
-            campaign = request.user.organisation.campaigns.all().get(slug=slug)
+            campaign = request.user.profile.campaigns.all().get(slug=slug)
         except Campaign.DoesNotExist:
             raise
 

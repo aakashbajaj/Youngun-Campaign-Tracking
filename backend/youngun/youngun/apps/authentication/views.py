@@ -5,9 +5,9 @@ from rest_framework.generics import RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from .serializers import UserInfoSerializer, OrganisationSerializer
+from .serializers import UserInfoSerializer
 from .renderers import UserInfoJSONRenderer
-from .models import User, Organisation
+from .models import User
 
 # Create your views here.
 
