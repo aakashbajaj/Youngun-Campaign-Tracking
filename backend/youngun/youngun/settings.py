@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'drfpasswordless',
 
     'youngun.apps.authentication',
+    'youngun.apps.usermanager',
     'youngun.apps.campaigns',
     'youngun.apps.content',
     'youngun.apps.core',

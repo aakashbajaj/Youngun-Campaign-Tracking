@@ -1,0 +1,1616 @@
+{
+  "created_at": "2020-06-27 13:56",
+  "cli_options": "-a -g -o modeluml.json --json",
+  "disable_fields": false,
+  "disable_abstract_fields": false,
+  "use_subgraph": true,
+  "graphs": [
+    {
+      "True": true,
+      "False": false,
+      "None": null,
+      "name": "\"django.contrib.admin\"",
+      "app_name": "django.contrib.admin",
+      "cluster_app_name": "cluster_django_contrib_admin",
+      "models": [
+        {
+          "app_name": "django_contrib_admin_models",
+          "name": "LogEntry",
+          "abstracts": [],
+          "fields": [
+            {
+              "name": "id",
+              "label": "id",
+              "type": "AutoField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": true
+            },
+            {
+              "name": "content_type",
+              "label": "content_type",
+              "type": "ForeignKey (id)",
+              "blank": true,
+              "abstract": false,
+              "relation": true,
+              "primary_key": false
+            },
+            {
+              "name": "user",
+              "label": "user",
+              "type": "ForeignKey (id)",
+              "blank": false,
+              "abstract": false,
+              "relation": true,
+              "primary_key": false
+            },
+            {
+              "name": "action_flag",
+              "label": "action_flag",
+              "type": "PositiveSmallIntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "action_time",
+              "label": "action_time",
+              "type": "DateTimeField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "change_message",
+              "label": "change_message",
+              "type": "TextField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "object_id",
+              "label": "object_id",
+              "type": "TextField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "object_repr",
+              "label": "object_repr",
+              "type": "CharField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            }
+          ],
+          "relations": [
+            {
+              "target_app": "youngun_apps_authentication_models",
+              "target": "User",
+              "type": "ForeignKey",
+              "name": "user",
+              "label": "user (logentry)",
+              "arrows": "[arrowhead=none, arrowtail=dot, dir=both]",
+              "needs_node": false
+            },
+            {
+              "target_app": "django_contrib_contenttypes_models",
+              "target": "ContentType",
+              "type": "ForeignKey",
+              "name": "content_type",
+              "label": "content_type (logentry)",
+              "arrows": "[arrowhead=none, arrowtail=dot, dir=both]",
+              "needs_node": false
+            }
+          ],
+          "label": "LogEntry"
+        }
+      ]
+    },
+    {
+      "True": true,
+      "False": false,
+      "None": null,
+      "name": "\"django.contrib.auth\"",
+      "app_name": "django.contrib.auth",
+      "cluster_app_name": "cluster_django_contrib_auth",
+      "models": [
+        {
+          "app_name": "django_contrib_auth_models",
+          "name": "Permission",
+          "abstracts": [],
+          "fields": [
+            {
+              "name": "id",
+              "label": "id",
+              "type": "AutoField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": true
+            },
+            {
+              "name": "content_type",
+              "label": "content_type",
+              "type": "ForeignKey (id)",
+              "blank": false,
+              "abstract": false,
+              "relation": true,
+              "primary_key": false
+            },
+            {
+              "name": "codename",
+              "label": "codename",
+              "type": "CharField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "name",
+              "label": "name",
+              "type": "CharField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            }
+          ],
+          "relations": [
+            {
+              "target_app": "django_contrib_contenttypes_models",
+              "target": "ContentType",
+              "type": "ForeignKey",
+              "name": "content_type",
+              "label": "content_type (permission)",
+              "arrows": "[arrowhead=none, arrowtail=dot, dir=both]",
+              "needs_node": false
+            }
+          ],
+          "label": "Permission"
+        },
+        {
+          "app_name": "django_contrib_auth_models",
+          "name": "Group",
+          "abstracts": [],
+          "fields": [
+            {
+              "name": "id",
+              "label": "id",
+              "type": "AutoField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": true
+            },
+            {
+              "name": "name",
+              "label": "name",
+              "type": "CharField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            }
+          ],
+          "relations": [
+            {
+              "target_app": "django_contrib_auth_models",
+              "target": "Permission",
+              "type": "ManyToManyField",
+              "name": "permissions",
+              "label": "permissions (group)",
+              "arrows": "[arrowhead=dot arrowtail=dot, dir=both]",
+              "needs_node": false
+            }
+          ],
+          "label": "Group"
+        }
+      ]
+    },
+    {
+      "True": true,
+      "False": false,
+      "None": null,
+      "name": "\"django.contrib.contenttypes\"",
+      "app_name": "django.contrib.contenttypes",
+      "cluster_app_name": "cluster_django_contrib_contenttypes",
+      "models": [
+        {
+          "app_name": "django_contrib_contenttypes_models",
+          "name": "ContentType",
+          "abstracts": [],
+          "fields": [
+            {
+              "name": "id",
+              "label": "id",
+              "type": "AutoField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": true
+            },
+            {
+              "name": "app_label",
+              "label": "app_label",
+              "type": "CharField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "model",
+              "label": "model",
+              "type": "CharField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            }
+          ],
+          "relations": [],
+          "label": "ContentType"
+        }
+      ]
+    },
+    {
+      "True": true,
+      "False": false,
+      "None": null,
+      "name": "\"django.contrib.sessions\"",
+      "app_name": "django.contrib.sessions",
+      "cluster_app_name": "cluster_django_contrib_sessions",
+      "models": [
+        {
+          "app_name": "django_contrib_sessions_base_session",
+          "name": "AbstractBaseSession",
+          "abstracts": [],
+          "fields": [
+            {
+              "name": "expire_date",
+              "label": "expire_date",
+              "type": "DateTimeField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "session_data",
+              "label": "session_data",
+              "type": "TextField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            }
+          ],
+          "relations": [],
+          "label": "AbstractBaseSession"
+        },
+        {
+          "app_name": "django_contrib_sessions_models",
+          "name": "Session",
+          "abstracts": ["AbstractBaseSession"],
+          "fields": [
+            {
+              "name": "session_key",
+              "label": "session_key",
+              "type": "CharField",
+              "blank": false,
+              "abstract": true,
+              "relation": false,
+              "primary_key": true
+            },
+            {
+              "name": "expire_date",
+              "label": "expire_date",
+              "type": "DateTimeField",
+              "blank": false,
+              "abstract": true,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "session_data",
+              "label": "session_data",
+              "type": "TextField",
+              "blank": false,
+              "abstract": true,
+              "relation": false,
+              "primary_key": false
+            }
+          ],
+          "relations": [
+            {
+              "target_app": "django_contrib_sessions_base_session",
+              "target": "AbstractBaseSession",
+              "type": "inheritance",
+              "name": "inheritance",
+              "label": "abstract\\ninheritance",
+              "arrows": "[arrowhead=empty, arrowtail=none, dir=both]",
+              "needs_node": false
+            }
+          ],
+          "label": "Session"
+        }
+      ]
+    },
+    {
+      "True": true,
+      "False": false,
+      "None": null,
+      "name": "\"rest_framework.authtoken\"",
+      "app_name": "rest_framework.authtoken",
+      "cluster_app_name": "cluster_rest_framework_authtoken",
+      "models": [
+        {
+          "app_name": "rest_framework_authtoken_models",
+          "name": "Token",
+          "abstracts": [],
+          "fields": [
+            {
+              "name": "key",
+              "label": "key",
+              "type": "CharField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": true
+            },
+            {
+              "name": "user",
+              "label": "user",
+              "type": "OneToOneField (id)",
+              "blank": false,
+              "abstract": false,
+              "relation": true,
+              "primary_key": false
+            },
+            {
+              "name": "created",
+              "label": "created",
+              "type": "DateTimeField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            }
+          ],
+          "relations": [
+            {
+              "target_app": "youngun_apps_authentication_models",
+              "target": "User",
+              "type": "OneToOneField",
+              "name": "user",
+              "label": "user (auth_token)",
+              "arrows": "[arrowhead=none, arrowtail=none, dir=both]",
+              "needs_node": false
+            }
+          ],
+          "label": "Token"
+        }
+      ]
+    },
+    {
+      "True": true,
+      "False": false,
+      "None": null,
+      "name": "\"drfpasswordless\"",
+      "app_name": "drfpasswordless",
+      "cluster_app_name": "cluster_drfpasswordless",
+      "models": [
+        {
+          "app_name": "drfpasswordless_models",
+          "name": "AbstractBaseCallbackToken",
+          "abstracts": [],
+          "fields": [
+            {
+              "name": "user",
+              "label": "user",
+              "type": "ForeignKey (None)",
+              "blank": false,
+              "abstract": false,
+              "relation": true,
+              "primary_key": false
+            },
+            {
+              "name": "created_at",
+              "label": "created_at",
+              "type": "DateTimeField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "is_active",
+              "label": "is_active",
+              "type": "BooleanField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "to_alias",
+              "label": "to_alias",
+              "type": "CharField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "to_alias_type",
+              "label": "to_alias_type",
+              "type": "CharField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            }
+          ],
+          "relations": [
+            {
+              "target_app": "youngun_apps_authentication_models",
+              "target": "User",
+              "type": "ForeignKey",
+              "name": "user",
+              "label": "user (abstractbasecallbacktoken)",
+              "arrows": "[arrowhead=none, arrowtail=dot, dir=both]",
+              "needs_node": false
+            }
+          ],
+          "label": "AbstractBaseCallbackToken"
+        },
+        {
+          "app_name": "drfpasswordless_models",
+          "name": "CallbackToken",
+          "abstracts": ["AbstractBaseCallbackToken"],
+          "fields": [
+            {
+              "name": "id",
+              "label": "id",
+              "type": "UUIDField",
+              "blank": false,
+              "abstract": true,
+              "relation": false,
+              "primary_key": true
+            },
+            {
+              "name": "user",
+              "label": "user",
+              "type": "ForeignKey (id)",
+              "blank": false,
+              "abstract": true,
+              "relation": true,
+              "primary_key": false
+            },
+            {
+              "name": "created_at",
+              "label": "created_at",
+              "type": "DateTimeField",
+              "blank": true,
+              "abstract": true,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "is_active",
+              "label": "is_active",
+              "type": "BooleanField",
+              "blank": false,
+              "abstract": true,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "key",
+              "label": "key",
+              "type": "CharField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "to_alias",
+              "label": "to_alias",
+              "type": "CharField",
+              "blank": true,
+              "abstract": true,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "to_alias_type",
+              "label": "to_alias_type",
+              "type": "CharField",
+              "blank": true,
+              "abstract": true,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "type",
+              "label": "type",
+              "type": "CharField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            }
+          ],
+          "relations": [
+            {
+              "target_app": "drfpasswordless_models",
+              "target": "AbstractBaseCallbackToken",
+              "type": "inheritance",
+              "name": "inheritance",
+              "label": "abstract\\ninheritance",
+              "arrows": "[arrowhead=empty, arrowtail=none, dir=both]",
+              "needs_node": false
+            }
+          ],
+          "label": "CallbackToken"
+        }
+      ]
+    },
+    {
+      "True": true,
+      "False": false,
+      "None": null,
+      "name": "\"youngun.apps.authentication\"",
+      "app_name": "youngun.apps.authentication",
+      "cluster_app_name": "cluster_youngun_apps_authentication",
+      "models": [
+        {
+          "app_name": "django_contrib_auth_models",
+          "name": "PermissionsMixin",
+          "abstracts": [],
+          "fields": [
+            {
+              "name": "is_superuser",
+              "label": "is_superuser",
+              "type": "BooleanField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            }
+          ],
+          "relations": [],
+          "label": "PermissionsMixin"
+        },
+        {
+          "app_name": "django_contrib_auth_base_user",
+          "name": "AbstractBaseUser",
+          "abstracts": [],
+          "fields": [
+            {
+              "name": "last_login",
+              "label": "last_login",
+              "type": "DateTimeField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "password",
+              "label": "password",
+              "type": "CharField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            }
+          ],
+          "relations": [],
+          "label": "AbstractBaseUser"
+        },
+        {
+          "app_name": "youngun_apps_authentication_models",
+          "name": "User",
+          "abstracts": ["AbstractBaseUser", "PermissionsMixin"],
+          "fields": [
+            {
+              "name": "id",
+              "label": "id",
+              "type": "AutoField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": true
+            },
+            {
+              "name": "created_at",
+              "label": "created_at",
+              "type": "DateTimeField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "email",
+              "label": "email",
+              "type": "EmailField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "is_active",
+              "label": "is_active",
+              "type": "BooleanField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "is_staff",
+              "label": "is_staff",
+              "type": "BooleanField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "is_superuser",
+              "label": "is_superuser",
+              "type": "BooleanField",
+              "blank": false,
+              "abstract": true,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "last_login",
+              "label": "last_login",
+              "type": "DateTimeField",
+              "blank": true,
+              "abstract": true,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "mobile",
+              "label": "mobile",
+              "type": "CharField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "password",
+              "label": "password",
+              "type": "CharField",
+              "blank": false,
+              "abstract": true,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "updated_at",
+              "label": "updated_at",
+              "type": "DateTimeField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "username",
+              "label": "username",
+              "type": "CharField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            }
+          ],
+          "relations": [
+            {
+              "target_app": "django_contrib_auth_models",
+              "target": "Group",
+              "type": "ManyToManyField",
+              "name": "groups",
+              "label": "groups (user)",
+              "arrows": "[arrowhead=dot arrowtail=dot, dir=both]",
+              "needs_node": false
+            },
+            {
+              "target_app": "django_contrib_auth_models",
+              "target": "Permission",
+              "type": "ManyToManyField",
+              "name": "user_permissions",
+              "label": "user_permissions (user)",
+              "arrows": "[arrowhead=dot arrowtail=dot, dir=both]",
+              "needs_node": false
+            },
+            {
+              "target_app": "django_contrib_auth_base_user",
+              "target": "AbstractBaseUser",
+              "type": "inheritance",
+              "name": "inheritance",
+              "label": "abstract\\ninheritance",
+              "arrows": "[arrowhead=empty, arrowtail=none, dir=both]",
+              "needs_node": false
+            },
+            {
+              "target_app": "django_contrib_auth_models",
+              "target": "PermissionsMixin",
+              "type": "inheritance",
+              "name": "inheritance",
+              "label": "abstract\\ninheritance",
+              "arrows": "[arrowhead=empty, arrowtail=none, dir=both]",
+              "needs_node": false
+            }
+          ],
+          "label": "User"
+        }
+      ]
+    },
+    {
+      "True": true,
+      "False": false,
+      "None": null,
+      "name": "\"youngun.apps.usermanager\"",
+      "app_name": "youngun.apps.usermanager",
+      "cluster_app_name": "cluster_youngun_apps_usermanager",
+      "models": [
+        {
+          "app_name": "youngun_apps_usermanager_models",
+          "name": "Organisation",
+          "abstracts": [],
+          "fields": [
+            {
+              "name": "id",
+              "label": "id",
+              "type": "AutoField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": true
+            },
+            {
+              "name": "name",
+              "label": "name",
+              "type": "CharField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            }
+          ],
+          "relations": [],
+          "label": "Organisation"
+        },
+        {
+          "app_name": "youngun_apps_usermanager_models",
+          "name": "Brand",
+          "abstracts": [],
+          "fields": [
+            {
+              "name": "id",
+              "label": "id",
+              "type": "AutoField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": true
+            },
+            {
+              "name": "organisation",
+              "label": "organisation",
+              "type": "ForeignKey (id)",
+              "blank": true,
+              "abstract": false,
+              "relation": true,
+              "primary_key": false
+            },
+            {
+              "name": "name",
+              "label": "name",
+              "type": "CharField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            }
+          ],
+          "relations": [
+            {
+              "target_app": "youngun_apps_usermanager_models",
+              "target": "Organisation",
+              "type": "ForeignKey",
+              "name": "organisation",
+              "label": "organisation (brand)",
+              "arrows": "[arrowhead=none, arrowtail=dot, dir=both]",
+              "needs_node": false
+            }
+          ],
+          "label": "Brand"
+        },
+        {
+          "app_name": "youngun_apps_usermanager_models",
+          "name": "Profile",
+          "abstracts": [],
+          "fields": [
+            {
+              "name": "id",
+              "label": "id",
+              "type": "AutoField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": true
+            },
+            {
+              "name": "user",
+              "label": "user",
+              "type": "OneToOneField (id)",
+              "blank": false,
+              "abstract": false,
+              "relation": true,
+              "primary_key": false
+            },
+            {
+              "name": "first_name",
+              "label": "first_name",
+              "type": "CharField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "last_name",
+              "label": "last_name",
+              "type": "CharField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            }
+          ],
+          "relations": [
+            {
+              "target_app": "youngun_apps_authentication_models",
+              "target": "User",
+              "type": "OneToOneField",
+              "name": "user",
+              "label": "user (profile)",
+              "arrows": "[arrowhead=none, arrowtail=none, dir=both]",
+              "needs_node": false
+            },
+            {
+              "target_app": "youngun_apps_usermanager_models",
+              "target": "Brand",
+              "type": "ManyToManyField",
+              "name": "brand",
+              "label": "brand (users)",
+              "arrows": "[arrowhead=dot arrowtail=dot, dir=both]",
+              "needs_node": false
+            },
+            {
+              "target_app": "youngun_apps_campaigns_models",
+              "target": "Campaign",
+              "type": "ManyToManyField",
+              "name": "campaigns",
+              "label": "campaigns (profiles)",
+              "arrows": "[arrowhead=dot arrowtail=dot, dir=both]",
+              "needs_node": false
+            }
+          ],
+          "label": "Profile"
+        }
+      ]
+    },
+    {
+      "True": true,
+      "False": false,
+      "None": null,
+      "name": "\"youngun.apps.campaigns\"",
+      "app_name": "youngun.apps.campaigns",
+      "cluster_app_name": "cluster_youngun_apps_campaigns",
+      "models": [
+        {
+          "app_name": "youngun_apps_campaigns_models",
+          "name": "Campaign",
+          "abstracts": [],
+          "fields": [
+            {
+              "name": "id",
+              "label": "id",
+              "type": "AutoField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": true
+            },
+            {
+              "name": "brand",
+              "label": "brand",
+              "type": "ForeignKey (id)",
+              "blank": true,
+              "abstract": false,
+              "relation": true,
+              "primary_key": false
+            },
+            {
+              "name": "approved_content_pieces",
+              "label": "approved_content_pieces",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "cost_per_engagement",
+              "label": "cost_per_engagement",
+              "type": "CharField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "cost_per_post_impression",
+              "label": "cost_per_post_impression",
+              "type": "CharField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "end_date",
+              "label": "end_date",
+              "type": "DateField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "fb_posts",
+              "label": "fb_posts",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "fb_stories",
+              "label": "fb_stories",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "hashtag",
+              "label": "hashtag",
+              "type": "CharField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "in_posts",
+              "label": "in_posts",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "in_stories",
+              "label": "in_stories",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "last_updated",
+              "label": "last_updated",
+              "type": "DateTimeField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "live_fb_posts",
+              "label": "live_fb_posts",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "live_fb_stories",
+              "label": "live_fb_stories",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "live_google_sheet",
+              "label": "live_google_sheet",
+              "type": "URLField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "live_in_posts",
+              "label": "live_in_posts",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "live_in_stories",
+              "label": "live_in_stories",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "live_tw_posts",
+              "label": "live_tw_posts",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "live_tw_stories",
+              "label": "live_tw_stories",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "name",
+              "label": "name",
+              "type": "CharField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "num_content_pieces",
+              "label": "num_content_pieces",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "num_posts",
+              "label": "num_posts",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "num_stories",
+              "label": "num_stories",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "particaipating_profiles",
+              "label": "particaipating_profiles",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "post_reach",
+              "label": "post_reach",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "post_saves",
+              "label": "post_saves",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "post_shares",
+              "label": "post_shares",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "post_stats",
+              "label": "post_stats",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "reports_google_sheet",
+              "label": "reports_google_sheet",
+              "type": "URLField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "slide_url",
+              "label": "slide_url",
+              "type": "URLField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "slug",
+              "label": "slug",
+              "type": "SlugField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "start_date",
+              "label": "start_date",
+              "type": "DateField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "status",
+              "label": "status",
+              "type": "CharField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "story_views",
+              "label": "story_views",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "total_campaign_reach",
+              "label": "total_campaign_reach",
+              "type": "CharField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "total_post_engagement",
+              "label": "total_post_engagement",
+              "type": "CharField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "tw_posts",
+              "label": "tw_posts",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "tw_stories",
+              "label": "tw_stories",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "unique_content_pieces",
+              "label": "unique_content_pieces",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "website_traffic",
+              "label": "website_traffic",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            }
+          ],
+          "relations": [
+            {
+              "target_app": "youngun_apps_usermanager_models",
+              "target": "Brand",
+              "type": "ForeignKey",
+              "name": "brand",
+              "label": "brand (campaigns)",
+              "arrows": "[arrowhead=none, arrowtail=dot, dir=both]",
+              "needs_node": false
+            }
+          ],
+          "label": "Campaign"
+        },
+        {
+          "app_name": "youngun_apps_campaigns_models",
+          "name": "LiveCampaign",
+          "abstracts": [],
+          "fields": [],
+          "relations": [
+            {
+              "target_app": "youngun_apps_campaigns_models",
+              "target": "Campaign",
+              "type": "inheritance",
+              "name": "inheritance",
+              "label": "proxy\\ninheritance",
+              "arrows": "[arrowhead=empty, arrowtail=none, dir=both]",
+              "needs_node": false
+            }
+          ],
+          "label": "LiveCampaign"
+        },
+        {
+          "app_name": "youngun_apps_campaigns_models",
+          "name": "CampaignReport",
+          "abstracts": [],
+          "fields": [],
+          "relations": [
+            {
+              "target_app": "youngun_apps_campaigns_models",
+              "target": "Campaign",
+              "type": "inheritance",
+              "name": "inheritance",
+              "label": "proxy\\ninheritance",
+              "arrows": "[arrowhead=empty, arrowtail=none, dir=both]",
+              "needs_node": false
+            }
+          ],
+          "label": "CampaignReport"
+        }
+      ]
+    },
+    {
+      "True": true,
+      "False": false,
+      "None": null,
+      "name": "\"youngun.apps.content\"",
+      "app_name": "youngun.apps.content",
+      "cluster_app_name": "cluster_youngun_apps_content",
+      "models": [
+        {
+          "app_name": "youngun_apps_content_models",
+          "name": "Post",
+          "abstracts": [],
+          "fields": [
+            {
+              "name": "id",
+              "label": "id",
+              "type": "AutoField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": true
+            },
+            {
+              "name": "campaign",
+              "label": "campaign",
+              "type": "ForeignKey (id)",
+              "blank": false,
+              "abstract": false,
+              "relation": true,
+              "primary_key": false
+            },
+            {
+              "name": "comments",
+              "label": "comments",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "date",
+              "label": "date",
+              "type": "DateField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "embed_code",
+              "label": "embed_code",
+              "type": "TextField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "likes",
+              "label": "likes",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "platform",
+              "label": "platform",
+              "type": "CharField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "post_reach",
+              "label": "post_reach",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "post_saves",
+              "label": "post_saves",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "post_shares",
+              "label": "post_shares",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "post_type",
+              "label": "post_type",
+              "type": "CharField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "url",
+              "label": "url",
+              "type": "URLField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "visibility",
+              "label": "visibility",
+              "type": "CharField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            }
+          ],
+          "relations": [
+            {
+              "target_app": "youngun_apps_campaigns_models",
+              "target": "Campaign",
+              "type": "ForeignKey",
+              "name": "campaign",
+              "label": "campaign (posts)",
+              "arrows": "[arrowhead=none, arrowtail=dot, dir=both]",
+              "needs_node": false
+            }
+          ],
+          "label": "Post"
+        },
+        {
+          "app_name": "youngun_apps_content_models",
+          "name": "Story",
+          "abstracts": [],
+          "fields": [
+            {
+              "name": "id",
+              "label": "id",
+              "type": "AutoField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": true
+            },
+            {
+              "name": "campaign",
+              "label": "campaign",
+              "type": "ForeignKey (id)",
+              "blank": false,
+              "abstract": false,
+              "relation": true,
+              "primary_key": false
+            },
+            {
+              "name": "date",
+              "label": "date",
+              "type": "DateTimeField",
+              "blank": true,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "platform",
+              "label": "platform",
+              "type": "CharField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            },
+            {
+              "name": "story_views",
+              "label": "story_views",
+              "type": "IntegerField",
+              "blank": false,
+              "abstract": false,
+              "relation": false,
+              "primary_key": false
+            }
+          ],
+          "relations": [
+            {
+              "target_app": "youngun_apps_campaigns_models",
+              "target": "Campaign",
+              "type": "ForeignKey",
+              "name": "campaign",
+              "label": "campaign (story)",
+              "arrows": "[arrowhead=none, arrowtail=dot, dir=both]",
+              "needs_node": false
+            }
+          ],
+          "label": "Story"
+        },
+        {
+          "app_name": "youngun_apps_content_models",
+          "name": "InstagramPost",
+          "abstracts": [],
+          "fields": [],
+          "relations": [
+            {
+              "target_app": "youngun_apps_content_models",
+              "target": "Post",
+              "type": "inheritance",
+              "name": "inheritance",
+              "label": "proxy\\ninheritance",
+              "arrows": "[arrowhead=empty, arrowtail=none, dir=both]",
+              "needs_node": false
+            }
+          ],
+          "label": "InstagramPost"
+        },
+        {
+          "app_name": "youngun_apps_content_models",
+          "name": "FacebookPost",
+          "abstracts": [],
+          "fields": [],
+          "relations": [
+            {
+              "target_app": "youngun_apps_content_models",
+              "target": "Post",
+              "type": "inheritance",
+              "name": "inheritance",
+              "label": "proxy\\ninheritance",
+              "arrows": "[arrowhead=empty, arrowtail=none, dir=both]",
+              "needs_node": false
+            }
+          ],
+          "label": "FacebookPost"
+        },
+        {
+          "app_name": "youngun_apps_content_models",
+          "name": "TwitterPost",
+          "abstracts": [],
+          "fields": [],
+          "relations": [
+            {
+              "target_app": "youngun_apps_content_models",
+              "target": "Post",
+              "type": "inheritance",
+              "name": "inheritance",
+              "label": "proxy\\ninheritance",
+              "arrows": "[arrowhead=empty, arrowtail=none, dir=both]",
+              "needs_node": false
+            }
+          ],
+          "label": "TwitterPost"
+        }
+      ]
+    }
+  ]
+}

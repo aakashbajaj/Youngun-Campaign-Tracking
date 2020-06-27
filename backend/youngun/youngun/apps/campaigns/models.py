@@ -3,7 +3,7 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.utils.translation import gettext as _
 
-from youngun.apps.authentication.models import Organisation
+from youngun.apps.usermanager.models import Brand
 # Create your models here.
 
 
@@ -14,14 +14,14 @@ class Status(models.TextChoices):
 
 class Campaign(models.Model):
     name = models.CharField(_("Name"), max_length=255)
-    organisation = models.ForeignKey(Organisation, verbose_name=_(
-        "Organisation"), related_name="campaigns", on_delete=models.CASCADE, null=True)
+    brand = models.ForeignKey(Brand, verbose_name=_(
+        "Brand"), related_name="campaigns", on_delete=models.CASCADE, null=True, blank=True)
     hashtag = models.CharField(_("Hashtag"), max_length=100)
-    status = models.CharField(_("Campaign Status"),
-                              choices=Status.choices, max_length=50, default=Status.ACTIVE)
+    status = models.CharField(
+        _("Campaign Status"), choices=Status.choices, max_length=50, default=Status.ACTIVE)
 
-    start_date = models.DateField(_("Campaign Start"), auto_now=True)
-    end_date = models.DateField(_("Campaign End"), auto_now=True)
+    start_date = models.DateField(_("Campaign Start"), blank=True, null=True)
+    end_date = models.DateField(_("Campaign End"), blank=True, null=True)
 
     slide_url = models.URLField(
         _("Slide URL"), max_length=200, default="example.com")
