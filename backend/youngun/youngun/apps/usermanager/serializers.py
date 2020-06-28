@@ -24,3 +24,12 @@ class ProfileSerializer(ModelSerializer):
     class Meta:
         model = Profile
         fields = ['full_name', 'token', 'email', 'mobile']
+
+
+class InvitedUserSerializer(ModelSerializer):
+    email = serializers.CharField(source='user.email')
+    mobile = serializers.CharField(source='user.mobile')
+
+    class Meta:
+        model = Profile
+        fields = ['full_name', 'email', 'mobile']

@@ -3,8 +3,8 @@ from rest_framework.generics import RetrieveAPIView, CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from .serializers import ProfileSerializer
-from .renderers import ProfileJSONRenderer
+from .serializers import ProfileSerializer, InvitedUserSerializer
+from .renderers import ProfileJSONRenderer, InvitedProfileJSONRenderer
 
 from youngun.apps.campaigns.models import Campaign
 from youngun.apps.authentication.models import User
@@ -19,6 +19,21 @@ class ProfileInfoRetriveAPIView(RetrieveAPIView):
 
     def retrieve(self, request, *args, **kwargs):
         serializer = self.serializer_class(request.user.profile)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class MyInvitedUsersRetriveAPIView(RetrieveAPIView):
+    permission_classes = (IsAuthenticated, )
+    serializer_class = InvitedUserSerializer
+    renderer_classes = (InvitedProfileJSONRenderer, )
+
+    def retrieve(self, request, *args, **kwargs):
+        if not request.user.profile.is_main_user:
+            return Response({"response": "Not Allowed. Not Main User"}, status.HTTP_401_UNAUTHORIZED)
+
+        serializer = self.serializer_class(
+            request.user.profile.invited_users, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
