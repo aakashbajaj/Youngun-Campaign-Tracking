@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
 from youngun.apps.usermanager.serializers import BrandSerializer
-from youngun.apps.content.serializers import InstagramPostDisplaySerializer, FacebookPostDisplaySerializer, TwitterPostDisplaySerializer
+from youngun.apps.content.serializers import InstagramPostDisplaySerializer, FacebookPostDisplaySerializer, TwitterPostDisplaySerializer, StoriesDisplaySerializer
 from .models import LiveCampaign, Campaign
 
 
@@ -48,6 +48,7 @@ class LiveCampaignFeedSerilaizer(ModelSerializer):
         source='get_facebook_posts', many=True, read_only=True)
     twitter = TwitterPostDisplaySerializer(
         source='get_twitter_posts', many=True, read_only=True)
+    stories = StoriesDisplaySerializer(many=True, read_only=True)
 
     class Meta:
         model = Campaign
@@ -56,5 +57,6 @@ class LiveCampaignFeedSerilaizer(ModelSerializer):
             'instagram',
             'facebook',
             'twitter',
+            'stories',
             'stories_google_photos_album_url'
         ]

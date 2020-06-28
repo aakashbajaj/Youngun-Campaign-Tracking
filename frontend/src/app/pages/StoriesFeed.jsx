@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import CampaignContext from "../data/CampaignContext";
 import Spinner from "../shared/Spinner";
+import Img from "react-image";
 
 export default class StoriesFeed extends Component {
   static contextType = CampaignContext;
@@ -18,49 +19,55 @@ export default class StoriesFeed extends Component {
     // window.fbAsyncInit();
   }
 
+  onImgLoad = (evt) => {
+    evt.preventDeafult();
+    // this.setState({ :  });
+  };
+
   render() {
-    var stories_url = "";
+    var stories = [];
     if (
       this.context.currentCampaignInView !== null &&
       this.context.liveCampaignFeed[this.context.currentCampaignInView] !==
         null &&
       this.context.liveCampaignFeed[this.context.currentCampaignInView]
-        .stories_google_photos_album_url !== null
+        .stories !== null
     ) {
-      stories_url = this.context.liveCampaignFeed[
+      stories = this.context.liveCampaignFeed[
         this.context.currentCampaignInView
-      ].stories_google_photos_album_url;
+      ].stories;
     }
 
-    if (!stories_url) {
+    if (!stories) {
       return <Spinner />;
-    } else if (stories_url === "") {
+    } else if (stories === []) {
       return <div>Nothing to show</div>;
     }
-    const iframe_str = `<iframe src=${stories_url}></iframe>`;
+    // const iframe_str = `<iframe src=${stories_url}></iframe>`;
     return (
       <div>
         <div className="page-header">
           <h3 className="page-title">Stories</h3>
         </div>
         <div className="row">
-          <div>
+          {/* <div>
             <div dangerouslySetInnerHTML={this.createMarkup(iframe_str)}></div>
-          </div>
-          {/* {fbposts.map((post, idx) => {
+          </div> */}
+          {stories.map((post, idx) => {
             return (
               <div
                 key={idx}
-                className="col-xl-6 col-lg-6 col-md-6 col-sm-6 grid-margin stretch-card"
+                className="col-xl-4 col-lg-4 col-md-5 col-sm-6 grid-margin stretch-card "
               >
-                <div
-                  className="fb-post"
-                  data-href={`${post.url}`}
-                  data-width="100"
-                ></div>
+                <img
+                  key={post.url}
+                  src={post.url}
+                  alt={"Story"}
+                  loader={<Spinner />}
+                />
               </div>
             );
-          })} */}
+          })}
         </div>
       </div>
     );

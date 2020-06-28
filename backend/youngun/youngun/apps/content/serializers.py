@@ -1,6 +1,12 @@
 from rest_framework.serializers import ModelSerializer
 
-from .models import InstagramPost, FacebookPost, TwitterPost, Post
+from .models import InstagramPost, FacebookPost, TwitterPost, Post, Story
+
+
+class StoriesDisplaySerializer(ModelSerializer):
+    class Meta:
+        model = Story
+        fields = ['url']
 
 
 class InstagramPostDisplaySerializer(ModelSerializer):

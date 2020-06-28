@@ -18,7 +18,11 @@ def custom_titled_filter(title):
 
 @admin.register(Story)
 class StoryAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('id', 'campaign', 'platform', 'date')
+
+    list_filter = [
+        ('campaign__name', custom_titled_filter("Campaign")),
+    ]
 
 
 @admin.register(Post)
