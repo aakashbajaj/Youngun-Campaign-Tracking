@@ -57,7 +57,7 @@ export default class StoriesFeed extends Component {
             return (
               <div
                 key={idx}
-                className="col-xl-4 col-lg-4 col-md-5 col-sm-6 grid-margin stretch-card "
+                className="col-xl-4 col-lg-4 col-md-6 col-sm-6 grid-margin stretch-card "
               >
                 <img
                   key={post.url}

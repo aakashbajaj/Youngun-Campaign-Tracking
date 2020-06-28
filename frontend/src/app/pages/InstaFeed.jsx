@@ -37,7 +37,7 @@ export default class InstaFeed extends Component {
     return (
       <div>
         <div className="page-header">
-          <h3 className="page-title">Instagram/Facebook/Twitter</h3>
+          <h3 className="page-title">Instagram</h3>
         </div>
         <div className="row">
           {instaposts.map((post, idx) => {
