@@ -32,7 +32,7 @@ class Post(models.Model):
 
     embed_code = models.TextField(_("embed code"), null=True, blank=True)
     visibility = models.CharField(
-        _("post visibility"), choices=PostVisibility.choices, max_length=50, default=PostVisibility.PUBLIC)
+        _("post visibility"), choices=PostVisibility.choices, max_length=50, default='public')
 
     post_type = models.CharField(
         _("post_type"), max_length=50, choices=[("p", "Post"), ("v", "Video")], null=True, blank=True)
