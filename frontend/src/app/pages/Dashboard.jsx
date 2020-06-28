@@ -4,6 +4,7 @@ import CampaignContext from "../data/CampaignContext";
 import StoryMetric from "../components/StoryMetric";
 import CardDoughnut from "../components/CardDoughnut";
 import Spinner from "../shared/Spinner";
+import ContentSlideCard from "../components/ContentSlideCard";
 // import ContentSlideCard from "../components/ContentSlideCard";
 // import DatePicker from 'react-datepicker';
 // import { Dropdown } from 'react-bootstrap';
@@ -13,7 +14,7 @@ export class Dashboard extends Component {
 
   currentCampLiveMetricsTemp = {
     name: "",
-    organisation: {
+    brand: {
       name: "",
     },
     hashtag: "",
@@ -63,6 +64,13 @@ export class Dashboard extends Component {
     document.querySelector(".proBanner").classList.toggle("hide");
   }
 
+  zeroToDash(cnt) {
+    if (cnt === 0) {
+      return "--";
+    }
+    return cnt;
+  }
+
   render() {
     var liveCampMetrics = this.currentCampLiveMetrics;
     if (
@@ -83,8 +91,8 @@ export class Dashboard extends Component {
       <div>
         <div className="page-header">
           <h3 className="page-title">
-            {liveCampMetrics && liveCampMetrics.organisation
-              ? liveCampMetrics.organisation.name
+            {liveCampMetrics && liveCampMetrics.brand
+              ? liveCampMetrics.brand.name
               : null}
           </h3>
           <nav aria-label="breadcrumb">
@@ -109,35 +117,58 @@ export class Dashboard extends Component {
             {/* Instagram */}
             <StoryMetric
               platform="in"
-              mainText={`Posts Live: ${liveCampMetrics.live_in_posts}`}
-              subText={`Total Posts: ${liveCampMetrics.in_posts}`}
+              PostMainText={`Posts Live: ${this.zeroToDash(
+                liveCampMetrics.live_in_posts
+              )}`}
+              PostSubText={`Total Posts: ${this.zeroToDash(
+                liveCampMetrics.in_posts
+              )}`}
+              StoryMainText={`Stories Live: ${this.zeroToDash(
+                liveCampMetrics.live_in_stories
+              )}`}
+              StorySubText={`Total Stories: ${this.zeroToDash(
+                liveCampMetrics.in_stories
+              )}`}
             />
           </div>
           <div className="col-xl-4 col-lg-6 col-md-6 col-sm-6 grid-margin stretch-card">
             {/* Facebook */}
             <StoryMetric
               platform="fb"
-              mainText={`Posts Live: ${liveCampMetrics.live_fb_posts}`}
-              subText={`Total Posts: ${liveCampMetrics.fb_posts}`}
+              PostMainText={`Posts Live: ${this.zeroToDash(
+                liveCampMetrics.live_fb_posts
+              )}`}
+              PostSubText={`Total Posts: ${this.zeroToDash(
+                liveCampMetrics.fb_posts
+              )}`}
+              StoryMainText={`Stories Live: ${this.zeroToDash(
+                liveCampMetrics.live_fb_stories
+              )}`}
+              StorySubText={`Total Stories: ${this.zeroToDash(
+                liveCampMetrics.fb_stories
+              )}`}
             />
           </div>
           <div className="col-xl-4 col-lg-6 col-md-6 col-sm-6 grid-margin stretch-card">
             {/* Twitter */}
             <StoryMetric
               platform="tw"
-              mainText={`Posts Live: ${liveCampMetrics.live_tw_posts}`}
-              subText={`Total Posts: ${liveCampMetrics.tw_posts}`}
+              PostMainText={`Posts Live: ${this.zeroToDash(
+                liveCampMetrics.live_tw_posts
+              )}`}
+              PostSubText={`Total Posts: ${this.zeroToDash(
+                liveCampMetrics.tw_posts
+              )}`}
+              StoryMainText={`Stories Live: ${this.zeroToDash(
+                liveCampMetrics.live_tw_stories
+              )}`}
+              StorySubText={`Total Stories: ${this.zeroToDash(
+                liveCampMetrics.tw_stories
+              )}`}
             />
           </div>
-          {/* <div className="col-xl-4 col-lg-6 col-md-6 col-sm-6 grid-margin stretch-card">
-            C4
-            <StoryMetric
-              platform="tw"
-              mainText={liveCampMetrics.name}
-              subText="QWER"
-            />
-          </div> */}
         </div>
+
         {/* <div className="row">
           <div className="col-xl-4 col-lg-6 col-sm-6  grid-margin stretch-card">
             C5
@@ -167,29 +198,7 @@ export class Dashboard extends Component {
             />
           </div>
           <div className="col-sm-6 col-md-6 col-lg-6 grid-margin stretch-card">
-            <div className="card card-statistics">
-              <div className="card-body">
-                <div className="clearfix">
-                  <div className="float-left">
-                    <i className="mdi mdi-receipt text-warning icon-lg"></i>
-                  </div>
-                  <div className="float-right">
-                    <p className="mb-0 text-right text-dark"></p>
-                    <div className="fluid-container">
-                      <h3 className="font-weight-medium text-right mb-0 mt-3 text-dark">
-                        <a
-                          href={`${liveCampMetrics.slide_url}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          View Content Slide
-                        </a>
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ContentSlideCard slide_url={liveCampMetrics.slide_url} />
           </div>
         </div>
       </div>

@@ -107,16 +107,19 @@ class Sidebar extends Component {
             </Link>
           </li>
 
-          <li
-            className={
-              this.isPathActive("/report") ? "nav-item active" : "nav-item"
-            }
-          >
-            <Link className="nav-link" to="/report">
-              <i className="mdi mdi-table-large menu-icon"></i>
-              <span className="menu-title">Report</span>
-            </Link>
-          </li>
+          {/* {this.context.campaigns[this.context.currentCampaignInView].status ===
+          "completed" ? (
+            <li
+              className={
+                this.isPathActive("/report") ? "nav-item active" : "nav-item"
+              }
+            >
+              <Link className="nav-link" to="/report">
+                <i className="mdi mdi-table-large menu-icon"></i>
+                <span className="menu-title">Report</span>
+              </Link>
+            </li>
+          ) : null} */}
         </ul>
       </nav>
     );
