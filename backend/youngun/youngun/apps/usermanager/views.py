@@ -1,5 +1,5 @@
 from rest_framework import status
-from rest_framework.generics import RetrieveAPIView
+from rest_framework.generics import RetrieveAPIView, CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -18,3 +18,13 @@ class ProfileInfoRetriveAPIView(RetrieveAPIView):
         serializer = self.serializer_class(request.user.profile)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class InviteSubUsersAPIView(CreateAPIView):
+    permission_classes = (IsAuthenticated, )
+
+    def post(self, request, *args, **kwargs):
+        if not request.user.profile.is_main_user:
+            return Response({"response": "Not Allowed"}, status.HTTP_401_UNAUTHORIZED)
+
+        email = request.data["email"]
