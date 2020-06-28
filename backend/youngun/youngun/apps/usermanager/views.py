@@ -32,10 +32,14 @@ class MyInvitedUsersRetriveAPIView(RetrieveAPIView):
         if not request.user.profile.is_main_user:
             return Response({"response": "Not Allowed. Not Main User"}, status.HTTP_401_UNAUTHORIZED)
 
-        serializer = self.serializer_class(
-            request.user.profile.invited_users, many=True)
+        invited_profiles = {}
+        for camp in request.user.profile.campaigns.all():
+            serializer = self.serializer_class(
+                request.user.profile.invited_users.filter(campaigns=camp), many=True)
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+            invited_profiles[camp.slug] = serializer.data
+
+        return Response(invited_profiles, status=status.HTTP_200_OK)
 
 
 class InviteSubUsersAPIView(CreateAPIView):
