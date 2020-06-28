@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import InstagramPost, FacebookPost, TwitterPost, Post
+from .models import InstagramPost, FacebookPost, TwitterPost, Post, Story
 from django.utils.translation import gettext_lazy as _
 
 
@@ -14,6 +14,15 @@ def custom_titled_filter(title):
             instance.title = title
             return instance
     return Wrapper
+
+
+@admin.register(Story)
+class StoryAdmin(admin.ModelAdmin):
+    list_display = ('id', 'campaign', 'platform', 'date')
+
+    list_filter = [
+        ('campaign__name', custom_titled_filter("Campaign")),
+    ]
 
 
 @admin.register(Post)

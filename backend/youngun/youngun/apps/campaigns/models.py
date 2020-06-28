@@ -89,6 +89,9 @@ class Campaign(models.Model):
     stories_google_photos_album_url = models.URLField(
         _("Stories Album URL"), max_length=500, default="", blank=True)
 
+    stories_fetch_ctrl = models.BooleanField(
+        _("Stories fetched?"), default=False)
+
     # Campaign Report
     num_content_pieces = models.IntegerField(
         _("num content pieces"), default=0)
