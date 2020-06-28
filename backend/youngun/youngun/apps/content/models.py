@@ -45,10 +45,11 @@ class Post(models.Model):
 
 
 class Story(models.Model):
+    url = models.URLField(_("Story Snapshot URL"), max_length=200, default="")
     campaign = models.ForeignKey(Campaign, verbose_name=_(
         "campaign"), on_delete=models.CASCADE)
     platform = models.CharField(
-        _("platform"), max_length=50, choices=Platform.choices)
+        _("platform"), max_length=50, choices=Platform.choices, default='in')
     story_views = models.IntegerField(_("Story Views"), default=0)
     date = models.DateTimeField(_("posted timestamp"), auto_now_add=True)
 
