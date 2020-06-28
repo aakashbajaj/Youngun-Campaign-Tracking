@@ -98,6 +98,17 @@ class Sidebar extends Component {
 
           <li
             className={
+              this.isPathActive("/storiesfeed") ? "nav-item active" : "nav-item"
+            }
+          >
+            <Link className="nav-link" to="/storiesfeed">
+              <i className="mdi mdi-fullscreen menu-icon"></i>
+              <span className="menu-title">Stories Feed</span>
+            </Link>
+          </li>
+
+          <li
+            className={
               this.isPathActive("/report") ? "nav-item active" : "nav-item"
             }
           >

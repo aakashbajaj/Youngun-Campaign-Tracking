@@ -86,6 +86,9 @@ class Campaign(models.Model):
     live_tw_posts = models.IntegerField(_("live twitter posts"), default=0)
     live_tw_stories = models.IntegerField(_("live twitter stories"), default=0)
 
+    stories_google_photos_album_url = models.URLField(
+        _("Stories Album URL"), max_length=500, default="", blank=True)
+
     # Campaign Report
     num_content_pieces = models.IntegerField(
         _("num content pieces"), default=0)

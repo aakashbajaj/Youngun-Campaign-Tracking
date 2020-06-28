@@ -2,45 +2,52 @@ import React, { Component } from "react";
 import CampaignContext from "../data/CampaignContext";
 import Spinner from "../shared/Spinner";
 
-export default class FBFeed extends Component {
+export default class StoriesFeed extends Component {
   static contextType = CampaignContext;
 
   createMarkup(embed_code) {
     return { __html: embed_code };
   }
   componentDidMount() {
-    console.log("in FB CDM");
-    window.fbAsyncInit();
+    console.log("in Stories CDM");
+    // window.fbAsyncInit();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    window.fbAsyncInit();
+    // window.instgrm.Embeds.process();
+    // window.fbAsyncInit();
   }
 
   render() {
-    var fbposts = [];
+    var stories_url = "";
     if (
       this.context.currentCampaignInView !== null &&
       this.context.liveCampaignFeed[this.context.currentCampaignInView] !==
         null &&
       this.context.liveCampaignFeed[this.context.currentCampaignInView]
-        .facebook !== null
+        .stories_google_photos_album_url !== null
     ) {
-      fbposts = this.context.liveCampaignFeed[
+      stories_url = this.context.liveCampaignFeed[
         this.context.currentCampaignInView
-      ].facebook;
+      ].stories_google_photos_album_url;
     }
 
-    if (!fbposts) {
+    if (!stories_url) {
       return <Spinner />;
+    } else if (stories_url === "") {
+      return <div>Nothing to show</div>;
     }
+    const iframe_str = `<iframe src=${stories_url}></iframe>`;
     return (
       <div>
         <div className="page-header">
-          <h3 className="page-title">Facebook</h3>
+          <h3 className="page-title">Stories</h3>
         </div>
         <div className="row">
-          {fbposts.map((post, idx) => {
+          <div>
+            <div dangerouslySetInnerHTML={this.createMarkup(iframe_str)}></div>
+          </div>
+          {/* {fbposts.map((post, idx) => {
             return (
               <div
                 key={idx}
@@ -53,7 +60,7 @@ export default class FBFeed extends Component {
                 ></div>
               </div>
             );
-          })}
+          })} */}
         </div>
       </div>
     );
