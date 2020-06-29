@@ -5,6 +5,7 @@ import StoryMetric from "../components/StoryMetric";
 import CardDoughnut from "../components/CardDoughnut";
 import Spinner from "../shared/Spinner";
 import ContentSlideCard from "../components/ContentSlideCard";
+import InviteUserCard from "../components/InviteUserCard";
 // import ContentSlideCard from "../components/ContentSlideCard";
 // import DatePicker from 'react-datepicker';
 // import { Dropdown } from 'react-bootstrap';
@@ -199,6 +200,12 @@ export class Dashboard extends Component {
           </div>
           <div className="col-sm-6 col-md-6 col-lg-6 grid-margin stretch-card">
             <ContentSlideCard slide_url={liveCampMetrics.slide_url} />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-6 col-md-6 col-lg-6 grid-margin stretch-card"></div>
+          <div className="col-sm-6 col-md-6 col-lg-6 grid-margin stretch-card">
+            <InviteUserCard />
           </div>
         </div>
       </div>

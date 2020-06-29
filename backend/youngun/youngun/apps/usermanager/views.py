@@ -101,7 +101,7 @@ class RemoveInvitedUserAPIView(CreateAPIView):
             return Response({"response": "Not Allowed. Invalid Campaign"}, status.HTTP_401_UNAUTHORIZED)
 
         try:
-            invited_user, _ = User.objects.get(email=email)
+            invited_user = User.objects.get(email=email)
             invited_user.delete()
 
         except User.DoesNotExist:

@@ -10,12 +10,13 @@ export default class GlobalState extends Component {
     isAuthenticated: false,
     isAuthInProgress: false,
     sendingOTP: false,
-    errors: [],
+    errors: {},
     campaigns: {},
     liveCampaignData: {},
     liveCampaignFeed: {},
     campaignReportData: {},
     currentCampaignInView: null,
+    invited_profiles: {},
   };
 
   // constructor(props) {
@@ -36,6 +37,8 @@ export default class GlobalState extends Component {
     } catch (error) {
       console.log(error.response);
     }
+
+    this.getInvitedUsersData();
 
     const resp = await API.get("/api/campaigns/");
 
@@ -96,6 +99,17 @@ export default class GlobalState extends Component {
     };
     this.setState(newState);
   }
+
+  getInvitedUsersData = () => {
+    API.get("/api/profile/myinvites/")
+      .then((resp) => {
+        console.log(resp.data);
+        this.setState({ invited_profiles: resp.data.invited_profile });
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  };
   //#endregion
 
   //#region Event Handler
@@ -104,7 +118,37 @@ export default class GlobalState extends Component {
     this.setState({ currentCampaignInView: evt.target.id });
   };
   //#endregion
+  //#region Actions
+  inviteEmailUser = (email) => {
+    const data = {
+      email: email,
+      campaign_slug: this.state.currentCampaignInView,
+    };
+    API.post("/api/profile/inviteuser/", data)
+      .then((resp) => {
+        console.log(resp.data);
+        this.getInvitedUsersData();
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  };
 
+  removeInvitedUser = (email) => {
+    const data = {
+      email: email,
+      campaign_slug: this.state.currentCampaignInView,
+    };
+    API.post("/api/profile/removeinvite/", data)
+      .then((resp) => {
+        console.log(resp.data);
+        this.getInvitedUsersData();
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  };
+  //#endregion
   //#region utility functions
   loadTempCredentials() {
     const token = "07b833d53b38f85517dcb922b94e1a7ff841c950";
@@ -252,6 +296,9 @@ export default class GlobalState extends Component {
     logout: this.logout,
     verify: this.verify,
     setCurrentCampaign: this.setCurrentCampaign,
+
+    inviteEmailUser: this.inviteEmailUser,
+    removeInvitedUser: this.removeInvitedUser,
   };
 
   render() {
