@@ -63,6 +63,8 @@ class Navbar extends Component {
                   <span className="profile-text">
                     {this.context.user
                       ? this.context.user.full_name
+                        ? this.context.user.full_name
+                        : this.context.user.email
                       : this.context.userEmail}
                   </span>
                   {/* <img

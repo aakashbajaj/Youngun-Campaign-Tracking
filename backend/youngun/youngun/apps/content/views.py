@@ -20,8 +20,8 @@ class CreatePostAPIView(CreateAPIView):
     def post(self, request, slug, *args, **kwargs):
         try:
             campaign = Campaign.objects.get(slug=slug)
-        except:
-            raise
+        except Campaign.DoesNotExist:
+            return Response({"response": "No Campaign match"}, status.HTTP_400_BAD_REQUEST)
 
         post_url = request.data["url"]
 
@@ -47,4 +47,4 @@ class CreatePostAPIView(CreateAPIView):
         return Response({"response": "Created"}, status.HTTP_200_OK)
 
 
-post_type = "post"
+# post_type = "post"

@@ -36,6 +36,10 @@ class Profile(models.Model):
     campaigns = models.ManyToManyField(
         "campaigns.Campaign", verbose_name=_("campaigns"), related_name="profiles", blank=True)
 
+    is_main_user = models.BooleanField(_("Main User"), default=False)
+    added_by = models.ForeignKey("self", verbose_name=_(
+        "Added By"), on_delete=models.DO_NOTHING, related_name='invited_users', blank=True, default=None, null=True)
+
     def __str__(self):
         return self.user.email
 
