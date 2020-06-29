@@ -44,6 +44,7 @@ class MyInvitedUsersRetriveAPIView(RetrieveAPIView):
 
 class InviteSubUsersAPIView(CreateAPIView):
     permission_classes = (IsAuthenticated, )
+    serializer_class = InvitedUserSerializer
 
     def post(self, request, *args, **kwargs):
         if not request.user.profile.is_main_user:
@@ -59,10 +60,8 @@ class InviteSubUsersAPIView(CreateAPIView):
 
         adder_prof_obj = request.user.profile
 
-        print(adder_prof_obj.campaigns.all())
-
         if not camp_obj in adder_prof_obj.campaigns.all():
-            return Response({"response": "Not Allowed. Invalid Campaign", "payload": adder_prof_obj.campaigns.all()}, status.HTTP_401_UNAUTHORIZED)
+            return Response({"response": "Not Allowed. Invalid Campaign"}, status.HTTP_401_UNAUTHORIZED)
 
         invited_user, _ = User.objects.get_or_create(email=email)
         invited_user.profile.added_by = adder_prof_obj
@@ -70,4 +69,49 @@ class InviteSubUsersAPIView(CreateAPIView):
 
         invited_user.profile.save()
 
-        return Response({"response": "Created"}, status.HTTP_201_CREATED)
+        invited_profiles = {}
+        for camp in request.user.profile.campaigns.all():
+            serializer = self.serializer_class(
+                request.user.profile.invited_users.filter(campaigns=camp), many=True)
+
+            invited_profiles[camp.slug] = serializer.data
+
+        return Response({"response": "Created", "invited_profiles": invited_profiles}, status.HTTP_201_CREATED)
+
+
+class RemoveInvitedUserAPIView(CreateAPIView):
+    permission_classes = (IsAuthenticated, )
+    serializer_class = InvitedUserSerializer
+
+    def post(self, request, *args, **kwargs):
+        if not request.user.profile.is_main_user:
+            return Response({"response": "Not Allowed. Not Main User"}, status.HTTP_401_UNAUTHORIZED)
+
+        email = request.data["email"]
+
+        campaign_slug = request.data["campaign_slug"]
+        try:
+            camp_obj = Campaign.objects.get(slug=campaign_slug)
+        except Campaign.DoesNotExist:
+            return Response({"response": "Not Allowed. Invalid Campaign"}, status.HTTP_401_UNAUTHORIZED)
+
+        adder_prof_obj = request.user.profile
+
+        if not camp_obj in adder_prof_obj.campaigns.all():
+            return Response({"response": "Not Allowed. Invalid Campaign"}, status.HTTP_401_UNAUTHORIZED)
+
+        try:
+            invited_user, _ = User.objects.get(email=email)
+            invited_user.delete()
+
+        except User.DoesNotExist:
+            return Response({"response": "No User Found With Matching Email"}, status.HTTP_400_BAD_REQUEST)
+
+        invited_profiles = {}
+        for camp in request.user.profile.campaigns.all():
+            serializer = self.serializer_class(
+                request.user.profile.invited_users.filter(campaigns=camp), many=True)
+
+            invited_profiles[camp.slug] = serializer.data
+
+        return Response({"response": "Created", "invited_profiles": invited_profiles}, status.HTTP_201_CREATED)
