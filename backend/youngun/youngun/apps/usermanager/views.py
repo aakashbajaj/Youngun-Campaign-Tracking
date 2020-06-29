@@ -102,6 +102,9 @@ class RemoveInvitedUserAPIView(CreateAPIView):
 
         try:
             invited_user = User.objects.get(email=email)
+            if invited_user not in request.user.profile.invited_users.all():
+                return Response({"response": "Not Allowed. Invalid User"}, status.HTTP_401_UNAUTHORIZED)
+
             invited_user.delete()
 
         except User.DoesNotExist:

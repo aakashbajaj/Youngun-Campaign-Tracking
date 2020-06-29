@@ -118,6 +118,7 @@ export default class GlobalState extends Component {
     this.setState({ currentCampaignInView: evt.target.id });
   };
   //#endregion
+
   //#region Actions
   inviteEmailUser = (email) => {
     const data = {
