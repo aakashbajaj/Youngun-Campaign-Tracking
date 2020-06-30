@@ -4,19 +4,8 @@ from django.utils.translation import gettext as _
 # Create your models here.
 
 
-class Organisation(models.Model):
-    name = models.CharField(max_length=255)
-    # email_suffix = models.CharField(
-    #     _("email suffix"), max_length=255, blank=True)
-
-    def __str__(self):
-        return self.name
-
-
 class Brand(models.Model):
     name = models.CharField(max_length=255)
-    organisation = models.ForeignKey(Organisation, verbose_name=_(
-        "organisation"), on_delete=models.DO_NOTHING, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -34,6 +23,11 @@ class Profile(models.Model):
         "campaigns.Campaign", verbose_name=_("campaigns"), related_name="profiles", blank=True)
 
     is_main_user = models.BooleanField(_("Main User"), default=False)
+    is_staff_profile = models.BooleanField(
+        _("Is Staff Profile"), default=False)
+    is_client_profile = models.BooleanField(
+        _("Is Client Profile"), default=True)
+
     added_by = models.ForeignKey("self", verbose_name=_(
         "Added By"), on_delete=models.DO_NOTHING, related_name='invited_users', blank=True, default=None, null=True)
 
@@ -49,3 +43,35 @@ class Profile(models.Model):
     @property
     def full_name(self):
         return self.get_full_name
+
+
+class StaffProfileManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_staff_profile=True)
+
+
+class StaffProfile(Profile):
+    def save(self, *args, **kwargs):
+        self.is_staff_profile = True
+        return super(StaffProfile, self).save(*args, **kwargs)
+
+    class Meta:
+        proxy = True
+
+    objects = StaffProfileManager()
+
+
+class ClientProfileManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_client_profile=True)
+
+
+class ClientProfile(Profile):
+    def save(self, *args, **kwargs):
+        self.is_client_profile = True
+        return super(ClientProfile, self).save(*args, **kwargs)
+
+    class Meta:
+        proxy = True
+
+    objects = ClientProfileManager()
