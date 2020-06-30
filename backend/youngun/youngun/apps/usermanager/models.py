@@ -30,9 +30,6 @@ class Profile(models.Model):
     last_name = models.CharField(
         _("Last Name"), max_length=255, blank=True, default="")
 
-    brand = models.ManyToManyField(
-        Brand, verbose_name=_("brands"), related_name='users', blank=True)
-
     campaigns = models.ManyToManyField(
         "campaigns.Campaign", verbose_name=_("campaigns"), related_name="profiles", blank=True)
 

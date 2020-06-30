@@ -1,11 +1,28 @@
 from django.contrib import admin
 
 from .models import Campaign, LiveCampaign, CampaignReport
+from youngun.apps.usermanager.models import Profile
 # Register your models here.
+
+
+class ProfilesInline(admin.TabularInline):
+    model = Profile.campaigns.through
 
 
 @admin.register(Campaign)
 class CampaignAdmin(admin.ModelAdmin):
+    readonly_fields = ('get_profiles', )
+    inlines = [
+        ProfilesInline,
+    ]
+    fields = (
+        'name',
+        'brand',
+        'hashtag',
+        'status',
+        'start_date',
+        'end_date',
+    )
     list_display = (
         'name',
         'brand',
@@ -13,6 +30,7 @@ class CampaignAdmin(admin.ModelAdmin):
         'status',
         'start_date',
         'end_date',
+        # 'get_profiles'
         # 'posts',
         # 'instagram_posts'
     )
