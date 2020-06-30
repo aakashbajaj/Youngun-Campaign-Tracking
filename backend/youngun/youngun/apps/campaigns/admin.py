@@ -5,16 +5,19 @@ from youngun.apps.usermanager.models import Profile
 # Register your models here.
 
 
-class ProfilesInline(admin.TabularInline):
+class ProfilesInline(admin.StackedInline):
     model = Profile.campaigns.through
+
+    autocomplete_fields = ('campaign', )
 
 
 @admin.register(Campaign)
 class CampaignAdmin(admin.ModelAdmin):
-    readonly_fields = ('get_profiles', )
+    # readonly_fields = ('get_profiles', )
     inlines = [
         ProfilesInline,
     ]
+    search_fields = ['profile', ]
     fields = (
         'name',
         'brand',
