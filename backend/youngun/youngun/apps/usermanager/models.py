@@ -23,8 +23,8 @@ class Brand(models.Model):
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(
-        "authentication.User", verbose_name=_(""), on_delete=models.CASCADE, related_name="profile")
+    # user = models.OneToOneField(
+    #     "authentication.User", verbose_name=_(""), on_delete=models.CASCADE, related_name="profile")
     first_name = models.CharField(
         _("First Name"), max_length=255, blank=True, default="")
     last_name = models.CharField(

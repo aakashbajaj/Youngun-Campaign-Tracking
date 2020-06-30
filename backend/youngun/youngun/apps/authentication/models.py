@@ -11,6 +11,8 @@ from django.core.validators import RegexValidator
 
 from rest_framework.authtoken.models import Token
 
+from youngun.apps.usermanager.models import Profile
+
 
 class UserManager(BaseUserManager):
     def create_user(self, username, email, password=None):
@@ -42,6 +44,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_("Email"), db_index=True, unique=True)
     username = models.CharField(
         _("Username"), max_length=255)
+
+    profile = models.OneToOneField("usermanager.Profile", verbose_name=_(
+        "profile"), related_name='user', on_delete=models.CASCADE, null=True, blank=True)
 
     phone_regex = RegexValidator(
         regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
