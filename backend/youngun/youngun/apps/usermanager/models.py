@@ -4,19 +4,8 @@ from django.utils.translation import gettext as _
 # Create your models here.
 
 
-class Organisation(models.Model):
-    name = models.CharField(max_length=255)
-    # email_suffix = models.CharField(
-    #     _("email suffix"), max_length=255, blank=True)
-
-    def __str__(self):
-        return self.name
-
-
 class Brand(models.Model):
     name = models.CharField(max_length=255)
-    organisation = models.ForeignKey(Organisation, verbose_name=_(
-        "organisation"), on_delete=models.DO_NOTHING, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -29,9 +18,6 @@ class Profile(models.Model):
         _("First Name"), max_length=255, blank=True, default="")
     last_name = models.CharField(
         _("Last Name"), max_length=255, blank=True, default="")
-
-    brand = models.ManyToManyField(
-        Brand, verbose_name=_("brands"), related_name='users', blank=True)
 
     campaigns = models.ManyToManyField(
         "campaigns.Campaign", verbose_name=_("campaigns"), related_name="profiles", blank=True)

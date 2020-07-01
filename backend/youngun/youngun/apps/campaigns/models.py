@@ -33,10 +33,6 @@ class Campaign(models.Model):
 
     slug = models.SlugField(_("Slug"), blank=True)
 
-    # @property
-    # def slug(self):
-    #     return slugify(self.organisation.name + "-" + self.name)
-
     @property
     def get_instagram_posts(self):
         return self.posts.filter(platform="in")
@@ -48,6 +44,18 @@ class Campaign(models.Model):
     @property
     def get_twitter_posts(self):
         return self.posts.filter(platform="tw")
+
+    @property
+    def get_instagram_stories(self):
+        return self.stories.filter(platform="in")
+
+    @property
+    def get_facebook_stories(self):
+        return self.stories.filter(platform="fb")
+
+    @property
+    def get_twitter_stories(self):
+        return self.stories.filter(platform="tw")
 
     def __str__(self):
         return self.name
@@ -86,11 +94,23 @@ class Campaign(models.Model):
     live_tw_posts = models.IntegerField(_("live twitter posts"), default=0)
     live_tw_stories = models.IntegerField(_("live twitter stories"), default=0)
 
-    stories_google_photos_album_url = models.URLField(
-        _("Stories Album URL"), max_length=500, default="", blank=True)
+    in_stories_google_photos_album_url = models.URLField(
+        _("Instagram Stories Album URL"), max_length=500, default="example.com", blank=True)
 
-    stories_fetch_ctrl = models.BooleanField(
-        _("Stories fetched?"), default=False)
+    in_stories_fetch_ctrl = models.BooleanField(
+        _("Instagram Stories fetched?"), default=False)
+
+    fb_stories_google_photos_album_url = models.URLField(
+        _("Facebook Stories Album URL"), max_length=500, default="example.com", blank=True)
+
+    fb_stories_fetch_ctrl = models.BooleanField(
+        _("Facebook Stories fetched?"), default=False)
+
+    tw_stories_google_photos_album_url = models.URLField(
+        _("Twitter Stories Album URL"), max_length=500, default="example.com", blank=True)
+
+    tw_stories_fetch_ctrl = models.BooleanField(
+        _("Twitter Stories fetched?"), default=False)
 
     # Campaign Report
     num_content_pieces = models.IntegerField(
