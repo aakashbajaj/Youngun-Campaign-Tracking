@@ -33,10 +33,6 @@ class Campaign(models.Model):
 
     slug = models.SlugField(_("Slug"), blank=True)
 
-    # @property
-    # def slug(self):
-    #     return slugify(self.organisation.name + "-" + self.name)
-
     @property
     def get_instagram_posts(self):
         return self.posts.filter(platform="in")

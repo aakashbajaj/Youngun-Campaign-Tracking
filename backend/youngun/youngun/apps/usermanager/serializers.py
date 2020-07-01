@@ -1,13 +1,7 @@
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 
-from .models import Organisation, Brand, Profile
-
-
-class OrganisationSerializer(ModelSerializer):
-    class Meta:
-        model = Organisation
-        fields = ['name']
+from .models import Brand, Profile
 
 
 class BrandSerializer(ModelSerializer):
