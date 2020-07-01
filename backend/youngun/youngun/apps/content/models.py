@@ -109,3 +109,51 @@ class TwitterPost(Post):
         proxy = True
 
     objects = TwitterPostManager()
+
+
+class InstagramStoryManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(platform=Platform.INSTAGRAM)
+
+
+class FacebookStoryManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(platform=Platform.FACEBOOK)
+
+
+class TwitterStoryManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(platform=Platform.TWITTER)
+
+
+class InstagramStory(Story):
+    def save(self, *args, **kwargs):
+        self.platform = Platform.INSTAGRAM
+        return super(InstagramStory, self).save(*args, **kwargs)
+
+    class Meta:
+        proxy = True
+
+    objects = InstagramStoryManager()
+
+
+class FacebookStory(Story):
+    def save(self, *args, **kwargs):
+        self.platform = Platform.FACEBOOK
+        return super(FacebookStory, self).save(*args, **kwargs)
+
+    class Meta:
+        proxy = True
+
+    objects = FacebookStoryManager()
+
+
+class TwitterStory(Story):
+    def save(self, *args, **kwargs):
+        self.platform = Platform.TWITTER
+        return super(TwitterStory, self).save(*args, **kwargs)
+
+    class Meta:
+        proxy = True
+
+    objects = TwitterStoryManager()
