@@ -82,8 +82,14 @@ class Campaign(models.Model):
     live_tw_posts = models.IntegerField(_("live twitter posts"), default=0)
     live_tw_stories = models.IntegerField(_("live twitter stories"), default=0)
 
-    stories_google_photos_album_url = models.URLField(
-        _("Stories Album URL"), max_length=500, default="", blank=True)
+    in_stories_google_photos_album_url = models.URLField(
+        _("Instagram Stories Album URL"), max_length=500, default="example.com", blank=True)
+
+    fb_stories_google_photos_album_url = models.URLField(
+        _("Facebook Stories Album URL"), max_length=500, default="example.com", blank=True)
+
+    tw_stories_google_photos_album_url = models.URLField(
+        _("Twitter Stories Album URL"), max_length=500, default="example.com", blank=True)
 
     stories_fetch_ctrl = models.BooleanField(
         _("Stories fetched?"), default=False)
