@@ -31,6 +31,8 @@ class Post(models.Model):
     date = models.DateField(_("posted date"), auto_now_add=True)
 
     embed_code = models.TextField(_("embed code"), null=True, blank=True)
+    alt_google_photo_url = models.URLField(
+        _("Alternate Google Photo URL"), max_length=400, null=True, blank=True, default="example.com")
     visibility = models.CharField(
         _("post visibility"), choices=PostVisibility.choices, max_length=50, default='public')
 
@@ -45,7 +47,8 @@ class Post(models.Model):
 
 
 class Story(models.Model):
-    url = models.URLField(_("Story Snapshot URL"), max_length=200, default="")
+    url = models.URLField(_("Story Snapshot URL"),
+                          max_length=200, default="example.com")
     campaign = models.ForeignKey(Campaign, verbose_name=_(
         "campaign"), related_name="stories", on_delete=models.CASCADE)
     platform = models.CharField(
