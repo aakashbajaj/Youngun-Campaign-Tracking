@@ -1,7 +1,19 @@
 from django.contrib import admin
 
 from .models import Campaign, LiveCampaign, CampaignReport
+from youngun.apps.usermanager.models import Profile
 # Register your models here.
+
+
+class ProfileInline(admin.StackedInline):
+    model = Profile.campaigns.through
+    extra = 0
+    max_num = 4
+
+    def get_queryset(self, request):
+        qs = super(ProfileInline, self).get_queryset(request)
+        return qs.filter(profile__user__is_staff=True)
+        # return Profile.campaigns.through.all()
 
 
 @admin.register(Campaign)
@@ -16,6 +28,21 @@ class CampaignAdmin(admin.ModelAdmin):
         # 'posts',
         # 'instagram_posts'
     )
+
+    inlines = [
+        ProfileInline,
+    ]
+
+    fields = [
+        'name',
+        'slug',
+        'brand',
+        'hashtag',
+        'status',
+        'start_date',
+        'end_date',
+        'slide_url',
+    ]
 
     list_filter = ['brand', 'status']
 
