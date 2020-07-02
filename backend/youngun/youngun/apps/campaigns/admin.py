@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from .models import Campaign, LiveCampaign, CampaignReport
 from youngun.apps.usermanager.models import Profile
+from .forms import ImportPostForm
 # Register your models here.
 
 
@@ -18,6 +19,7 @@ class ProfileInline(admin.StackedInline):
 
 @admin.register(Campaign)
 class CampaignAdmin(admin.ModelAdmin):
+
     list_display = (
         'name',
         'brand',
@@ -49,6 +51,7 @@ class CampaignAdmin(admin.ModelAdmin):
 
 @admin.register(LiveCampaign)
 class LiveCampaignAdmin(admin.ModelAdmin):
+    form = ImportPostForm
     list_display = (
         'name',
         'brand',
@@ -70,6 +73,28 @@ class LiveCampaignAdmin(admin.ModelAdmin):
         'live_tw_posts',
         'live_tw_stories',
     )
+
+    # fields = [
+    #     'name',
+    #     'brand',
+    #     'status',
+    #     'particaipating_profiles',
+    #     'unique_content_pieces',
+    #     'approved_content_pieces',
+    #     'last_updated',
+    #     'fb_posts',
+    #     'fb_stories',
+    #     'in_posts',
+    #     'in_stories',
+    #     'tw_posts',
+    #     'tw_stories',
+    #     'live_fb_posts',
+    #     'live_fb_stories',
+    #     'live_in_posts',
+    #     'live_in_stories',
+    #     'live_tw_posts',
+    #     'live_tw_stories',
+    # ]
 
     list_filter = ['brand', 'status']
 

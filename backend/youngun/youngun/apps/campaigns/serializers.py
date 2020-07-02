@@ -26,7 +26,7 @@ class LiveCampaignMetricsSerializer(ModelSerializer):
         fields = [
             'name', 'brand', 'hashtag', 'status',
             'start_date', 'end_date',
-            'slide_url', 'live_google_sheet', 'slug', 'stories_google_photos_album_url',
+            'slide_url', 'live_google_sheet', 'slug',
             'particaipating_profiles', 'unique_content_pieces', 'approved_content_pieces', 'remaining_content_pieces',
             'last_updated',
             'fb_posts', 'fb_stories',
@@ -58,5 +58,4 @@ class LiveCampaignFeedSerilaizer(ModelSerializer):
             'facebook',
             'twitter',
             'stories',
-            'stories_google_photos_album_url'
         ]
