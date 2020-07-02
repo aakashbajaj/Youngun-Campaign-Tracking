@@ -281,6 +281,7 @@ export default class GlobalState extends Component {
       liveCampaignFeed: {},
       campaignReportData: {},
       currentCampaignInView: null,
+      invited_profiles: {},
     };
 
     //delete token from LS

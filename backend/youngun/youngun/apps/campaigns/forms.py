@@ -38,26 +38,40 @@ class ImportPostForm(forms.ModelForm):
         print(self.cleaned_data)
         file_csv = self.cleaned_data["import_posts_csv"]
 
+        cnt = 0
+
         if not file_csv is None:
 
             fld = file_csv.read()
-            print(file_csv.read().decode("utf-8"))
             parsed_fl = fld.decode("utf-8")
             posts_list = parsed_fl.split("\n")
             posts_list = [x for x in posts_list if x]
             print(posts_list)
 
             for post in posts_list:
-                print(post)
                 p_obj, created = Post.objects.get_or_create(
                     campaign=self.instance, url=post)
+                if created:
+                    cnt = cnt + 1
 
-                p_obj.platform = "in"
+                if "facebook.com" in post:
+                    p_obj.platform = "fb"
+                    if "/video/" in post:
+                        p_obj.post_type = "video"
+                    else:
+                        p_obj.post_type = "post"
+                elif "instagram.com" in post:
+                    p_obj.platform = "in"
+                    p_obj.embed_code = ""
+                elif "twitter.com" in post:
+                    p_obj.platform = "tw"
+                    p_obj.embed_code = ""
 
-                # p_obj.campaign = self
-                # p_obj.save()
+                p_obj.save()
 
             if commit:
                 m.save()
 
             return m
+
+        print("%d Posts Added" % cnt)
