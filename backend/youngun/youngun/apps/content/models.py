@@ -85,6 +85,7 @@ class InstagramPost(Post):
 
     class Meta:
         proxy = True
+        verbose_name_plural = "Instagram Posts"
 
     objects = InstagramPostManager()
 
@@ -96,6 +97,7 @@ class FacebookPost(Post):
 
     class Meta:
         proxy = True
+        verbose_name_plural = "Facebook Posts"
 
     objects = FacebookPostManager()
 
@@ -107,6 +109,7 @@ class TwitterPost(Post):
 
     class Meta:
         proxy = True
+        verbose_name_plural = "Twitter Posts"
 
     objects = TwitterPostManager()
 
@@ -133,6 +136,7 @@ class InstagramStory(Story):
 
     class Meta:
         proxy = True
+        verbose_name_plural = "Instagram Stories"
 
     objects = InstagramStoryManager()
 
@@ -144,6 +148,7 @@ class FacebookStory(Story):
 
     class Meta:
         proxy = True
+        verbose_name_plural = "Facebook Stories"
 
     objects = FacebookStoryManager()
 
@@ -155,5 +160,6 @@ class TwitterStory(Story):
 
     class Meta:
         proxy = True
+        verbose_name_plural = "Twitter Stories"
 
     objects = TwitterStoryManager()

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import InstagramPost, FacebookPost, TwitterPost, Post, Story
+from .models import InstagramPost, FacebookPost, TwitterPost, Post, Story, InstagramStory, FacebookStory, TwitterStory
 from django.utils.translation import gettext_lazy as _
 
 
@@ -63,6 +63,36 @@ class TwitterPostAdmin(admin.ModelAdmin):
     exclude = ('platform', 'post_type')
     list_display = ('url', 'campaign', 'date', 'likes', 'comments',
                     'post_shares', 'post_saves', 'post_reach')
+
+    list_filter = [
+        ('campaign__name', custom_titled_filter("Campaign")),
+    ]
+
+
+@admin.register(InstagramStory)
+class InstagramStoryAdmin(admin.ModelAdmin):
+    exclude = ('platform', )
+    list_display = ('url', 'campaign', 'date')
+
+    list_filter = [
+        ('campaign__name', custom_titled_filter("Campaign")),
+    ]
+
+
+@admin.register(FacebookStory)
+class FacebookStoryAdmin(admin.ModelAdmin):
+    exclude = ('platform', )
+    list_display = ('url', 'campaign', 'date')
+
+    list_filter = [
+        ('campaign__name', custom_titled_filter("Campaign")),
+    ]
+
+
+@admin.register(TwitterStory)
+class TwitterStoryAdmin(admin.ModelAdmin):
+    exclude = ('platform', )
+    list_display = ('url', 'campaign', 'date')
 
     list_filter = [
         ('campaign__name', custom_titled_filter("Campaign")),

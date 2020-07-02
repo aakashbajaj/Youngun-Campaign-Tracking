@@ -1,6 +1,5 @@
 from django.db import models
 
-from django.template.defaultfilters import slugify
 from django.utils.translation import gettext as _
 
 from youngun.apps.usermanager.models import Brand
@@ -61,7 +60,7 @@ class Campaign(models.Model):
         return self.name
 
     class Meta:
-        verbose_name_plural = "All Campaigns"
+        verbose_name_plural = "Admin - Campaign"
 
     # Live Metrics
     particaipating_profiles = models.IntegerField(
@@ -136,8 +135,10 @@ class Campaign(models.Model):
 class LiveCampaign(Campaign):
     class Meta:
         proxy = True
+        verbose_name_plural = "Campaign Live Details"
 
 
 class CampaignReport(Campaign):
     class Meta:
         proxy = True
+        verbose_name_plural = "Campaign Report Data"

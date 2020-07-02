@@ -48,6 +48,12 @@ class CampaignAdmin(admin.ModelAdmin):
 
     list_filter = ['brand', 'status']
 
+    def get_queryset(self, request):
+        qs = super(CampaignAdmin, self).get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(profiles=request.user.profile)
+
 
 @admin.register(LiveCampaign)
 class LiveCampaignAdmin(admin.ModelAdmin):
