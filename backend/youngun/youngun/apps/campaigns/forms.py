@@ -2,6 +2,7 @@ import csv
 
 from django import forms
 from django.contrib import messages
+from django.utils.html import format_html
 
 from .models import Campaign
 from youngun.apps.content.models import Post
@@ -9,12 +10,26 @@ from youngun.apps.content.models import Post
 
 class ImportPostForm(forms.ModelForm):
     import_posts_csv = forms.FileField(allow_empty_file=True, required=False)
+    # link_to_in_posts = forms.URLField(
+    #     label="Instagram Posts", max_length=400, required=False)
+
+    # def __init__(self, *args, **kwargs):
+    #     super(ImportPostForm, self).__init__(*args, **kwargs)
+    #     obj = kwargs["instance"]
+    #     link = "/admin/content/instagrampost/?campaign__name=" + obj.name
+    #     p_name = format_html('<a href="{}">{}</a>', link, obj.name)
+    #     self.fields['link_to_in_posts'].initial = link
+    #     print(kwargs)
+    #     print(type(kwargs))
+    #     print(kwargs.keys())
+    #     print(kwargs["instance"].brand)
 
     class Meta:
         model = Campaign
         fields = [
             'name',
             'brand',
+            # 'link_to_in_posts',
             'status',
             'import_posts_csv',
             'particaipating_profiles',
@@ -32,6 +47,10 @@ class ImportPostForm(forms.ModelForm):
             'live_tw_posts',
             'live_tw_stories',
         ]
+
+    def gen_link_to_in_posts(self, obj):
+        link = "/admin/content/instagrampost/?campaign__name=" + obj.name
+        return format_html('<a href="{}">{}</a>', link, obj.name + "Posts")
 
     def save(self, commit=True, *args, **kwargs):
         m = super(ImportPostForm, self).save(commit=False)

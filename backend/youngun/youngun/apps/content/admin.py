@@ -1,11 +1,14 @@
 from django.contrib import admin
-from .models import InstagramPost, FacebookPost, TwitterPost, Post, Story, InstagramStory, FacebookStory, TwitterStory
+
 from django.utils.translation import gettext_lazy as _
+from django.urls import reverse
+from django.utils.html import format_html
 
-
+from .models import InstagramPost, FacebookPost, TwitterPost, Post, Story, InstagramStory, FacebookStory, TwitterStory
 # class CampaignFilter(admin.SimpleListFilter):
 #     title = _("Campiagn")
 #     parameter_name = "campaign__name"
+
 
 def custom_titled_filter(title):
     class Wrapper(admin.FieldListFilter):
@@ -39,12 +42,24 @@ class PostAdmin(admin.ModelAdmin):
 @admin.register(InstagramPost)
 class InstagramPostAdmin(admin.ModelAdmin):
     exclude = ('platform', 'post_type')
-    list_display = ('url', 'campaign', 'date', 'likes', 'comments',
+    list_display = ('url', 'link_to_camp', 'date', 'likes', 'comments',
                     'post_shares', 'post_saves', 'post_reach')
+
+    readonly_fields = ('date', 'link_to_camp')
+    fields = ('url', 'link_to_camp', 'date', 'likes', 'comments',
+              'post_shares', 'post_saves', 'post_reach', 'embed_code', 'visibility', 'alt_google_photo_url')
+    # list_display_links = ('campaign', )
 
     list_filter = [
         ('campaign__name', custom_titled_filter("Campaign")),
     ]
+
+    def link_to_camp(self, obj):
+        link = reverse("admin:campaigns_campaign_change",
+                       args=[obj.campaign.id])
+        return format_html('<a href="{}">{}</a>', link, obj.campaign.name)
+
+    link_to_camp.short_description = "Campaign"
 
 
 @admin.register(FacebookPost)

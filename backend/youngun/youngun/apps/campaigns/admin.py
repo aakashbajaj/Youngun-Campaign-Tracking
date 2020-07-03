@@ -1,5 +1,7 @@
 from django.contrib import admin
 
+from django.utils.html import format_html
+
 from .models import Campaign, LiveCampaign, CampaignReport
 from youngun.apps.usermanager.models import Profile
 from .forms import ImportPostForm
@@ -62,21 +64,21 @@ class LiveCampaignAdmin(admin.ModelAdmin):
         'name',
         'brand',
         'status',
+        'post_lists',
         'particaipating_profiles',
         'unique_content_pieces',
         'approved_content_pieces',
-        'last_updated',
-        'fb_posts',
-        'fb_stories',
         'in_posts',
-        'in_stories',
-        'tw_posts',
-        'tw_stories',
-        'live_fb_posts',
-        'live_fb_stories',
         'live_in_posts',
+        'in_stories',
         'live_in_stories',
+        'fb_posts',
+        'live_fb_posts',
+        'fb_stories',
+        'live_fb_stories',
+        'tw_posts',
         'live_tw_posts',
+        'tw_stories',
         'live_tw_stories',
     )
 
@@ -103,6 +105,15 @@ class LiveCampaignAdmin(admin.ModelAdmin):
     # ]
 
     list_filter = ['brand', 'status']
+
+    def post_lists(self, obj):
+        in_link = "/admin/content/instagrampost/?campaign__name=" + \
+            obj.name.replace(" ", "+")
+        fb_link = "/admin/content/facebookpost/?campaign__name=" + \
+            obj.name.replace(" ", "+")
+        tw_link = "/admin/content/twitterpost/?campaign__name=" + \
+            obj.name.replace(" ", "+")
+        return format_html('<a href="{}">{}</a>\n<a href="{}">{}</a>\n<a href="{}">{}</a>', in_link, "Instagram", fb_link, "Facebook",  tw_link, "Twitter")
 
 
 @admin.register(CampaignReport)

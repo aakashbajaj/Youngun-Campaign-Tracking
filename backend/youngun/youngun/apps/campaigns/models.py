@@ -17,18 +17,18 @@ class Campaign(models.Model):
         "Brand"), related_name="campaigns", on_delete=models.CASCADE, null=True, blank=True)
     hashtag = models.CharField(_("Hashtag"), max_length=100)
     status = models.CharField(
-        _("Campaign Status"), choices=Status.choices, max_length=50, default=Status.ACTIVE)
+        _("Status"), choices=Status.choices, max_length=50, default=Status.ACTIVE)
 
     start_date = models.DateField(_("Campaign Start"), blank=True, null=True)
     end_date = models.DateField(_("Campaign End"), blank=True, null=True)
 
     slide_url = models.URLField(
-        _("Slide URL"), max_length=200, default="example.com")
+        _("Slide URL"), max_length=200, default="http://example.com")
 
     live_google_sheet = models.URLField(
-        _("Live Google Sheet"), max_length=200, default="example.com")
+        _("Live Google Sheet"), max_length=200, default="http://example.com")
     reports_google_sheet = models.URLField(
-        _("Reports Google Sheet"), max_length=200, default="example.com")
+        _("Reports Google Sheet"), max_length=200, default="http://example.com")
 
     slug = models.SlugField(_("Slug"), blank=True)
 
@@ -64,7 +64,7 @@ class Campaign(models.Model):
 
     # Live Metrics
     particaipating_profiles = models.IntegerField(
-        _("particaipating profiles"), default=0)
+        _("participating profiles"), default=0)
     unique_content_pieces = models.IntegerField(
         _("unique content pieces"), default=0)
 
@@ -94,19 +94,19 @@ class Campaign(models.Model):
     live_tw_stories = models.IntegerField(_("live twitter stories"), default=0)
 
     in_stories_google_photos_album_url = models.URLField(
-        _("Instagram Stories Album URL"), max_length=500, default="example.com", blank=True)
+        _("Instagram Stories Album URL"), max_length=500, default="http://example.com", blank=True)
 
     in_stories_fetch_ctrl = models.BooleanField(
         _("Instagram Stories fetched?"), default=False)
 
     fb_stories_google_photos_album_url = models.URLField(
-        _("Facebook Stories Album URL"), max_length=500, default="example.com", blank=True)
+        _("Facebook Stories Album URL"), max_length=500, default="http://example.com", blank=True)
 
     fb_stories_fetch_ctrl = models.BooleanField(
         _("Facebook Stories fetched?"), default=False)
 
     tw_stories_google_photos_album_url = models.URLField(
-        _("Twitter Stories Album URL"), max_length=500, default="example.com", blank=True)
+        _("Twitter Stories Album URL"), max_length=500, default="http://example.com", blank=True)
 
     tw_stories_fetch_ctrl = models.BooleanField(
         _("Twitter Stories fetched?"), default=False)
