@@ -46,9 +46,12 @@ class InstagramPostAdmin(admin.ModelAdmin):
                     'post_shares', 'post_saves', 'post_reach')
 
     readonly_fields = ('date', 'link_to_camp')
-    fields = ('url', 'link_to_camp', 'date', 'likes', 'comments',
+    fields = ('url', 'campaign', 'link_to_camp', 'date', 'likes', 'comments',
               'post_shares', 'post_saves', 'post_reach', 'embed_code', 'visibility', 'alt_google_photo_url')
     # list_display_links = ('campaign', )
+
+    # add_fields = ('url', 'campaign', 'date', 'likes', 'comments',
+    #               'post_shares', 'post_saves', 'post_reach', 'embed_code', 'visibility', 'alt_google_photo_url')
 
     list_filter = [
         ('campaign__name', custom_titled_filter("Campaign")),
@@ -57,9 +60,15 @@ class InstagramPostAdmin(admin.ModelAdmin):
     def link_to_camp(self, obj):
         link = reverse("admin:campaigns_campaign_change",
                        args=[obj.campaign.id])
-        return format_html('<a href="{}">{}</a>', link, obj.campaign.name)
 
-    link_to_camp.short_description = "Campaign"
+        link_live = reverse("admin:campaigns_livecampaign_change",
+                            args=[obj.campaign.id])
+
+        link_report = reverse("admin:campaigns_campaignreport_change",
+                              args=[obj.campaign.id])
+        return format_html('<a href="{}">{}</a><br/><br/><a href="{}">{}</a><br/><br/><a href="{}">{}</a><br/>', link, "Campaign Admin", link_live, "Live Details", link_report, "Report Data")
+
+    link_to_camp.short_description = "Campaign URLs"
 
 
 @admin.register(FacebookPost)
