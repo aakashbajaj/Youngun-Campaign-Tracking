@@ -107,13 +107,15 @@ class LiveCampaignAdmin(admin.ModelAdmin):
     list_filter = ['brand', 'status']
 
     def post_lists(self, obj):
+        link = "/admin/content/post/?campaign__name=" + \
+            obj.name.replace(" ", "+")
         in_link = "/admin/content/instagrampost/?campaign__name=" + \
             obj.name.replace(" ", "+")
         fb_link = "/admin/content/facebookpost/?campaign__name=" + \
             obj.name.replace(" ", "+")
         tw_link = "/admin/content/twitterpost/?campaign__name=" + \
             obj.name.replace(" ", "+")
-        return format_html('<a href="{}">{}</a>\n<a href="{}">{}</a>\n<a href="{}">{}</a>', in_link, "Instagram", fb_link, "Facebook",  tw_link, "Twitter")
+        return format_html('<a href="{}">{}</a>\n<a href="{}">{}</a>\n<a href="{}">{}</a>\n<a href="{}">{}</a>', link, "All Posts", in_link, "Instagram", fb_link, "Facebook",  tw_link, "Twitter")
 
 
 @admin.register(CampaignReport)
@@ -138,3 +140,6 @@ class CampaignReportAdmin(admin.ModelAdmin):
     )
 
     list_filter = ['brand', 'status']
+
+
+admin.site.header = "Youngun Campaign tracker Admin"

@@ -24,3 +24,6 @@ urlpatterns = [
     path("api/", include('youngun.apps.usermanager.urls', namespace="profile")),
     path('', include('drfpasswordless.urls')),
 ]
+
+admin.site.site_header = "Youngun Campaign Tracker Admin"
+admin.site.site_url = "https://youngun.in"
