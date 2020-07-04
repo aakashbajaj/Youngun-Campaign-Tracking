@@ -5,6 +5,8 @@ from django.urls import reverse
 from django.utils.html import format_html
 
 from .models import InstagramPost, FacebookPost, TwitterPost, Post, Story, InstagramStory, FacebookStory, TwitterStory
+from youngun.apps.campaigns.models import Campaign
+
 # class CampaignFilter(admin.SimpleListFilter):
 #     title = _("Campiagn")
 #     parameter_name = "campaign__name"
@@ -69,6 +71,12 @@ class InstagramPostAdmin(admin.ModelAdmin):
         return format_html('<a href="{}">{}</a><br/><br/><a href="{}">{}</a><br/><br/><a href="{}">{}</a><br/>', link, "Campaign Admin", link_live, "Live Details", link_report, "Report Data")
 
     link_to_camp.short_description = "Campaign URLs"
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "campaign":
+            kwargs["queryset"] = Campaign.objects.filter(
+                staff_profiles=request.user.usermanager_staffprofile)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 @admin.register(FacebookPost)
