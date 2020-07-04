@@ -5,7 +5,7 @@ from youngun.apps.usermanager.models import Profile
 from .models import User
 
 
-@receiver(post_save, sender=User)
-def create_related_profile(sender, instance, created, *args, **kwargs):
-    if instance and created:
-        instance.profile = Profile.objects.create(user=instance)
+# @receiver(post_save, sender=User)
+# def create_related_profile(sender, instance, created, *args, **kwargs):
+#     if instance and created:
+#         instance.profile = Profile.objects.create(user=instance)
