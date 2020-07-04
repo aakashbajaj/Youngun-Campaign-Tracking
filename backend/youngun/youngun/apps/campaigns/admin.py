@@ -3,20 +3,48 @@ from django.contrib import admin
 from django.utils.html import format_html
 
 from .models import Campaign, LiveCampaign, CampaignReport
-from youngun.apps.usermanager.models import Profile
+from youngun.apps.usermanager.models import StaffProfile, ClientProfile
 from .forms import ImportPostForm
 # Register your models here.
 
 
-class ProfileInline(admin.StackedInline):
-    model = Profile.campaigns.through
+# class ProfileInline(admin.StackedInline):
+#     model = Profile.campaigns.through
+#     extra = 0
+#     max_num = 4
+
+#     def get_queryset(self, request):
+#         qs = super(ProfileInline, self).get_queryset(request)
+#         return qs.filter(profile__user__is_staff=True)
+#         # return Profile.campaigns.through.all()
+
+
+class StaffProfileInline(admin.StackedInline):
+    model = StaffProfile.campaigns.through
     extra = 0
     max_num = 4
 
-    def get_queryset(self, request):
-        qs = super(ProfileInline, self).get_queryset(request)
-        return qs.filter(profile__user__is_staff=True)
-        # return Profile.campaigns.through.all()
+    verbose_name = "Staff Profile"
+    verbose_name_plural = "Staff Profiles"
+
+    # def get_queryset(self, request):
+    #     qs = super(StaffProfileInline, self).get_queryset(request)
+    #     return qs.filter(profile__user__is_staff=True)
+    # return Profile.campaigns.through.all()
+
+
+class ClientProfileInline(admin.StackedInline):
+    model = ClientProfile.campaigns.through
+    extra = 0
+    max_num = 4
+
+    verbose_name = "Client Profile"
+    verbose_name_plural = "Client Profiles"
+
+    # def get_queryset(self, request):
+    #     qs = super(ProfileInline, self).get_queryset(request)
+    #     return qs.filter(profile__user__is_staff=True)
+    # return Profile.campaigns.through.all()
 
 
 @admin.register(Campaign)
@@ -34,7 +62,8 @@ class CampaignAdmin(admin.ModelAdmin):
     )
 
     inlines = [
-        ProfileInline,
+        StaffProfileInline,
+        ClientProfileInline
     ]
 
     fields = [
@@ -54,7 +83,7 @@ class CampaignAdmin(admin.ModelAdmin):
         qs = super(CampaignAdmin, self).get_queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(profiles=request.user.profile)
+        return qs.filter(staff_profiles=request.user.usermanager_staffprofile)
 
 
 @admin.register(LiveCampaign)
