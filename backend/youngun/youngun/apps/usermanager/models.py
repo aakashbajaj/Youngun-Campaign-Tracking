@@ -13,18 +13,14 @@ class Brand(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(
-        "authentication.User", verbose_name=_(""), on_delete=models.CASCADE, related_name="profile")
+        "authentication.User", verbose_name=_(""), on_delete=models.CASCADE, related_name="%(app_label)s_%(class)s")
     first_name = models.CharField(
         _("First Name"), max_length=255, blank=True, default="")
     last_name = models.CharField(
         _("Last Name"), max_length=255, blank=True, default="")
 
-    campaigns = models.ManyToManyField(
-        "campaigns.Campaign", verbose_name=_("campaigns"), related_name="profiles", blank=True)
-
-    is_main_user = models.BooleanField(_("Main User"), default=False)
-    added_by = models.ForeignKey("self", verbose_name=_(
-        "Added By"), on_delete=models.DO_NOTHING, related_name='invited_users', blank=True, default=None, null=True)
+    class Meta:
+        abstract = True
 
     def __str__(self):
         return self.user.email
@@ -38,3 +34,17 @@ class Profile(models.Model):
     @property
     def full_name(self):
         return self.get_full_name
+
+
+class ClientProfile(Profile):
+    campaigns = models.ManyToManyField(
+        "campaigns.Campaign", verbose_name=_("campaigns"), related_name="client_profiles", blank=True)
+
+    is_main_user = models.BooleanField(_("Main User"), default=False)
+    added_by = models.ForeignKey("self", verbose_name=_(
+        "Added By"), on_delete=models.DO_NOTHING, related_name='invited_users', blank=True, default=None, null=True)
+
+
+class StaffProfile(Profile):
+    campaigns = models.ManyToManyField(
+        "campaigns.Campaign", verbose_name=_("campaigns"), related_name="staff_profiles", blank=True)
