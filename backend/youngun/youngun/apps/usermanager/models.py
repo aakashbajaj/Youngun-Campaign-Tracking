@@ -55,3 +55,7 @@ class StaffProfile(Profile):
     @property
     def is_main_user(self):
         return True
+
+    @property
+    def invited_by_user(self):
+        return self.added_by.user
