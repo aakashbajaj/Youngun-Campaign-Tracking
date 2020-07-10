@@ -48,3 +48,10 @@ class ClientProfile(Profile):
 class StaffProfile(Profile):
     campaigns = models.ManyToManyField(
         "campaigns.Campaign", verbose_name=_("campaigns"), related_name="staff_profiles", blank=True)
+
+    added_by = models.ForeignKey("self", verbose_name=_(
+        "Added By"), on_delete=models.DO_NOTHING, related_name='invited_users', blank=True, default=None, null=True)
+
+    @property
+    def is_main_user(self):
+        return True

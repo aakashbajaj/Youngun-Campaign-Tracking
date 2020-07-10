@@ -8,6 +8,7 @@ from .renderers import ProfileJSONRenderer, InvitedProfileJSONRenderer
 
 from youngun.apps.campaigns.models import Campaign
 from youngun.apps.authentication.models import User
+from .models import ClientProfile
 
 # Create your views here.
 
@@ -64,10 +65,14 @@ class InviteSubUsersAPIView(CreateAPIView):
             return Response({"response": "Not Allowed. Invalid Campaign"}, status.HTTP_401_UNAUTHORIZED)
 
         invited_user, _ = User.objects.get_or_create(email=email)
-        invited_user.profile.added_by = adder_prof_obj
-        invited_user.profile.campaigns.add(camp_obj)
+        invited_profile, _ = ClientProfile.objects.get_or_create(
+            user=invited_user)
+        if not hasattr(request.user, "usermanager_staffprofile"):
+            invited_profile.added_by = adder_prof_obj
 
-        invited_user.profile.save()
+        invited_profile.campaigns.add(camp_obj)
+
+        invited_profile.save()
 
         invited_profiles = {}
         for camp in request.user.profile.campaigns.all():

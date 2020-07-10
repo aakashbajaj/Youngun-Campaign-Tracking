@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 
-from .models import Brand, Profile
+from .models import Brand, Profile, ClientProfile
 
 
 class BrandSerializer(ModelSerializer):
@@ -25,5 +25,5 @@ class InvitedUserSerializer(ModelSerializer):
     mobile = serializers.CharField(source='user.mobile')
 
     class Meta:
-        model = Profile
+        model = ClientProfile
         fields = ['full_name', 'email', 'mobile']

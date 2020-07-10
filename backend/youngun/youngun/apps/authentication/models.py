@@ -74,3 +74,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     def _generate_token(self):
         token, _ = Token.objects.get_or_create(user=self)
         return token
+
+    @property
+    def profile(self):
+        if hasattr(self, "usermanager_staffprofile"):
+            return self.usermanager_staffprofile
+        elif hasattr(self, "usermanager_clientprofile"):
+            return self.usermanager_clientprofile
+        else:
+            return None
