@@ -28,7 +28,6 @@ class ImportPostForm(forms.ModelForm):
         model = Campaign
         fields = [
             'name',
-            'brand',
             # 'link_to_in_posts',
             'status',
             'import_posts_csv',

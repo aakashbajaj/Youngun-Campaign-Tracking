@@ -40,6 +40,9 @@ class ClientProfile(Profile):
     campaigns = models.ManyToManyField(
         "campaigns.Campaign", verbose_name=_("campaigns"), related_name="client_profiles", blank=True)
 
+    brand = models.ForeignKey(Brand, verbose_name=_(
+        "Brand"), related_name="client_profile", on_delete=models.CASCADE, null=True, blank=True)
+
     is_main_user = models.BooleanField(_("Main User"), default=False)
     added_by = models.ForeignKey("self", verbose_name=_(
         "Added By"), on_delete=models.DO_NOTHING, related_name='invited_users', blank=True, default=None, null=True)
@@ -48,6 +51,9 @@ class ClientProfile(Profile):
 class StaffProfile(Profile):
     campaigns = models.ManyToManyField(
         "campaigns.Campaign", verbose_name=_("campaigns"), related_name="staff_profiles", blank=True)
+
+    brand = models.ForeignKey(Brand, verbose_name=_(
+        "Brand"), related_name="staff_profile", on_delete=models.CASCADE, null=True, blank=True)
 
     added_by = models.ForeignKey("self", verbose_name=_(
         "Added By"), on_delete=models.DO_NOTHING, related_name='invited_users', blank=True, default=None, null=True)
