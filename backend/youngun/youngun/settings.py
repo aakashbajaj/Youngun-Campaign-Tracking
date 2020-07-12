@@ -52,6 +52,8 @@ INSTALLED_APPS = [
 
     'corsheaders',
 
+    'django_crontab',
+
     'django_extensions',
     'rest_framework',
     'rest_framework.authtoken',
@@ -62,6 +64,7 @@ INSTALLED_APPS = [
     'youngun.apps.campaigns',
     'youngun.apps.content',
     'youngun.apps.core',
+    'youngun.apps.cronjobs',
 ]
 
 REST_FRAMEWORK = {
@@ -80,6 +83,11 @@ PASSWORDLESS_AUTH = {
 }
 
 AUTH_USER_MODEL = 'authentication.User'
+
+CRONJOBS = [
+    ('*/2 * * * *', 'cronjobs.update_livecnt.update_campaign_livecnt'),
+
+]
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
