@@ -25,9 +25,9 @@ def custom_titled_filter(title):
 class StoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'campaign', 'platform', 'date')
 
-    # list_filter = [
-    #     ('campaign__name', custom_titled_filter("Campaign")),
-    # ]
+    list_filter = [
+        ('campaign__name', custom_titled_filter("Campaign")),
+    ]
 
 
 @admin.register(Post)
@@ -55,9 +55,9 @@ class InstagramPostAdmin(admin.ModelAdmin):
     # add_fields = ('url', 'campaign', 'date', 'likes', 'comments',
     #               'post_shares', 'post_saves', 'post_reach', 'embed_code', 'visibility', 'alt_google_photo_url')
 
-    # list_filter = [
-    #     ('campaign__name', custom_titled_filter("Campaign")),
-    # ]
+    list_filter = [
+        ('campaign__name', custom_titled_filter("Campaign")),
+    ]
 
     save_on_top = True
 
@@ -95,9 +95,9 @@ class FacebookPostAdmin(admin.ModelAdmin):
     # add_fields = ('url', 'campaign', 'date', 'likes', 'comments',
     #               'post_shares', 'post_saves', 'post_reach', 'embed_code', 'visibility', 'alt_google_photo_url')
 
-    # list_filter = [
-    #     ('campaign__name', custom_titled_filter("Campaign")),
-    # ]
+    list_filter = [
+        ('campaign__name', custom_titled_filter("Campaign")),
+    ]
 
     save_on_top = True
 
@@ -135,9 +135,9 @@ class TwitterPostAdmin(admin.ModelAdmin):
     # add_fields = ('url', 'campaign', 'date', 'likes', 'comments',
     #               'post_shares', 'post_saves', 'post_reach', 'embed_code', 'visibility', 'alt_google_photo_url')
 
-    # list_filter = [
-    #     ('campaign__name', custom_titled_filter("Campaign")),
-    # ]
+    list_filter = [
+        ('campaign__name', custom_titled_filter("Campaign")),
+    ]
 
     save_on_top = True
 
@@ -166,9 +166,9 @@ class InstagramStoryAdmin(admin.ModelAdmin):
     exclude = ('platform', )
     list_display = ('url', 'campaign', 'date')
 
-    # list_filter = [
-    #     ('campaign__name', custom_titled_filter("Campaign")),
-    # ]
+    list_filter = [
+        ('campaign__name', custom_titled_filter("Campaign")),
+    ]
 
     save_on_top = True
 
@@ -197,9 +197,9 @@ class FacebookStoryAdmin(admin.ModelAdmin):
     exclude = ('platform', )
     list_display = ('url', 'campaign', 'date')
 
-    # list_filter = [
-    #     ('campaign__name', custom_titled_filter("Campaign")),
-    # ]
+    list_filter = [
+        ('campaign__name', custom_titled_filter("Campaign")),
+    ]
 
     save_on_top = True
 
@@ -228,9 +228,9 @@ class TwitterStoryAdmin(admin.ModelAdmin):
     exclude = ('platform', )
     list_display = ('url', 'campaign', 'date')
 
-    # list_filter = [
-    #     ('campaign__name', custom_titled_filter("Campaign")),
-    # ]
+    list_filter = [
+        ('campaign__name', custom_titled_filter("Campaign")),
+    ]
 
     save_on_top = True
 

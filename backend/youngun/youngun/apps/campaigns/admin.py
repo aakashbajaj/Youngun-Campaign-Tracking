@@ -52,7 +52,7 @@ class CampaignAdmin(admin.ModelAdmin):
 
     list_display = (
         'name',
-        'brand',
+
         'hashtag',
         'status',
         'start_date',
@@ -69,7 +69,7 @@ class CampaignAdmin(admin.ModelAdmin):
     fields = [
         'name',
         'slug',
-        'brand',
+
         'hashtag',
         'status',
         'start_date',
@@ -77,7 +77,7 @@ class CampaignAdmin(admin.ModelAdmin):
         'slide_url',
     ]
 
-    list_filter = ['brand', 'status']
+    list_filter = ['status']
 
     def get_queryset(self, request):
         qs = super(CampaignAdmin, self).get_queryset(request)
@@ -91,7 +91,7 @@ class LiveCampaignAdmin(admin.ModelAdmin):
     form = ImportPostForm
     list_display = (
         'name',
-        'brand',
+
         'status',
         'post_lists',
         'particaipating_profiles',
@@ -113,7 +113,7 @@ class LiveCampaignAdmin(admin.ModelAdmin):
 
     # fields = [
     #     'name',
-    #     'brand',
+    #
     #     'status',
     #     'particaipating_profiles',
     #     'unique_content_pieces',
@@ -133,7 +133,7 @@ class LiveCampaignAdmin(admin.ModelAdmin):
     #     'live_tw_stories',
     # ]
 
-    list_filter = ['brand', 'status']
+    list_filter = ['status']
 
     def post_lists(self, obj):
         link = "/admin/content/post/?campaign__name=" + \
@@ -151,7 +151,7 @@ class LiveCampaignAdmin(admin.ModelAdmin):
 class CampaignReportAdmin(admin.ModelAdmin):
     list_display = (
         'name',
-        'brand',
+
         'status',
         'num_content_pieces',
         'num_posts',
@@ -168,7 +168,7 @@ class CampaignReportAdmin(admin.ModelAdmin):
         'total_campaign_reach',
     )
 
-    list_filter = ['brand', 'status']
+    list_filter = ['status']
 
 
 admin.site.header = "Youngun Campaign tracker Admin"

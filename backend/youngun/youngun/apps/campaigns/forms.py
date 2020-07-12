@@ -28,10 +28,15 @@ class ImportPostForm(forms.ModelForm):
         model = Campaign
         fields = [
             'name',
-            'brand',
             # 'link_to_in_posts',
             'status',
             'import_posts_csv',
+            'in_stories_google_photos_album_url',
+            'in_stories_fetch_ctrl',
+            'fb_stories_google_photos_album_url',
+            'fb_stories_fetch_ctrl',
+            'tw_stories_google_photos_album_url',
+            'tw_stories_fetch_ctrl',
             'particaipating_profiles',
             'unique_content_pieces',
             'approved_content_pieces',
@@ -88,9 +93,9 @@ class ImportPostForm(forms.ModelForm):
 
                 p_obj.save()
 
-            if commit:
-                m.save()
+        if commit:
+            m.save()
 
-            return m
+        return m
 
         print("%d Posts Added" % cnt)

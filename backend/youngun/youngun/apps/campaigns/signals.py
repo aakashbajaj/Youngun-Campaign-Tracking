@@ -16,6 +16,22 @@ def slugify_campaign_if_not_exists(sender, instance, *args, **kwargs):
         instance.slug = slug
 
 
+@receiver(pre_save, sender=Campaign)
+def update_live_post_story_cnt(sender, instance, *args, **kwargs):
+    print("signal start &&&&&&&&&&&&&")
+    if instance:
+        print("signal instance &&&&&&&&&&&&&")
+        print(instance)
+        instance.live_fb_posts = instance.get_facebook_posts.count()
+        instance.live_in_posts = instance.get_instagram_posts.count()
+        instance.live_tw_posts = instance.get_twitter_posts.count()
+
+        instance.live_fb_stories = instance.get_facebook_stories.count()
+        instance.live_in_stories = instance.get_instagram_stories.count()
+        instance.live_tw_stories = instance.get_twitter_stories.count()
+        print("signal complete &&&&&&&&&&&&&&&&&&")
+
+
 @receiver(post_save, sender=Campaign)
 def fetch_story_screenshots(sender, instance, *args, **kwargs):
     if instance:
