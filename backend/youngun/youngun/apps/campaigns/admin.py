@@ -52,7 +52,7 @@ class CampaignAdmin(admin.ModelAdmin):
 
     list_display = (
         'name',
-
+        'company_name',
         'hashtag',
         'status',
         'start_date',
@@ -69,7 +69,7 @@ class CampaignAdmin(admin.ModelAdmin):
     fields = [
         'name',
         'slug',
-
+        'company_name',
         'hashtag',
         'status',
         'start_date',
@@ -91,7 +91,7 @@ class LiveCampaignAdmin(admin.ModelAdmin):
     form = ImportPostForm
     list_display = (
         'name',
-
+        'company_name',
         'status',
         'post_lists',
         'particaipating_profiles',
@@ -151,7 +151,7 @@ class LiveCampaignAdmin(admin.ModelAdmin):
 class CampaignReportAdmin(admin.ModelAdmin):
     list_display = (
         'name',
-
+        'company_name',
         'status',
         'num_content_pieces',
         'num_posts',

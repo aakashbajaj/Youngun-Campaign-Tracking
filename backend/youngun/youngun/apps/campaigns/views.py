@@ -11,6 +11,27 @@ from .models import Campaign
 # Create your views here.
 
 
+class CreateCampaignAPIView(CreateAPIView):
+    permission_classes = (IsAuthenticated, )
+    # serializer_class = CreateCampaignSerializer
+
+    def post(self, request, *args, **kwargs):
+        try:
+            camp_name = request.data["campaign_name"]
+            company_name = request.data["company_name"]
+            start_date = request.data["start_date"]
+
+            hashtag = camp_name.replace(" ", "")
+
+            Campaign.objects.create(
+                name=camp_name, company_name=company_name, hashtag=hashtag)
+
+            return Response({"response": "Campaign Created"}, status=status.HTTP_201_CREATED)
+
+        except Exception:
+            return Response({"response": "Internal Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 class CampignListRetrieveAPIView(RetrieveAPIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = CampaignDataSerializer
