@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.shortcuts import render
 
 from rest_framework import status
@@ -19,12 +21,14 @@ class CreateCampaignAPIView(CreateAPIView):
         try:
             camp_name = request.data["campaign_name"]
             company_name = request.data["company_name"]
-            start_date = request.data["start_date"]
+            date_str = request.data["start_date"]
+
+            start_date = datetime.strptime(date_str, "%Y-%m-%d").date()
 
             hashtag = camp_name.replace(" ", "")
 
             Campaign.objects.create(
-                name=camp_name, company_name=company_name, hashtag=hashtag)
+                name=camp_name, company_name=company_name, hashtag=hashtag, start_date=start_date)
 
             return Response({"response": "Campaign Created"}, status=status.HTTP_201_CREATED)
 
