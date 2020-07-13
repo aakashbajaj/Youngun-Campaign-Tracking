@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.shortcuts import render
 
 from rest_framework import status
@@ -9,6 +11,29 @@ from .serializers import CampaignDataSerializer, LiveCampaignMetricsSerializer, 
 from .renderers import LiveCampaignMetricJSONRenderer, CampaignDataJSONRenderer
 from .models import Campaign
 # Create your views here.
+
+
+class CreateCampaignAPIView(CreateAPIView):
+    permission_classes = (IsAuthenticated, )
+    # serializer_class = CreateCampaignSerializer
+
+    def post(self, request, *args, **kwargs):
+        try:
+            camp_name = request.data["campaign_name"]
+            company_name = request.data["company_name"]
+            date_str = request.data["start_date"]
+
+            start_date = datetime.strptime(date_str, "%Y-%m-%d").date()
+
+            hashtag = camp_name.replace(" ", "")
+
+            Campaign.objects.create(
+                name=camp_name, company_name=company_name, hashtag=hashtag, start_date=start_date)
+
+            return Response({"response": "Campaign Created"}, status=status.HTTP_201_CREATED)
+
+        except Exception:
+            return Response({"response": "Internal Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class CampignListRetrieveAPIView(RetrieveAPIView):

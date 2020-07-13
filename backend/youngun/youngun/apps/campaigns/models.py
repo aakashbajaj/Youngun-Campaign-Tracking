@@ -14,6 +14,8 @@ class Status(models.TextChoices):
 class Campaign(models.Model):
     name = models.CharField(_("Name"), max_length=255)
     hashtag = models.CharField(_("Hashtag"), max_length=100)
+    company_name = models.CharField(
+        _("Company Name"), blank=True, null=True, max_length=200)
     status = models.CharField(
         _("Status"), choices=Status.choices, max_length=50, default=Status.ACTIVE)
 

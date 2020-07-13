@@ -7,24 +7,31 @@ from .models import LiveCampaign, Campaign
 
 
 class CampaignDataSerializer(ModelSerializer):
-    brand = BrandSerializer(read_only=True)
 
     class Meta:
         model = LiveCampaign
         fields = [
-            'name', 'brand', 'hashtag', 'status',
+            'name', 'comapny_name', 'hashtag', 'status',
             'start_date', 'end_date',
             'slide_url', 'live_google_sheet', 'slug',
         ]
 
 
+class CreateCampaignSerializer(ModelSerializer):
+
+    class Meta:
+        model = Campaign
+        fields = [
+            'name', 'company_name', 'start_date'
+        ]
+
+
 class LiveCampaignMetricsSerializer(ModelSerializer):
-    brand = BrandSerializer(read_only=True)
 
     class Meta:
         model = LiveCampaign
         fields = [
-            'name', 'brand', 'hashtag', 'status',
+            'name', 'comapny_name', 'hashtag', 'status',
             'start_date', 'end_date',
             'slide_url', 'live_google_sheet', 'slug',
             'particaipating_profiles',
@@ -41,7 +48,6 @@ class LiveCampaignMetricsSerializer(ModelSerializer):
 
 class LiveCampaignFeedSerilaizer(ModelSerializer):
     # posts = InstagramPostDisplaySerializer(many=True, read_only=True)
-    brand = BrandSerializer(read_only=True)
 
     instagram = InstagramPostDisplaySerializer(
         source='get_instagram_posts', many=True, read_only=True)
@@ -54,7 +60,7 @@ class LiveCampaignFeedSerilaizer(ModelSerializer):
     class Meta:
         model = Campaign
         fields = [
-            'name', 'brand', 'hashtag', 'status', 'slug',
+            'name', 'comapny_name', 'hashtag', 'status', 'slug',
             'instagram',
             'facebook',
             'twitter',
