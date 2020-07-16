@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'drfpasswordless',
+    'django_q',
 
     'youngun.apps.authentication',
     'youngun.apps.usermanager',
@@ -70,6 +71,11 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated', )
+}
+
+Q_CLUSTER = {
+    "name": "youngun",
+    "orm": "default",
 }
 
 PASSWORDLESS_AUTH = {
