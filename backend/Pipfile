@@ -16,6 +16,7 @@ django-extensions = "*"
 requests = "*"
 django-cors-headers = "*"
 pylint-django = "*"
+django-q = "*"
 
 [requires]
 python_version = "3.7"
