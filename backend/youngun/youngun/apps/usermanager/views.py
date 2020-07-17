@@ -2,6 +2,7 @@ from rest_framework import status
 from rest_framework.generics import RetrieveAPIView, CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from django.core.mail import send_mail
 
 from .serializers import ProfileSerializer, InvitedUserSerializer
 from .renderers import ProfileJSONRenderer, InvitedProfileJSONRenderer
@@ -36,7 +37,7 @@ class MyInvitedUsersRetriveAPIView(RetrieveAPIView):
         invited_profiles = {}
         for camp in request.user.profile.campaigns.all():
             serializer = self.serializer_class(
-                request.user.profile.invited_users.filter(campaigns=camp), many=True)
+                request.user.profile.invited_users.filter(campaigns=camp, user__is_active=True), many=True)
 
             invited_profiles[camp.slug] = serializer.data
 
@@ -71,8 +72,19 @@ class InviteSubUsersAPIView(CreateAPIView):
             invited_profile.added_by = adder_prof_obj
 
         invited_profile.campaigns.add(camp_obj)
+        invited_profile.user.is_active = True
 
+        invited_profile.user.save()
         invited_profile.save()
+
+        send_mail(
+            subject="You've been invited to view {0}.".format(camp_obj.name),
+            message="You've been invited to view {0} by {1}".format(
+                camp_obj.name, adder_prof_obj.user.email),
+            from_email="support@youngun.in",
+            recipient_list=[invited_profile.user.email],
+            fail_silently=False
+        )
 
         invited_profiles = {}
         for camp in request.user.profile.campaigns.all():
@@ -107,10 +119,12 @@ class RemoveInvitedUserAPIView(CreateAPIView):
 
         try:
             invited_user = User.objects.get(email=email)
-            if invited_user not in request.user.profile.invited_users.all():
+            print(request.user.profile.invited_users.all())
+            if invited_user.profile not in request.user.profile.invited_users.all():
                 return Response({"response": "Not Allowed. Invalid User"}, status.HTTP_401_UNAUTHORIZED)
 
-            invited_user.delete()
+            invited_user.is_active = False
+            invited_user.save()
 
         except User.DoesNotExist:
             return Response({"response": "No User Found With Matching Email"}, status.HTTP_400_BAD_REQUEST)
@@ -118,7 +132,7 @@ class RemoveInvitedUserAPIView(CreateAPIView):
         invited_profiles = {}
         for camp in request.user.profile.campaigns.all():
             serializer = self.serializer_class(
-                request.user.profile.invited_users.filter(campaigns=camp), many=True)
+                request.user.profile.invited_users.filter(campaigns=camp, user__is_active=True), many=True)
 
             invited_profiles[camp.slug] = serializer.data
 

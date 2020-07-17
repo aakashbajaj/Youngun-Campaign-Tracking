@@ -16,8 +16,8 @@ class ProfileSerializer(ModelSerializer):
     mobile = serializers.CharField(source='user.mobile')
 
     class Meta:
-        model = Profile
-        fields = ['full_name', 'token', 'email', 'mobile']
+        model = ClientProfile
+        fields = ['full_name', 'token', 'email', 'mobile', 'is_main_user']
 
 
 class InvitedUserSerializer(ModelSerializer):

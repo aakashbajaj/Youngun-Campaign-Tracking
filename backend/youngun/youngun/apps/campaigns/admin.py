@@ -83,7 +83,7 @@ class CampaignAdmin(admin.ModelAdmin):
         qs = super(CampaignAdmin, self).get_queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(staff_profiles=request.user.usermanager_staffprofile)
+        return qs.filter(staff_profiles=request.user.profile)
 
 
 @admin.register(LiveCampaign)

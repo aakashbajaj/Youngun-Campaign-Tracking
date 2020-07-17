@@ -41,7 +41,10 @@ export default class InviteUserCard extends Component {
 
   inviteEmailUser = (evt) => {
     evt.preventDefault();
-    this.context.inviteEmailUser(this.state.inputEmail);
+    this.context.inviteEmailUser(
+      this.state.inputEmail,
+      this.setState({ inputEmail: "" })
+    );
   };
 
   removeInvitedUser = (email) => {

@@ -203,10 +203,12 @@ export class Dashboard extends Component {
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-6 col-md-6 col-lg-6 grid-margin stretch-card"></div>
-          <div className="col-sm-6 col-md-6 col-lg-6 grid-margin stretch-card">
-            <InviteUserCard />
-          </div>
+          {/* <div className="col-sm-6 col-md-6 col-lg-6 grid-margin stretch-card"></div> */}
+          {this.context.user.is_main_user ? (
+            <div className="col-sm-6 col-md-6 col-lg-6 grid-margin stretch-card">
+              <InviteUserCard />
+            </div>
+          ) : null}
         </div>
       </div>
     );
