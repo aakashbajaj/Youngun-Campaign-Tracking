@@ -1,6 +1,6 @@
-from youngun.apps.authentication.models import User
 from django import forms
 from django.contrib import admin
+from youngun.apps.authentication.models import User
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
 

@@ -11,7 +11,7 @@ class CampaignDataSerializer(ModelSerializer):
     class Meta:
         model = LiveCampaign
         fields = [
-            'name', 'comapny_name', 'hashtag', 'status',
+            'name', 'company_name', 'hashtag', 'status',
             'start_date', 'end_date',
             'slide_url', 'live_google_sheet', 'slug',
         ]
@@ -31,7 +31,7 @@ class LiveCampaignMetricsSerializer(ModelSerializer):
     class Meta:
         model = LiveCampaign
         fields = [
-            'name', 'comapny_name', 'hashtag', 'status',
+            'name', 'company_name', 'hashtag', 'status',
             'start_date', 'end_date',
             'slide_url', 'live_google_sheet', 'slug',
             'particaipating_profiles',
@@ -60,7 +60,7 @@ class LiveCampaignFeedSerilaizer(ModelSerializer):
     class Meta:
         model = Campaign
         fields = [
-            'name', 'comapny_name', 'hashtag', 'status', 'slug',
+            'name', 'company_name', 'hashtag', 'status', 'slug',
             'instagram',
             'facebook',
             'twitter',

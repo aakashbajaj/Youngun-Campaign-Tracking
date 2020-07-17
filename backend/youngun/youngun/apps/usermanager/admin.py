@@ -19,20 +19,20 @@ def custom_titled_filter(title):
     return Wrapper
 
 
-class EditLinkToInlineObject(object):
-    def edit_link(self, instance):
-        print(self)
-        print(instance)
-        # print(self._meta)
-        print("***** ", instance._meta)
-        print("***** ", instance._meta.model_name)
-        url = reverse('admin:%s_%s_change' % (
-            instance._meta.app_label,  "staffuser"),  args=[instance.user.pk])
-        print("**&& ", url)
-        if instance.pk:
-            return mark_safe(u'<a href="{u}">edit</a>'.format(u=url))
-        else:
-            return ''
+# class EditLinkToInlineObject(object):
+#     def edit_link(self, instance):
+#         print(self)
+#         print(instance)
+#         # print(self._meta)
+#         print("***** ", instance._meta)
+#         print("***** ", instance._meta.model_name)
+#         url = reverse('admin:%s_%s_change' % (
+#             instance._meta.app_label,  "staffuser"),  args=[instance.user.pk])
+#         print("**&& ", url)
+#         if instance.pk:
+#             return mark_safe(u'<a href="{u}">edit</a>'.format(u=url))
+#         else:
+#             return ''
 
 
 class AddedUserInline(admin.TabularInline):
@@ -90,11 +90,15 @@ class StaffProfileAdmin(admin.ModelAdmin):
         return qs
 
     def list_invited_profiles(self, obj):
-        email_list = [x.user.email for x in obj.profile.invited_users.all()]
+        email_list = [x.user.email for x in obj.profile.invited_users.filter(
+            user__is_active=True)]
         if(len(email_list) > 0):
-            return format_html('<p>{}</p>', email_list[0])
+            disp_list = ""
+            for email in email_list:
+                disp_list = disp_list + "<p>" + email + "</p><br/>"
+            return format_html(disp_list)
         else:
-            return format_html('<p>No Invited Users</p>')
+            return format_html('<p>--</p>')
 
     list_invited_profiles.short_description = "Invitees"
 
@@ -134,7 +138,8 @@ class ClientProfileAdmin(admin.ModelAdmin):
     )
     filter_horizontal = ["groups"]
 
-    list_display = ['email', 'list_invited_profiles']
+    list_display = ['email', 'list_invited_profiles',
+                    'is_main_user', 'is_active']
 
     inlines = [ClientProfileInlines]
     # search_fields = ["campaigns"]
@@ -142,6 +147,7 @@ class ClientProfileAdmin(admin.ModelAdmin):
     list_filter = [
         ('usermanager_staffprofile__campaigns__name',
          custom_titled_filter("Campaign")),
+        'is_active'
     ]
 
     def get_queryset(self, request):
@@ -149,8 +155,12 @@ class ClientProfileAdmin(admin.ModelAdmin):
         qs = qs.exclude(usermanager_clientprofile__isnull=True)
         return qs
 
+    def is_main_user(self, obj):
+        return obj.profile.is_main_user
+
     def list_invited_profiles(self, obj):
-        email_list = [x.user.email for x in obj.profile.invited_users.all()]
+        email_list = [x.user.email for x in obj.profile.invited_users.filter(
+            user__is_active=True)]
         if(len(email_list) > 0):
             disp_list = ""
             for email in email_list:
