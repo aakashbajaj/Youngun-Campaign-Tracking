@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'drfpasswordless',
     'django_q',
+    'drf_yasg',
 
     'youngun.apps.authentication',
     'youngun.apps.usermanager',
