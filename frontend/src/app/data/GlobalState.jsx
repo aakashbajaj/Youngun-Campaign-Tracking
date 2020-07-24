@@ -120,7 +120,7 @@ export default class GlobalState extends Component {
   //#endregion
 
   //#region Actions
-  inviteEmailUser = (email) => {
+  inviteEmailUser = (email, cb) => {
     const data = {
       email: email,
       campaign_slug: this.state.currentCampaignInView,
@@ -133,6 +133,7 @@ export default class GlobalState extends Component {
       .catch((err) => {
         console.log(err.response);
       });
+      cb();
   };
 
   removeInvitedUser = (email) => {

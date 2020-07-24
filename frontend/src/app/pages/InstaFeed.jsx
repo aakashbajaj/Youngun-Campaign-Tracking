@@ -9,6 +9,16 @@ export default class InstaFeed extends Component {
     return { __html: embed_code };
   }
   componentDidMount() {
+    // if (width <= 768) {
+    //   $(".card-columns").removeClass("card-columns").addClass("row");
+    //   $(".columns").addClass("col-sm-12");
+    //   $(".decks").addClass("card-deck pb-5");
+    // } else {
+    //   $(".row").addClass("card-columns").removeClass("row");
+    //   $(".columns").removeClass("col-sm-12");
+    //   $(".decks").removeClass("card-deck pb-5");
+    // }
+
     console.log("in Insta CDM");
     window.instgrm.Embeds.process();
   }
@@ -39,19 +49,25 @@ export default class InstaFeed extends Component {
         <div className="page-header">
           <h3 className="page-title">Instagram</h3>
         </div>
-        <div className="row">
-          {instaposts.map((post, idx) => {
-            if (post.embed_code !== "") {
-              return (
-                <div className="col-xl-4 col-lg-6 col-md-6 col-sm-6 grid-margin stretch-card">
-                  <div
-                    dangerouslySetInnerHTML={this.createMarkup(post.embed_code)}
-                  />
-                </div>
-              );
-            }
-            return null;
-          })}
+        <div className="container">
+          <div className="card-columns">
+            {instaposts.map((post, idx) => {
+              if (post.embed_code !== "") {
+                return (
+                  <div className="columns">
+                    <div className="decks">
+                      <div
+                        dangerouslySetInnerHTML={this.createMarkup(
+                          post.embed_code
+                        )}
+                      />
+                    </div>
+                  </div>
+                );
+              }
+              return null;
+            })}
+          </div>
         </div>
       </div>
     );
