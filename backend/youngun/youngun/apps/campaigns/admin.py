@@ -78,6 +78,7 @@ class CampaignAdmin(admin.ModelAdmin):
     ]
 
     list_filter = ['status']
+    save_on_top = True
 
     def get_queryset(self, request):
         qs = super(CampaignAdmin, self).get_queryset(request)
@@ -134,6 +135,7 @@ class LiveCampaignAdmin(admin.ModelAdmin):
     # ]
 
     list_filter = ['status']
+    save_on_top = True
 
     def post_lists(self, obj):
         link = "/admin/content/post/?campaign__name=" + \
@@ -169,6 +171,7 @@ class CampaignReportAdmin(admin.ModelAdmin):
     )
 
     list_filter = ['status']
+    save_on_top = True
 
 
 admin.site.header = "Youngun Campaign tracker Admin"

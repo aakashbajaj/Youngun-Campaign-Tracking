@@ -29,6 +29,8 @@ class StoryAdmin(admin.ModelAdmin):
         ('campaign__name', custom_titled_filter("Campaign")),
     ]
 
+    save_on_top = True
+
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
@@ -39,6 +41,8 @@ class PostAdmin(admin.ModelAdmin):
         'platform',
         ('campaign__name', custom_titled_filter("Campaign")),
     ]
+
+    save_on_top = True
 
 
 @admin.register(InstagramPost)
@@ -75,6 +79,7 @@ class InstagramPostAdmin(admin.ModelAdmin):
     link_to_camp.short_description = "Campaign URLs"
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        print(request)
         if db_field.name == "campaign":
             kwargs["queryset"] = Campaign.objects.filter(
                 staff_profiles=request.user.usermanager_staffprofile)
@@ -89,7 +94,7 @@ class FacebookPostAdmin(admin.ModelAdmin):
 
     readonly_fields = ('date', 'link_to_camp')
     fields = ('url', 'campaign', 'link_to_camp', 'date', 'likes', 'comments',
-              'post_shares', 'post_saves', 'post_reach', 'embed_code', 'visibility', 'alt_google_photo_url')
+              'post_shares', 'post_saves', 'post_reach',  'visibility', 'alt_google_photo_url')
     # list_display_links = ('campaign', )
 
     # add_fields = ('url', 'campaign', 'date', 'likes', 'comments',
