@@ -55,6 +55,17 @@ class User(AbstractBaseUser, PermissionsMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    tempid = models.CharField(
+        _("TempID"), blank=True, null=True, max_length=50)
+    tempotp = models.CharField(
+        _("TempOTP"), blank=True, null=True, max_length=50)
+    authInProgress = models.BooleanField(
+        _("AuthInProgress"), blank=True, default=False)
+    last_requested = models.DateTimeField(
+        _("Last OTP Request"), auto_now=False, auto_now_add=False, blank=True, null=True)
+    last_login = models.DateTimeField(
+        _("Last Login"), auto_now=False, auto_now_add=False, blank=True, null=True)
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
