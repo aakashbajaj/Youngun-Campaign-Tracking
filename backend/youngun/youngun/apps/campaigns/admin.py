@@ -82,7 +82,7 @@ class CampaignAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super(CampaignAdmin, self).get_queryset(request)
-        if request.user.is_superuser:
+        if request.user.is_superuser or request.user.groups.filter(name="MasterAdmin").exists():
             return qs
         return qs.filter(staff_profiles=request.user.profile)
 
@@ -148,6 +148,12 @@ class LiveCampaignAdmin(admin.ModelAdmin):
             obj.name.replace(" ", "+")
         return format_html('<a href="{}">{}</a>\n<a href="{}">{}</a>\n<a href="{}">{}</a>\n<a href="{}">{}</a>', link, "All Posts", in_link, "Instagram", fb_link, "Facebook",  tw_link, "Twitter")
 
+    def get_queryset(self, request):
+        qs = super(LiveCampaignAdmin, self).get_queryset(request)
+        if request.user.is_superuser or request.user.groups.filter(name="MasterAdmin").exists():
+            return qs
+        return qs.filter(staff_profiles=request.user.profile)
+
 
 @admin.register(CampaignReport)
 class CampaignReportAdmin(admin.ModelAdmin):
@@ -172,6 +178,12 @@ class CampaignReportAdmin(admin.ModelAdmin):
 
     list_filter = ['status']
     save_on_top = True
+
+    def get_queryset(self, request):
+        qs = super(CampaignReportAdmin, self).get_queryset(request)
+        if request.user.is_superuser or request.user.groups.filter(name="MasterAdmin").exists():
+            return qs
+        return qs.filter(staff_profiles=request.user.profile)
 
 
 admin.site.header = "Youngun Campaign tracker Admin"

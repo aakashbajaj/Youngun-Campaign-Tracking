@@ -83,6 +83,7 @@ class StaffProfileAdmin(admin.ModelAdmin):
         ('usermanager_staffprofile__campaigns__name',
          custom_titled_filter("Campaign")),
     ]
+    save_on_top = True
 
     def get_queryset(self, request):
         qs = super(StaffProfileAdmin, self).get_queryset(request)
@@ -149,6 +150,7 @@ class ClientProfileAdmin(admin.ModelAdmin):
          custom_titled_filter("Campaign")),
         'is_active'
     ]
+    save_on_top = True
 
     def get_queryset(self, request):
         qs = super(ClientProfileAdmin, self).get_queryset(request)

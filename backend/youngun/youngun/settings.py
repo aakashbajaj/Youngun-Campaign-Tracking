@@ -177,3 +177,8 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_PASSWORD = get_secret("GMAIL_PASSWORD")
+
+AWS_ACCESS_KEY = get_secret("AWS_ACCESS_KEY")
+AWS_SECRET = get_secret("AWS_SECRET")
+AWS_SESSION_TOKEN = get_secret("AWS_SESSION_TOKEN")
+SENDER_ID = get_secret("SENDER_ID")
