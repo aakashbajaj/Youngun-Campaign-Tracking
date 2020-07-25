@@ -53,6 +53,12 @@ class ImportPostForm(forms.ModelForm):
             'live_tw_stories',
         ]
 
+        widgets = {
+            'name': forms.TextInput(attrs={'readonly': 'readonly', 'disabled': 'disabled'}),
+            'status': forms.TextInput(attrs={'readonly': 'readonly', 'disabled': 'disabled'}),
+            # 'name': forms.TextInput(attrs={'readonly': 'readonly', 'disabled': 'disabled'}),
+        }
+
     def gen_link_to_in_posts(self, obj):
         link = "/admin/content/instagrampost/?campaign__name=" + obj.name
         return format_html('<a href="{}">{}</a>', link, obj.name + "Posts")

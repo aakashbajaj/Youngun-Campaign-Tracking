@@ -7,7 +7,7 @@ from rest_framework.generics import RetrieveAPIView
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
-from django.core.mail import send_mail
+from .tasks import send_otp_mail
 
 from .models import User
 
@@ -66,14 +66,16 @@ class InitiateLogin(APIView):
         user_obj.save()
 
         # send sms, mail
-        send_mail(
-            subject="Your OTP for Youngun Portal",
-            message="Use the OTP: {0}".format(
-                tempotp),
-            from_email="support@youngun.in",
-            recipient_list=[user_obj.email],
-            fail_silently=False
-        )
+        # send_mail(
+        #     subject="Your OTP for Youngun Portal",
+        #     message="Use the OTP: {0}".format(
+        #         tempotp),
+        #     from_email="support@youngun.in",
+        #     recipient_list=[user_obj.email],
+        #     fail_silently=False
+        # )
+        send_otp_mail(user_obj.email, tempotp)
+        print("OTP is " + str(tempotp))
 
         # return tempid, masked email/mobile
         masked_email = re.sub(r"([A-Za-z0-9])(.*)@([A-Za-z])(.*)\.(.*)$", lambda x: r"{}{}@{}{}.{}".format(
