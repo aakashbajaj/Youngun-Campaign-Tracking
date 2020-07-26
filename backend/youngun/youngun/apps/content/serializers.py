@@ -12,19 +12,19 @@ class StoriesDisplaySerializer(ModelSerializer):
 class InstagramPostDisplaySerializer(ModelSerializer):
     class Meta:
         model = Post
-        fields = ['url', 'embed_code']
+        fields = ['url', 'embed_code', 'alt_google_photo_url']
 
 
 class FacebookPostDisplaySerializer(ModelSerializer):
     class Meta:
         model = Post
-        fields = ['url', 'post_type']
+        fields = ['url', 'post_type', 'alt_google_photo_url']
 
 
 class TwitterPostDisplaySerializer(ModelSerializer):
     class Meta:
         model = Post
-        fields = ['url', 'embed_code']
+        fields = ['url', 'embed_code', 'alt_google_photo_url']
 
 
 class InstagramStoryDisplaySerializer(ModelSerializer):
