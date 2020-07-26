@@ -63,36 +63,15 @@ class Sidebar extends Component {
               <span className="menu-title">Dashboard</span>
             </Link>
           </li>
-          <li
-            className={
-              this.isPathActive("/instafeed") ? "nav-item active" : "nav-item"
-            }
-          >
-            <Link className="nav-link" to="/instafeed">
-              <i className="mdi mdi-instagram menu-icon"></i>
-              <span className="menu-title">Instagram Feed</span>
-            </Link>
-          </li>
 
           <li
             className={
-              this.isPathActive("/fbfeed") ? "nav-item active" : "nav-item"
+              this.isPathActive("/postsfeed") ? "nav-item active" : "nav-item"
             }
           >
-            <Link className="nav-link" to="/fbfeed">
-              <i className="mdi mdi-facebook menu-icon"></i>
-              <span className="menu-title">Facebook Feed</span>
-            </Link>
-          </li>
-
-          <li
-            className={
-              this.isPathActive("/twitterfeed") ? "nav-item active" : "nav-item"
-            }
-          >
-            <Link className="nav-link" to="/twitterfeed">
-              <i className="mdi mdi-twitter menu-icon"></i>
-              <span className="menu-title">Twitter Feed</span>
+            <Link className="nav-link" to="/postsfeed">
+              <i className="mdi mdi-fullscreen menu-icon"></i>
+              <span className="menu-title">Posts Feed</span>
             </Link>
           </li>
 
