@@ -27,6 +27,24 @@ class TwitterPostDisplaySerializer(ModelSerializer):
         fields = ['url', 'embed_code']
 
 
+class InstagramStoryDisplaySerializer(ModelSerializer):
+    class Meta:
+        model = Story
+        fields = ['url']
+
+
+class FacebookStoryDisplaySerializer(ModelSerializer):
+    class Meta:
+        model = Story
+        fields = ['url']
+
+
+class TwitterStoryDisplaySerializer(ModelSerializer):
+    class Meta:
+        model = Story
+        fields = ['url']
+
+
 class InstagramPostReportSerializer(ModelSerializer):
     class Meta:
         model = InstagramPost

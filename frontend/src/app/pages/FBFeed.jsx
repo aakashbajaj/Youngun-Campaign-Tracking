@@ -36,24 +36,22 @@ export default class FBFeed extends Component {
     }
     return (
       <div>
-        <div className="page-header">
-          <h3 className="page-title">Facebook</h3>
-        </div>
-        <div className="row">
-          {fbposts.map((post, idx) => {
-            return (
-              <div
-                key={idx}
-                className="col-xl-6 col-lg-6 col-md-6 col-sm-6 grid-margin stretch-card"
-              >
-                <div
-                  className="fb-post"
-                  data-href={`${post.url}`}
-                  data-width="100"
-                ></div>
-              </div>
-            );
-          })}
+        <div className="container">
+          <div className="card-columns">
+            {fbposts.map((post, idx) => {
+              return (
+                <div key={idx} className="columns">
+                  <div className="decks">
+                    <div
+                      className="fb-post"
+                      data-href={`${post.url}`}
+                      data-width="100"
+                    ></div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     );
