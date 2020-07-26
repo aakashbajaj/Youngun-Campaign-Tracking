@@ -55,6 +55,21 @@ class LiveCampaignFeedSerilaizer(ModelSerializer):
         source='get_facebook_posts', many=True, read_only=True)
     twitter = TwitterPostDisplaySerializer(
         source='get_twitter_posts', many=True, read_only=True)
+
+    in_posts = InstagramPostDisplaySerializer(
+        source='get_instagram_posts', many=True, read_only=True)
+    fb_posts = FacebookPostDisplaySerializer(
+        source='get_facebook_posts', many=True, read_only=True)
+    tw_posts = TwitterPostDisplaySerializer(
+        source='get_twitter_posts', many=True, read_only=True)
+
+    in_stories = InstagramPostDisplaySerializer(
+        source='get_instagram_stories', many=True, read_only=True)
+    fb_stories = FacebookPostDisplaySerializer(
+        source='get_facebook_stories', many=True, read_only=True)
+    tw_stories = TwitterPostDisplaySerializer(
+        source='get_twitter_stories', many=True, read_only=True)
+
     stories = StoriesDisplaySerializer(many=True, read_only=True)
 
     class Meta:
@@ -64,5 +79,11 @@ class LiveCampaignFeedSerilaizer(ModelSerializer):
             'instagram',
             'facebook',
             'twitter',
+            'in_stories',
+            'fb_stories',
+            'tw_stories',
+            'in_posts',
+            'fb_posts',
+            'tw_posts',
             'stories',
         ]

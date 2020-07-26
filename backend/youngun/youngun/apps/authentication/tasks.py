@@ -26,8 +26,10 @@ def senf_otp_sms(mobile, otptkn):
     client.publish(
         PhoneNumber=mobile,
         msg="Youngun Portal OTP: {0}".format(otptkn),
-        'AWS.SNS.SMS.SenderID': {
-            'DataType': 'String',
-            'StringValue': settings.SENDER_ID
+        MessageAttributes={
+            'AWS.SNS.SMS.SenderID': {
+                'DataType': 'String',
+                'StringValue': settings.SENDER_ID
+            }
         }
     )
