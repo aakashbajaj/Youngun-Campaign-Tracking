@@ -36,9 +36,6 @@ export default class TwitterFeed extends Component {
     }
     return (
       <div>
-        <div className="page-header">
-          <h3 className="page-title">Twitter</h3>
-        </div>
         <div className="row">
           {twitterposts.map((post, idx) => {
             if (post.embed_code !== "") {
