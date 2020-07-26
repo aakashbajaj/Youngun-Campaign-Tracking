@@ -2,6 +2,17 @@ import React, { Component } from "react";
 import CampaignContext from "../data/CampaignContext";
 import Spinner from "../shared/Spinner";
 
+import "./Masonry.css";
+
+import Masonry from "react-masonry-component";
+
+const masonryOptions = {
+  transitionDuration: 0,
+  columnWidth: 3,
+};
+
+const imagesLoadedOptions = { background: ".my-bg-image-el" };
+
 export default class InstaFeed extends Component {
   static contextType = CampaignContext;
 
@@ -44,31 +55,21 @@ export default class InstaFeed extends Component {
     if (!instaposts) {
       return <Spinner />;
     }
+
+    const childElements = instaposts.map((post, idx) => {
+      if (post.embed_code !== "") {
+        return (
+          <div className="masonry-item">
+            <div dangerouslySetInnerHTML={this.createMarkup(post.embed_code)} />
+          </div>
+        );
+      }
+      // return null;
+    });
+
     return (
       <div>
-        <div className="page-header">
-          <h3 className="page-title">Instagram</h3>
-        </div>
-        <div className="container">
-          <div className="card-columns">
-            {instaposts.map((post, idx) => {
-              if (post.embed_code !== "") {
-                return (
-                  <div className="columns">
-                    <div className="decks">
-                      <div
-                        dangerouslySetInnerHTML={this.createMarkup(
-                          post.embed_code
-                        )}
-                      />
-                    </div>
-                  </div>
-                );
-              }
-              return null;
-            })}
-          </div>
-        </div>
+        <div className="masonry">{childElements}</div>;
       </div>
     );
   }
