@@ -3,6 +3,8 @@ import API, { setAuthTokenHeader } from "../utils/api";
 import CampaignContext from "./CampaignContext";
 import Cookie from "js-cookie";
 
+import Notify from "../utils/notify";
+
 export default class GlobalState extends Component {
   state = {
     user: null,
@@ -133,7 +135,7 @@ export default class GlobalState extends Component {
       .catch((err) => {
         console.log(err.response);
       });
-      cb();
+    cb();
   };
 
   removeInvitedUser = (email) => {
@@ -265,6 +267,7 @@ export default class GlobalState extends Component {
     } catch (err) {
       console.log("ERROR");
       console.log(err.response);
+      Notify.notifyError(err.response.data.token[0]);
       // var errors = err.response.data["non_field_errors"];
       // this.setState({ errors: err.response });
     }

@@ -6,6 +6,7 @@ import Navbar from "./shared/Navbar";
 import Sidebar from "./shared/Sidebar";
 import Footer from "./shared/Footer";
 import GlobalState from "./data/GlobalState";
+import { ToastContainer } from "react-toastify";
 
 class App extends Component {
   state = {};
@@ -19,6 +20,17 @@ class App extends Component {
     return (
       <GlobalState>
         <div className="container-scroller">
+          <ToastContainer
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
           {navbarComponent}
           <div className="container-fluid page-body-wrapper">
             {sidebarComponent}
