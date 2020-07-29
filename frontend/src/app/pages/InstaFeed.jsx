@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import CampaignContext from "../data/CampaignContext";
 import Spinner from "../shared/Spinner";
 
-import ReactBricks from "react-bricks-infinite";
+// import ReactBricks from "react-bricks-infinite";
 
 // import "./Masonry.css";
 
