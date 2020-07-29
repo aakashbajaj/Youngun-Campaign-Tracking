@@ -36,24 +36,39 @@ export default class FBFeed extends Component {
     }
     return (
       <div>
-        <div className="container">
-          <div className="card-columns">
-            {fbposts.map((post, idx) => {
-              return (
-                <div key={idx} className="columns">
-                  <div className="decks">
-                    <div
-                      className="fb-post"
-                      data-href={`${post.url}`}
-                      data-width="100"
-                    ></div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+        {/* <div className="card-columns"> */}
+        <div className="row">
+          {fbposts.map((post, idx) => {
+            return (
+              <div
+                key={idx}
+                className="col-xl-4 col-lg-4 col-md-6 col-sm-12 grid-margin stretch-card"
+                // className="card"
+              >
+                {post.post_type === "post" ? (
+                  <div
+                    className="fb-post"
+                    data-href={`${post.url}`}
+                    data-width="50"
+                  />
+                ) : (
+                  <div
+                    class="fb-video"
+                    data-href={`${post.url}`}
+                    data-width="500"
+                    data-allowfullscreen="true"
+                    data-autoplay="false"
+                    data-show-captions="true"
+                  />
+                )}
+
+                {/* </div> */}
+              </div>
+            );
+          })}
         </div>
       </div>
+      // </div>
     );
   }
 }

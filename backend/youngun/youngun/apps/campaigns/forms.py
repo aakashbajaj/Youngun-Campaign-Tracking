@@ -54,8 +54,8 @@ class ImportPostForm(forms.ModelForm):
         ]
 
         widgets = {
-            'name': forms.TextInput(attrs={'readonly': 'readonly', 'disabled': 'disabled'}),
-            'status': forms.TextInput(attrs={'readonly': 'readonly', 'disabled': 'disabled'}),
+            'name': forms.TextInput(attrs={'readonly': 'readonly'}),
+            'status': forms.TextInput(attrs={'readonly': 'readonly'}),
             # 'name': forms.TextInput(attrs={'readonly': 'readonly', 'disabled': 'disabled'}),
         }
 
@@ -86,7 +86,7 @@ class ImportPostForm(forms.ModelForm):
 
                 if "facebook.com" in post:
                     p_obj.platform = "fb"
-                    if "/video/" in post:
+                    if "/video" in post:
                         p_obj.post_type = "video"
                     else:
                         p_obj.post_type = "post"

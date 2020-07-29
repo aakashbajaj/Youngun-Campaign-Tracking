@@ -2,8 +2,36 @@ import React, { Component } from "react";
 import CampaignContext from "../data/CampaignContext";
 import Spinner from "../shared/Spinner";
 
+import ReactBricks from "react-bricks-infinite";
+
+// import "./Masonry.css";
+
+// import Masonry from "react-masonry-component";
+
+// const masonryOptions = {
+//   transitionDuration: 0,
+//   columnWidth: 3,
+// };
+
+// const imagesLoadedOptions = { background: ".my-bg-image-el" };
+
+const sizes = [
+  { columns: 2, gutter: 20 },
+  { mq: "768px", columns: 3, gutter: 25 },
+  { mq: "1024px", columns: 5, gutter: 40 },
+];
+
 export default class InstaFeed extends Component {
   static contextType = CampaignContext;
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      reRender: false,
+      containerId: "bricks-container-app",
+      hasMoreBricks: false,
+    };
+  }
 
   createMarkup(embed_code) {
     return { __html: embed_code };
@@ -44,32 +72,27 @@ export default class InstaFeed extends Component {
     if (!instaposts) {
       return <Spinner />;
     }
-    return (
-      <div>
-        <div className="page-header">
-          <h3 className="page-title">Instagram</h3>
-        </div>
-        <div className="container">
-          <div className="card-columns">
-            {instaposts.map((post, idx) => {
-              if (post.embed_code !== "") {
-                return (
-                  <div className="columns">
-                    <div className="decks">
-                      <div
-                        dangerouslySetInnerHTML={this.createMarkup(
-                          post.embed_code
-                        )}
-                      />
-                    </div>
-                  </div>
-                );
-              }
-              return null;
-            })}
+
+    const childElements = instaposts.map((post, idx) => {
+      if (post.embed_code !== "") {
+        return (
+          <div
+            key={idx}
+            className="col-xl-4 col-lg-4 col-md-6 col-sm-12 grid-margin stretch-card"
+          >
+            <div dangerouslySetInnerHTML={this.createMarkup(post.embed_code)} />
           </div>
-        </div>
-      </div>
+        );
+      }
+      // return null;
+    });
+
+    return (
+      // <div className="row">
+      //   <div className="col-10">
+      <div className="row">{childElements}</div>
+      //   </div>
+      // </div>
     );
   }
 }
