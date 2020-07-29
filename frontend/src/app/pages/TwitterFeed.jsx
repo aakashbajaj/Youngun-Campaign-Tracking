@@ -37,14 +37,19 @@ export default class TwitterFeed extends Component {
     return (
       <div>
         <div className="row">
+          {/* <div className="card-columns"> */}
           {twitterposts.map((post, idx) => {
             if (post.embed_code !== "") {
               return (
                 <div key={idx}>
                   <div
-                    className="col-xl-6 col-lg-6 col-md-6 col-sm-12 grid-margin stretch-card"
+                    className="col-xl-4 col-lg-4 col-md-6 col-sm-12 grid-margin stretch-card"
                     dangerouslySetInnerHTML={this.createMarkup(post.embed_code)}
                   />
+                  {/* <div key={idx} className="card">
+                  <div
+                    dangerouslySetInnerHTML={this.createMarkup(post.embed_code)}
+                  /> */}
                 </div>
               );
             }
