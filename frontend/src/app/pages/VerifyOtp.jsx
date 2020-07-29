@@ -23,7 +23,7 @@ export class VerifyOtp extends Component {
 
   onSignInBtnClick = (evt) => {
     evt.preventDefault();
-    this.context.verify(this.state.otptoken, () => {
+    this.context.verifyOTPToken(this.state.otptoken, () => {
       this.props.history.push("/");
     });
   };
@@ -44,6 +44,14 @@ export class VerifyOtp extends Component {
                     alt="logo"
                   />
                 </div>
+                {/* {this.context.maskedData ? (
+                  <h6 className="font-weight-light">
+                    OTP has been sent to {this.context.maskedData.masked_email}
+                    {this.context.maskedData.masked_mobile
+                      ? " and " + this.context.maskedData.masked_mobile
+                      : null}
+                  </h6>
+                ) : null} */}
                 <h4>Enter the OTP to continue</h4>
                 <Form className="pt-3" onSubmit={this.onSignInBtnClick}>
                   <Form.Group className="d-flex search-field">

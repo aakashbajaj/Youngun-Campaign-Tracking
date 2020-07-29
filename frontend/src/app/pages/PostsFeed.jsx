@@ -60,26 +60,6 @@ export default class PostsFeed extends Component {
   }
 
   render() {
-    var stories = [];
-
-    if (
-      this.context.currentCampaignInView !== null &&
-      this.context.liveCampaignFeed[this.context.currentCampaignInView] !==
-        null &&
-      this.context.liveCampaignFeed[this.context.currentCampaignInView]
-        .stories !== null
-    ) {
-      stories = this.context.liveCampaignFeed[
-        this.context.currentCampaignInView
-      ].stories;
-    }
-
-    if (!stories) {
-      return <Spinner />;
-    } else if (stories === []) {
-      return <div>Nothing to show</div>;
-    }
-    // const iframe_str = `<iframe src=${stories_url}></iframe>`;
     return (
       <div>
         <div className="page-header">

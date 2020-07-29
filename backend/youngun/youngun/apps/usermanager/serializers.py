@@ -14,10 +14,12 @@ class ProfileSerializer(ModelSerializer):
     token = serializers.CharField(source='user.token_string')
     email = serializers.CharField(source='user.email')
     mobile = serializers.CharField(source='user.mobile')
+    brand_name = BrandSerializer(source="brand")
 
     class Meta:
         model = ClientProfile
-        fields = ['full_name', 'token', 'email', 'mobile', 'is_main_user']
+        fields = ['full_name', 'token', 'email',
+                  'mobile', 'is_main_user', 'brand_name']
 
 
 class InvitedUserSerializer(ModelSerializer):

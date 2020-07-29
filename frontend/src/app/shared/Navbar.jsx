@@ -60,6 +60,13 @@ class Navbar extends Component {
             <li className="nav-item  nav-profile border-0">
               <Dropdown alignRight>
                 <Dropdown.Toggle className="nav-link count-indicator bg-transparent">
+                  {/* <span className="profile-text">
+                    {this.context.user
+                      ? this.context.user.full_name
+                        ? this.context.user.full_name
+                        : this.context.user.email
+                      : this.context.userEmail}
+                  </span> */}
                   <span className="profile-text">
                     {this.context.user
                       ? this.context.user.full_name
@@ -67,6 +74,13 @@ class Navbar extends Component {
                         : this.context.user.email
                       : this.context.userEmail}
                   </span>
+                  <small className="designation text-muted text-small">
+                    {this.context.user
+                      ? this.context.user.brand_name
+                        ? this.context.user.brand_name.name
+                        : null
+                      : null}
+                  </small>
                   {/* <img
                     className="img-xs rounded-circle"
                     src={require("../../assets/images/faces/face8.jpg")}

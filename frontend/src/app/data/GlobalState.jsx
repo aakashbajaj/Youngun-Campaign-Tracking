@@ -19,6 +19,7 @@ export default class GlobalState extends Component {
     campaignReportData: {},
     currentCampaignInView: null,
     invited_profiles: {},
+    maskedData: null,
   };
 
   // constructor(props) {
@@ -170,7 +171,7 @@ export default class GlobalState extends Component {
     };
 
     this.setState(newState);
-    this.fetchAllData();
+    this.authenticate();
   }
 
   loadTokenFromCookie() {
@@ -186,13 +187,108 @@ export default class GlobalState extends Component {
         isAuthenticated: true,
       };
 
-      this.setState(newState, this.fetchAllData);
+      this.setState(newState, this.authenticate);
     }
   }
 
   resetToken() {
     Cookie.remove("djangotoken");
   }
+
+  authenticate() {
+    this.fetchAllData();
+  }
+
+  deauthenticate() {
+    this.logout();
+  }
+
+  initiateLogin = async (email, cb) => {
+    try {
+      const data = {
+        email: email,
+      };
+
+      const newState = {
+        ...this.state,
+        userEmail: email,
+        isAuthenticated: false,
+        isAuthInProgress: true,
+        sendingOTP: true,
+        maskedData: null,
+      };
+      this.setState(newState);
+
+      var resp = await API.post("/api/users/login/", data);
+      console.log(resp.data);
+
+      this.setState({ maskedData: resp.data });
+      cb();
+    } catch (err) {
+      console.log("ERROR");
+      console.log(err.response);
+      // window.alert(err.response);
+
+      Notify.notifyError(err.response.data.response);
+      const newState = {
+        ...this.state,
+        userEmail: email,
+        isAuthenticated: false,
+        isAuthInProgress: false,
+        sendingOTP: false,
+      };
+      this.setState(newState);
+    }
+  };
+
+  verifyOTPToken = async (otptoken, cb) => {
+    try {
+      console.log(this.state);
+
+      const data = {
+        tempid: this.state.maskedData.tempid,
+        inpotp: otptoken,
+      };
+      this.setState({ sendingOTP: false });
+
+      const resp = await API.post("/api/users/verify/", data);
+      console.log(resp);
+      console.log(resp.data["token"]);
+      // set token in localStorage
+      // localStorage.setItem("campaigntoken", resp.data["token"]);
+      Cookie.set("djangotoken", resp.data["token"], { expires: 1 });
+      setAuthTokenHeader(resp.data["token"]);
+
+      // setting authenticated user field in global state
+      const newState = {
+        ...this.state,
+        user: {
+          email: this.state.userEmail,
+          token: resp.data["token"],
+        },
+        isAuthenticated: true,
+        isAuthInProgress: false,
+        maskedData: null,
+      };
+      this.setState(newState);
+      this.authenticate();
+      cb();
+    } catch (err) {
+      console.log("ERROR");
+      console.log(err.response);
+      // window.alert(err.response);
+
+      Notify.notifyError(err.response.data.response);
+      const newState = {
+        ...this.state,
+        userEmail: this.state.userEmail,
+        isAuthenticated: false,
+        isAuthInProgress: false,
+        sendingOTP: false,
+      };
+      this.setState(newState);
+    }
+  };
   //#endregion
 
   //#region user login, logout
@@ -305,6 +401,9 @@ export default class GlobalState extends Component {
 
     inviteEmailUser: this.inviteEmailUser,
     removeInvitedUser: this.removeInvitedUser,
+
+    initiateLogin: this.initiateLogin,
+    verifyOTPToken: this.verifyOTPToken,
   };
 
   render() {

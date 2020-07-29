@@ -5,7 +5,7 @@ const Notify = {
   notifyError: (msg) => {
     console.log(msg);
     toast.error(msg, {
-      position: "bottom-right",
+      position: "top-center",
       autoClose: 5000,
       hideProgressBar: true,
       closeOnClick: true,

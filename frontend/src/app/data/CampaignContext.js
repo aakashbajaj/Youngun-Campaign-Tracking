@@ -14,4 +14,6 @@ export default React.createContext({
   login: () => {},
   logout: () => {},
   verify: () => {},
+
+  initiateLogin: () => {},
 });

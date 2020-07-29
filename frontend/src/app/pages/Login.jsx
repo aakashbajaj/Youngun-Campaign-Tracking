@@ -4,6 +4,8 @@ import { Redirect } from "react-router-dom";
 
 import CampaignContext from "../data/CampaignContext";
 
+import "./LoginVerify.css";
+
 export class Login extends Component {
   static contextType = CampaignContext;
 
@@ -20,7 +22,7 @@ export class Login extends Component {
     evt.preventDefault();
     const { email } = this.state;
     console.log(email);
-    this.context.login(email, () => {
+    this.context.initiateLogin(email, () => {
       this.props.history.push("/verify");
     });
   };
@@ -56,7 +58,7 @@ export class Login extends Component {
                     />
                   </Form.Group>
                   {this.context.sendingOTP ? (
-                    <h7 className="font-weight-light">Sending OTP....</h7>
+                    <p className="font-weight-light">Sending OTP....</p>
                   ) : null}
 
                   <div className="mt-3">

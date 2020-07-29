@@ -49,7 +49,7 @@ class InitiateLogin(APIView):
         try:
             user_obj = User.objects.get(email=email)
         except User.DoesNotExist:
-            return Response({"response": "Not Allowed. Invalid Email"}, status.HTTP_401_UNAUTHORIZED)
+            return Response({"response": "No user found with provided email"}, status.HTTP_401_UNAUTHORIZED)
 
         # generate temp id for user
         # generate OTP
@@ -80,6 +80,7 @@ class InitiateLogin(APIView):
         # return tempid, masked email/mobile
         masked_email = re.sub(r"([A-Za-z0-9])(.*)@([A-Za-z])(.*)\.(.*)$", lambda x: r"{}{}@{}{}.{}".format(
             x.group(1), "*"*len(x.group(2)), x.group(3), "*"*len(x.group(4)), x.group(5)), user_obj.email)
+        masked_mobile = None
         if not user_obj.mobile == "":
             masked_mobile = user_obj.mobile[3:5] + \
                 "*******" + user_obj.mobile[-2:]
