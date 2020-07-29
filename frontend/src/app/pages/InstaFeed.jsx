@@ -83,8 +83,25 @@ export default class InstaFeed extends Component {
             <div dangerouslySetInnerHTML={this.createMarkup(post.embed_code)} />
           </div>
         );
+      } else if (
+        post.alt_google_photo_url !== "" &&
+        post.alt_google_photo_url !== null
+      ) {
+        return (
+          <div
+            key={idx}
+            className="col-xl-4 col-lg-4 col-md-6 col-sm-12 grid-margin stretch-card"
+          >
+            <img
+              key={post.alt_google_photo_url}
+              src={post.alt_google_photo_url}
+              alt={"Post"}
+              loader={<Spinner />}
+            />
+          </div>
+        );
       }
-      // return null;
+      return null;
     });
 
     return (
