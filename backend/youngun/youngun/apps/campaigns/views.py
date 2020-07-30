@@ -42,10 +42,13 @@ class CampignListRetrieveAPIView(RetrieveAPIView):
     renderer_classes = (CampaignDataJSONRenderer, )
 
     def retrieve(self, request, *args, **kwargs):
-        user_campaigns = request.user.profile.campaigns.all()
-        serializer = self.serializer_class(user_campaigns, many=True)
+        if hasattr(request.user.profile, "campaigns"):
+            user_campaigns = request.user.profile.campaigns.all()
+            serializer = self.serializer_class(user_campaigns, many=True)
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response({"response": "No Campaigns found"}, status=status.HTTP_200_OK)
 
 
 class CampignDataRetrieveAPIView(RetrieveAPIView):

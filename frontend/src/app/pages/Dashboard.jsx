@@ -85,7 +85,10 @@ export class Dashboard extends Component {
       liveCampMetrics = this.currentCampLiveMetrics;
     }
     console.log(liveCampMetrics);
-    if (!liveCampMetrics) {
+    if (this.context.campaignCount === 0) {
+      console.log(this.context.campaignCount);
+      return <h5>No Data To Show</h5>;
+    } else if (!liveCampMetrics) {
       return <Spinner />;
     }
     return (

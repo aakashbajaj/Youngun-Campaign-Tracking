@@ -20,6 +20,7 @@ export default class GlobalState extends Component {
     currentCampaignInView: null,
     invited_profiles: {},
     maskedData: null,
+    campaignCount: 0,
   };
 
   // constructor(props) {
@@ -50,33 +51,38 @@ export default class GlobalState extends Component {
     var campData = {};
     var firstCampaign = null;
 
-    campaigns.forEach((campaign) => {
-      campData[campaign.slug] = campaign;
-      if (firstCampaign === null) firstCampaign = campaign.slug;
+    if (campaigns && campaigns.length > 0) {
+      this.setState({ campaignCount: campaigns.length });
+      campaigns.forEach((campaign) => {
+        campData[campaign.slug] = campaign;
+        if (firstCampaign === null) firstCampaign = campaign.slug;
 
-      API.get(`/api/campaigns/${campaign.slug}/metrics`)
-        .then((resp) => {
-          console.log(resp.data);
-          this.addLiveCampaignData(campaign.slug, resp.data.campaign);
-        })
-        .catch((err) => {
-          console.log(err.response);
-        });
+        API.get(`/api/campaigns/${campaign.slug}/metrics`)
+          .then((resp) => {
+            console.log(resp.data);
+            this.addLiveCampaignData(campaign.slug, resp.data.campaign);
+          })
+          .catch((err) => {
+            console.log(err.response);
+          });
 
-      API.get(`/api/campaigns/${campaign.slug}/feed`)
-        .then((resp) => {
-          console.log(resp.data);
-          this.addLiveCampaignFeed(campaign.slug, resp.data.campaign);
-        })
-        .catch((err) => {
-          console.log(err.response);
-        });
-    });
+        API.get(`/api/campaigns/${campaign.slug}/feed`)
+          .then((resp) => {
+            console.log(resp.data);
+            this.addLiveCampaignFeed(campaign.slug, resp.data.campaign);
+          })
+          .catch((err) => {
+            console.log(err.response);
+          });
+      });
 
-    this.setState({
-      campaigns: campData,
-      currentCampaignInView: firstCampaign,
-    });
+      this.setState({
+        campaigns: campData,
+        currentCampaignInView: firstCampaign,
+      });
+    } else {
+      this.setState({ campaignCount: 0 });
+    }
   }
 
   addLiveCampaignData(slug, data) {
@@ -159,35 +165,13 @@ export default class GlobalState extends Component {
     const token = "07b833d53b38f85517dcb922b94e1a7ff841c950";
     const userEmail = "aakashbajaj2007@gmail.com";
 
-    setAuthTokenHeader(token);
-    const newState = {
-      ...this.state,
-      userEmail: userEmail,
-      user: {
-        email: userEmail,
-        token: token,
-      },
-      isAuthenticated: true,
-    };
-
-    this.setState(newState);
-    this.authenticate();
+    this.authenticate(token);
   }
 
   loadTokenFromCookie() {
     const token = Cookie.get("djangotoken") ? Cookie.get("djangotoken") : null;
     if (token) {
-      setAuthTokenHeader(token);
-      const newState = {
-        ...this.state,
-        user: {
-          email: "",
-          token: token,
-        },
-        isAuthenticated: true,
-      };
-
-      this.setState(newState, this.authenticate);
+      this.authenticate(token);
     }
   }
 
@@ -195,9 +179,32 @@ export default class GlobalState extends Component {
     Cookie.remove("djangotoken");
   }
 
-  authenticate() {
-    this.fetchAllData();
-  }
+  authenticate = async (token) => {
+    try {
+      setAuthTokenHeader(token);
+      await API.get("/api/users/authenticate/");
+
+      // set token in localStorage
+      // localStorage.setItem("campaigntoken", resp.data["token"]);
+      Cookie.set("djangotoken", token, { expires: 1 });
+
+      // setting authenticated user field in global state
+      const newState = {
+        ...this.state,
+        user: {
+          email: this.state.userEmail,
+          token: token,
+        },
+        isAuthenticated: true,
+        isAuthInProgress: false,
+        maskedData: null,
+      };
+      this.setState(newState);
+      this.fetchAllData();
+    } catch (err) {
+      this.logout();
+    }
+  };
 
   deauthenticate() {
     this.logout();
@@ -254,24 +261,8 @@ export default class GlobalState extends Component {
       const resp = await API.post("/api/users/verify/", data);
       console.log(resp);
       console.log(resp.data["token"]);
-      // set token in localStorage
-      // localStorage.setItem("campaigntoken", resp.data["token"]);
-      Cookie.set("djangotoken", resp.data["token"], { expires: 1 });
-      setAuthTokenHeader(resp.data["token"]);
 
-      // setting authenticated user field in global state
-      const newState = {
-        ...this.state,
-        user: {
-          email: this.state.userEmail,
-          token: resp.data["token"],
-        },
-        isAuthenticated: true,
-        isAuthInProgress: false,
-        maskedData: null,
-      };
-      this.setState(newState);
-      this.authenticate();
+      this.authenticate(resp.data["token"]);
       cb();
     } catch (err) {
       console.log("ERROR");

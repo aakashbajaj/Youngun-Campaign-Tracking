@@ -20,8 +20,9 @@ import axios from "axios";
 
 // export default API;
 
+console.log(process.env.REACT_APP_BACKENDURL);
 const API = axios.create({
-  baseURL: "http://localhost:8000/",
+  baseURL: process.env.REACT_APP_BACKENDURL,
 });
 
 export const setAuthTokenHeader = (token) => {
