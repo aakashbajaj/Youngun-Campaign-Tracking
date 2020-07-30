@@ -1,4 +1,5 @@
 # rm *.sqlite3
+cd youngun
 
 python manage.py makemigrations
 

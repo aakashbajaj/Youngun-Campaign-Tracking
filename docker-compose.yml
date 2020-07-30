@@ -4,9 +4,10 @@ services:
     build: ./backend
     ports:
       - "3600:8000"
-    volumes:
-      - ./backend/youngun:/code
-    command: "sh docker-entrypoint.sh"
+    # volumes:
+    #   - ./backend/youngun:/code
+    
+    command: bash -c "chmod +x ./youngun/docker-entrypoint.sh && sh ./youngun/docker-entrypoint.sh"
   frontend:
     container_name: frontend
     build: ./frontend

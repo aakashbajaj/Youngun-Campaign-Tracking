@@ -8,3 +8,4 @@ pylint-django
 django-q
 drf-yasg
 boto3
+psycopg2
