@@ -20,6 +20,9 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
+from django.conf.urls.static import static
+from django.conf import settings
+
 schema_view = get_schema_view(
     openapi.Info(
         title="Snippets API",
@@ -48,7 +51,7 @@ urlpatterns = [
     path("api/", include('youngun.apps.usermanager.urls', namespace="profile")),
     path('', include('drfpasswordless.urls')),
 
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 admin.site.site_header = "Youngun Campaign Tracker Admin"
 admin.site.site_url = "https://youngun.in"
