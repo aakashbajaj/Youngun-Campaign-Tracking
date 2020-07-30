@@ -203,6 +203,7 @@ export default class GlobalState extends Component {
       this.fetchAllData();
     } catch (err) {
       this.logout();
+      Notify.notifyError("Error in Authentication");
     }
   };
 
