@@ -127,8 +127,12 @@ WSGI_APPLICATION = 'youngun.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME':  get_secret("POSTGRES_DB_NAME"),
+        'USER': get_secret("POSTGRES_DB_USER"),
+        'PASSWORD': get_secret("POSTGRES_DB_PASSWORD"),
+        'HOST': get_secret("POSTGRES_HOST"),
+        'PORT': get_secret("POSTGRES_PORT")
     }
 }
 
