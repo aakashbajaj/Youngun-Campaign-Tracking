@@ -26,7 +26,7 @@ class CreatePostAPIView(CreateAPIView):
         post_url = request.data["url"]
 
         if "facebook.com" in post_url:
-            if "/video/" in post_url:
+            if "/video" in post_url:
                 Post.objects.create(url=post_url, campaign=campaign,
                                     platform="fb", embed_code="", post_type="video")
             else:

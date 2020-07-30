@@ -4,12 +4,14 @@ services:
     build: ./backend
     ports:
       - "3600:8000"
+    command: bash -c "chmod +x ./youngun/docker-entrypoint.sh && sh ./youngun/docker-entrypoint.sh"
     # volumes:
     #   - ./backend/youngun:/code
-    
-    command: bash -c "chmod +x ./youngun/docker-entrypoint.sh && sh ./youngun/docker-entrypoint.sh"
+
   frontend:
     container_name: frontend
     build: ./frontend
     ports:
       - "3500:80"
+    environment:
+      - REACT_APP_BACKENDURL=https://trackingapi.youngun.in/

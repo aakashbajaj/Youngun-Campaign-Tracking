@@ -22,7 +22,7 @@ import axios from "axios";
 
 console.log(process.env.REACT_APP_BACKENDURL);
 const API = axios.create({
-  baseURL: process.env.REACT_APP_BACKENDURL,
+  baseURL: "https://trackingapi.youngun.in/",
 });
 
 export const setAuthTokenHeader = (token) => {
