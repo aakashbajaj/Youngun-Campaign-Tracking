@@ -1,0 +1,10 @@
+django
+djangorestframework
+drfpasswordless
+django-extensions
+requests
+django-cors-headers
+pylint-django
+django-q
+drf-yasg
+boto3
