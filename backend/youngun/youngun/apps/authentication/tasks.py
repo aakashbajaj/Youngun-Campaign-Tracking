@@ -9,8 +9,9 @@ from django_q.models import Schedule
 
 
 def send_otp_mail(email, otptkn):
-    msg = "Use the OTP: {0}".format(otptkn)
-    subj = "Your login OTP for Youngun Portal"
+    msg = "Hi!\nThe OTP for your login on Youngun Campaign Tracker is {0}".format(
+        otptkn)
+    subj = "Login OTP for Youngun Portal"
     async_task('django.core.mail.send_mail', subj,
                msg, "support@youngun.in", [email])
 

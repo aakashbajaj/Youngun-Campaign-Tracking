@@ -7,6 +7,8 @@ from django.core.mail import send_mail
 from .serializers import ProfileSerializer, InvitedUserSerializer
 from .renderers import ProfileJSONRenderer, InvitedProfileJSONRenderer
 
+from .tasks import send_invite_mail
+
 from youngun.apps.campaigns.models import Campaign
 from youngun.apps.authentication.models import User
 from .models import ClientProfile
@@ -77,14 +79,17 @@ class InviteSubUsersAPIView(CreateAPIView):
         invited_profile.user.save()
         invited_profile.save()
 
-        send_mail(
-            subject="You've been invited to view {0}.".format(camp_obj.name),
-            message="You've been invited to view {0} by {1}".format(
-                camp_obj.name, adder_prof_obj.user.email),
-            from_email="support@youngun.in",
-            recipient_list=[invited_profile.user.email],
-            fail_silently=False
-        )
+        # send_mail(
+        #     subject="You've been invited to view {0}.".format(camp_obj.name),
+        #     message="You've been invited to view {0} by {1}".format(
+        #         camp_obj.name, adder_prof_obj.user.email),
+        #     from_email="support@youngun.in",
+        #     recipient_list=[invited_profile.user.email],
+        #     fail_silently=False
+        # )
+
+        send_invite_mail(invited_profile.user.email,
+                         camp_obj.name, adder_prof_obj.get_full_name)
 
         invited_profiles = {}
         for camp in request.user.profile.campaigns.all():
