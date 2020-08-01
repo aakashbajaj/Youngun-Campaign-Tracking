@@ -28,7 +28,7 @@ class Post(models.Model):
     post_shares = models.IntegerField(_("post_shares"), default=0)
     post_saves = models.IntegerField(_("post_saves"), default=0)
     post_reach = models.IntegerField(_("post_reach"), default=0)
-    date = models.DateField(_("posted date"), auto_now_add=True)
+    date = models.DateTimeField(_("posted date"), auto_now_add=True)
 
     embed_code = models.TextField(_("embed code"), null=True, blank=True)
     alt_google_photo_url = models.URLField(

@@ -114,6 +114,7 @@ GitHub.sublime-settings
 .history
 
 secrets.json
+config.json
 youngun/sb.sqlite3
 
 */static/*

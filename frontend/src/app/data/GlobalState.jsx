@@ -97,7 +97,25 @@ export default class GlobalState extends Component {
     this.setState(newState);
   }
 
+  sortFeedList(feedList) {
+    return feedList.sort(function (a, b) {
+      if (a.date == b.date) {
+        return b.id < a.id ? -1 : 1;
+      } else {
+        return new Date(b.date) < new Date(a.date) ? -1 : 1;
+      }
+    });
+  }
+
   addLiveCampaignFeed(slug, data) {
+    // data.in_posts = this.sortFeedList(data.in_posts);
+    // data.fb_posts = this.sortFeedList(data.fb_posts);
+    // data.tw_posts = this.sortFeedList(data.tw_posts);
+
+    data.instagram = this.sortFeedList(data.instagram);
+    data.facebook = this.sortFeedList(data.facebook);
+    data.twitter = this.sortFeedList(data.twitter);
+
     const newLiveCampFeed = {
       ...this.state.liveCampaignFeed,
       [slug]: data,
