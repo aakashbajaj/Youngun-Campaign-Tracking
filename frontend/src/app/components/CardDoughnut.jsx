@@ -61,7 +61,7 @@ export default class CardDoughnut extends Component {
               </h4> */}
               <div className="wrapper mt-2">
                 <h4 className="card-title font-weight-medium mb-2 ">
-                  Participating Profiles: {this.props.unique_content_pieces}
+                  Participating Profiles: {this.props.particaipating_profiles}
                   {/* <p className="mb-0 font-weight-medium"></p> */}
                 </h4>
                 <h4 className="card-title font-weight-medium mb-2 ">

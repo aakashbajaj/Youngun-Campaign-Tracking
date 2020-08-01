@@ -199,6 +199,7 @@ export class Dashboard extends Component {
               remaining_content_pieces={
                 liveCampMetrics.remaining_content_pieces
               }
+              particaipating_profiles={liveCampMetrics.particaipating_profiles}
             />
           </div>
           <div className="col-sm-6 col-md-6 col-lg-6 grid-margin stretch-card">
