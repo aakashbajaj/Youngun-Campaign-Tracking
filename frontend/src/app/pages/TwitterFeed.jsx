@@ -65,6 +65,7 @@ export default class TwitterFeed extends Component {
                     key={post.alt_google_photo_url}
                     src={post.alt_google_photo_url}
                     alt={"Post"}
+                    href={post.url}
                     loader={<Spinner />}
                   />
                 </div>
