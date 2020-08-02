@@ -61,7 +61,7 @@ export default class TwitterFeed extends Component {
                   key={idx}
                   className="col-xl-4 col-lg-4 col-md-6 col-sm-12 grid-margin stretch-card"
                 >
-                  <a href={post.url}>
+                  <a href={post.url} target="_blank" rel="noopener noreferrer">
                     <img
                       key={post.alt_google_photo_url}
                       src={post.alt_google_photo_url}
