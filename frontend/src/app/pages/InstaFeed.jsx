@@ -90,10 +90,16 @@ export default class InstaFeed extends Component {
         return (
           <div
             key={idx}
-            className="col-xl-4 col-lg-4 col-md-6 col-sm-12 grid-margin stretch-card"
+            className="col-xl-4 col-lg-4 col-md-6 col-sm-12 grid-margin img-responsive stretch-card"
+            // style={{
+            //   textAlign: "center",
+            // }}
           >
             <a href={post.url} target="_blank" rel="noopener noreferrer">
               <img
+                style={{
+                  width: "80%",
+                }}
                 key={post.alt_google_photo_url}
                 src={post.alt_google_photo_url}
                 alt={"Post"}
@@ -109,7 +115,14 @@ export default class InstaFeed extends Component {
     return (
       // <div className="row">
       //   <div className="col-10">
-      <div className="row">{childElements}</div>
+      <div
+        className="row"
+        style={{
+          textAlign: "center",
+        }}
+      >
+        {childElements}
+      </div>
       //   </div>
       // </div>
     );
