@@ -92,13 +92,14 @@ export default class InstaFeed extends Component {
             key={idx}
             className="col-xl-4 col-lg-4 col-md-6 col-sm-12 grid-margin stretch-card"
           >
-            <img
-              key={post.alt_google_photo_url}
-              src={post.alt_google_photo_url}
-              alt={"Post"}
-              href={post.url}
-              loader={<Spinner />}
-            />
+            <a href={post.url}>
+              <img
+                key={post.alt_google_photo_url}
+                src={post.alt_google_photo_url}
+                alt={"Post"}
+                loader={<Spinner />}
+              />
+            </a>
           </div>
         );
       }
