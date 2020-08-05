@@ -45,7 +45,7 @@ export default class FBFeed extends Component {
                 className="col-xl-4 col-lg-4 col-md-6 col-sm-12 grid-margin stretch-card"
                 // className="card"
               >
-                {post.post_type === "post" ? (
+                {post.post_type === "p" ? (
                   <div
                     className="fb-post"
                     data-href={`${post.url}`}
