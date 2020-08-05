@@ -51,8 +51,8 @@ def save_facebook_info(sender, instance, *args, **kwargs):
         post_url = instance.url
 
         if "/video" in post_url:
-            instance.post_type = "video"
+            instance.post_type = "v"
         else:
-            instance.post_type = "post"
+            instance.post_type = "p"
 
         instance.embed_code = ""
