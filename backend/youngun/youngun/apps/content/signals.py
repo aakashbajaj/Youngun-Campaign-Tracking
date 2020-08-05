@@ -42,3 +42,17 @@ def fetch_twitter_embed_code(sender, instance, *args, **kwargs):
 
             elif res.status_code == 200:
                 instance.embed_code = res.json()["html"]
+
+
+@receiver(pre_save, sender=FacebookPost)
+@receiver(pre_save, sender=Post)
+def save_facebook_info(sender, instance, *args, **kwargs):
+    if instance and instance.platform == "fb":
+        post_url = instance.url
+
+        if "/video" in post_url:
+            instance.post_type = "video"
+        else:
+            instance.post_type = "post"
+
+        instance.embed_code = ""

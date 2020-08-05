@@ -48,12 +48,12 @@ class PostAdmin(admin.ModelAdmin):
 @admin.register(InstagramPost)
 class InstagramPostAdmin(admin.ModelAdmin):
     exclude = ('platform', 'post_type')
-    list_display = ('url', 'campaign', 'link_to_camp', 'date', 'likes', 'comments',
+    list_display = ('url', 'campaign', 'link_to_camp', 'date', 'visibility', 'likes', 'comments',
                     'post_shares', 'post_saves', 'post_reach')
 
     readonly_fields = ('date', 'link_to_camp')
-    fields = ('url', 'campaign', 'link_to_camp', 'date', 'likes', 'comments',
-              'post_shares', 'post_saves', 'post_reach', 'embed_code', 'visibility', 'alt_google_photo_url')
+    fields = ('url', 'campaign', 'link_to_camp', 'date', 'visibility', 'alt_google_photo_url',
+              'likes', 'comments', 'post_shares', 'post_saves', 'post_reach', 'embed_code')
     # list_display_links = ('campaign', )
 
     # add_fields = ('url', 'campaign', 'date', 'likes', 'comments',
@@ -89,11 +89,11 @@ class InstagramPostAdmin(admin.ModelAdmin):
 @admin.register(FacebookPost)
 class FacebookPostAdmin(admin.ModelAdmin):
     exclude = ('platform', 'embed_code')
-    list_display = ('url', 'campaign', 'link_to_camp', 'date', 'likes', 'comments',
+    list_display = ('url', 'campaign', 'post_type', 'link_to_camp', 'date', 'likes', 'comments',
                     'post_shares', 'post_saves', 'post_reach')
 
     readonly_fields = ('date', 'link_to_camp')
-    fields = ('url', 'campaign', 'link_to_camp', 'date', 'likes', 'comments',
+    fields = ('url', 'campaign', 'link_to_camp', 'date', 'post_type', 'likes', 'comments',
               'post_shares', 'post_saves', 'post_reach',  'visibility', 'alt_google_photo_url')
     # list_display_links = ('campaign', )
 
@@ -129,7 +129,7 @@ class FacebookPostAdmin(admin.ModelAdmin):
 @admin.register(TwitterPost)
 class TwitterPostAdmin(admin.ModelAdmin):
     exclude = ('platform', 'post_type')
-    list_display = ('url', 'campaign', 'link_to_camp', 'date', 'likes', 'comments',
+    list_display = ('url', 'campaign', 'link_to_camp', 'date', 'visibility', 'likes', 'comments',
                     'post_shares', 'post_saves', 'post_reach')
 
     readonly_fields = ('date', 'link_to_camp')
