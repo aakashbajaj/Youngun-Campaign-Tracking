@@ -4,6 +4,8 @@ from django import forms
 from django.contrib import messages
 from django.utils.html import format_html
 
+from .tasks import bulk_upload_csv
+
 from .models import Campaign
 from youngun.apps.content.models import Post
 
@@ -31,6 +33,7 @@ class ImportPostForm(forms.ModelForm):
             # 'link_to_in_posts',
             'status',
             'import_posts_csv',
+            'twitter_collection_url',
             'in_stories_google_photos_album_url',
             'in_stories_fetch_ctrl',
             'fb_stories_google_photos_album_url',
@@ -68,8 +71,6 @@ class ImportPostForm(forms.ModelForm):
         print(self.cleaned_data)
         file_csv = self.cleaned_data["import_posts_csv"]
 
-        cnt = 0
-
         if not file_csv is None:
 
             fld = file_csv.read()
@@ -78,26 +79,7 @@ class ImportPostForm(forms.ModelForm):
             posts_list = [x for x in posts_list if x]
             print(posts_list)
 
-            for post in posts_list:
-                p_obj, created = Post.objects.get_or_create(
-                    campaign=self.instance, url=post)
-                if created:
-                    cnt = cnt + 1
-
-                if "facebook.com" in post:
-                    p_obj.platform = "fb"
-                    if "/video" in post:
-                        p_obj.post_type = "video"
-                    else:
-                        p_obj.post_type = "post"
-                elif "instagram.com" in post:
-                    p_obj.platform = "in"
-                    p_obj.embed_code = ""
-                elif "twitter.com" in post:
-                    p_obj.platform = "tw"
-                    p_obj.embed_code = ""
-
-                p_obj.save()
+            bulk_upload_csv(posts_list, self.instance.id)
 
         if commit:
             m.save()

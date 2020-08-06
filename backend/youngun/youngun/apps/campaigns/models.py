@@ -30,6 +30,9 @@ class Campaign(models.Model):
     reports_google_sheet = models.URLField(
         _("Reports Google Sheet"), max_length=200, default="http://example.com")
 
+    twitter_collection_url = models.URLField(
+        _("Twitter Posts Collection URL"), max_length=1500, blank=True, null=True)
+
     slug = models.SlugField(_("Slug"), blank=True)
 
     @property

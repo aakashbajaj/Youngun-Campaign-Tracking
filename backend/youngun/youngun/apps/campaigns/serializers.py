@@ -34,6 +34,7 @@ class LiveCampaignMetricsSerializer(ModelSerializer):
             'name', 'company_name', 'hashtag', 'status',
             'start_date', 'end_date',
             'slide_url', 'live_google_sheet', 'slug',
+            'twitter_collection_url',
             'particaipating_profiles',
             'unique_content_pieces', 'approved_content_pieces', 'remaining_content_pieces',
             'last_updated',
