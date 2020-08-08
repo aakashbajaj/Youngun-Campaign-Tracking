@@ -24,13 +24,7 @@ def fetch_insta_embed_code(sender, instance, *args, **kwargs):
             elif res.status_code == 200:
                 fetched_embed = res.json()["html"]
                 instance.embed_code = fetched_embed
-
-            if fetched_embed.startswith("<blockquote"):
-                start_idx = fetched_embed.index("(@")
-                if start_idx > 0:
-                    end_idx = fetched_embed[start_idx:].index(")")
-                    instance.post_username = fetched_embed[start_idx +
-                                                           2:end_idx+start_idx]
+                instance.post_username = res.json()["author_name"]
 
 
 @receiver(pre_save, sender=TwitterPost)

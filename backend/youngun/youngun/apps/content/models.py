@@ -18,7 +18,7 @@ class PostVisibility(models.Choices):
 
 
 class Post(models.Model):
-    url = models.URLField(_("post url"), max_length=255, unique=True)
+    url = models.URLField(_("post url"), max_length=1000, unique=True)
     platform = models.CharField(
         _("platform"), max_length=50, choices=Platform.choices)
     campaign = models.ForeignKey(Campaign, verbose_name=_(
@@ -35,7 +35,7 @@ class Post(models.Model):
 
     embed_code = models.TextField(_("embed code"), null=True, blank=True)
     alt_google_photo_url = models.URLField(
-        _("Alternate Google Photo URL"), max_length=1500, null=True, blank=True)
+        _("Alternate Google Photo URL"), max_length=4000, null=True, blank=True)
     visibility = models.CharField(
         _("post visibility"), choices=PostVisibility.choices, max_length=50, default='public')
 
