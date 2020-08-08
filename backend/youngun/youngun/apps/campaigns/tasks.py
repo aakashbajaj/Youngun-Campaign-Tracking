@@ -9,7 +9,7 @@ from youngun.apps.content.models import InstagramStory, FacebookStory, TwitterSt
 
 
 def bulk_upload_csv(posts_list, campaign_id):
-    async_task('youngun.apps.campaigns.upload_posts_lists',
+    async_task('youngun.apps.campaigns.tasks.upload_posts_lists',
                posts_list, campaign_id)
 
 

@@ -23,6 +23,9 @@ class Post(models.Model):
         _("platform"), max_length=50, choices=Platform.choices)
     campaign = models.ForeignKey(Campaign, verbose_name=_(
         "campaign"), related_name="posts", on_delete=models.CASCADE)
+
+    post_username = models.CharField(
+        _("Post Upload Username"), max_length=100, blank=True, null=True)
     likes = models.IntegerField(_("likes"), default=0)
     comments = models.IntegerField(_("comments"), default=0)
     post_shares = models.IntegerField(_("post_shares"), default=0)
