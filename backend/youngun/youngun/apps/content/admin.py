@@ -61,7 +61,10 @@ class InstagramPostAdmin(admin.ModelAdmin):
 
     list_filter = [
         ('campaign__name', custom_titled_filter("Campaign")),
+        'visibility',
+        'post_username'
     ]
+    search_fields = ('post_username', 'url')
 
     save_on_top = True
 
