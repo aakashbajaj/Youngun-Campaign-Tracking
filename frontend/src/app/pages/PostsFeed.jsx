@@ -12,7 +12,7 @@ const InstaFeed = lazy(() => import("./InstaFeed"));
 const InstaFeedFunc = lazy(() => import("../feeds/InstaFeedFunc"));
 const FBFeed = lazy(() => import("./FBFeed"));
 // const TwitterFeed = lazy(() => import("./TwitterFeed"));
-const TwitterFeed = lazy(() => import("../feeds/TwitterFeed"));
+const TwitterFeed = lazy(() => import("../feeds/TwitterFeedTrial"));
 
 export default class PostsFeed extends Component {
   static contextType = CampaignContext;
