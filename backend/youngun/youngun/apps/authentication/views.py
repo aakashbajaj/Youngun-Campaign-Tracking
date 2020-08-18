@@ -1,6 +1,7 @@
 import random
 import re
 from datetime import datetime
+import pytz
 
 from rest_framework import status
 from rest_framework.generics import RetrieveAPIView
@@ -13,6 +14,7 @@ from .models import User
 
 from .serializers import UserInfoSerializer
 from .renderers import UserInfoJSONRenderer
+from youngun.apps.core.models import MasterLogger
 
 # Create your views here.
 
@@ -32,6 +34,20 @@ class UserInfoRetrieveAPIView(RetrieveAPIView):
 
     def retrieve(self, request, *args, **kwargs):
         serializer = self.serializer_class(request.user)
+
+        m_logger, created = MasterLogger.objects.get_or_create(
+            user=request.user)
+        if created:
+            m_logger.email = request.user.email
+
+        m_logger.login_cnt = m_logger.login_cnt + 1
+
+        dt_str = datetime.now(pytz.timezone('Asia/Kolkata')
+                              ).strftime("%Y-%m-%d %H:%M:%S")
+        m_logger.history_log = dt_str + "\n" + m_logger.history_log
+        m_logger.last_login = datetime.now(pytz.timezone('Asia/Kolkata'))
+
+        m_logger.save()
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -60,22 +76,13 @@ class InitiateLogin(APIView):
         user_obj.tempid = tempid
         user_obj.tempotp = tempotp
         user_obj.authInProgress = True
-        user_obj.last_requested = datetime.now()
+        user_obj.last_requested = datetime.now(pytz.timezone('Asia/Kolkata'))
 
         # save instance
         user_obj.save()
 
         # send sms, mail
-        # send_mail(
-        #     subject="Your OTP for Youngun Portal",
-        #     message="Use the OTP: {0}".format(
-        #         tempotp),
-        #     from_email="support@youngun.in",
-        #     recipient_list=[user_obj.email],
-        #     fail_silently=False
-        # )
         send_otp_mail(user_obj.email, tempotp)
-        print("OTP is " + str(tempotp))
 
         # return tempid, masked email/mobile
         masked_email = re.sub(r"([A-Za-z0-9])(.*)@([A-Za-z])(.*)\.(.*)$", lambda x: r"{}{}@{}{}.{}".format(
@@ -111,7 +118,7 @@ class VerifyLogin(APIView):
             return Response({"response": "Not Allowed. Invalid Request"}, status.HTTP_400_BAD_REQUEST)
 
         # verify if otp matches
-        if inpotp == user_obj.tempotp:
+        if inpotp == user_obj.tempotp and user_obj.authInProgress == True:
             # authInProgress = false
             # destroy otp and tempid
             user_obj.authInProgress = False
