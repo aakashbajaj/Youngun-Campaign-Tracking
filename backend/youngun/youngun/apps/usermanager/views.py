@@ -89,7 +89,7 @@ class InviteSubUsersAPIView(CreateAPIView):
         # )
 
         send_invite_mail(invited_profile.user.email,
-                         camp_obj.name, adder_prof_obj.get_full_name())
+                         camp_obj.hashtag, adder_prof_obj.get_full_name())
 
         invited_profiles = {}
         for camp in request.user.profile.campaigns.all():
