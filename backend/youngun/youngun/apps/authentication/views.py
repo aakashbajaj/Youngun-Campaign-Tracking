@@ -58,7 +58,7 @@ class InitiateLogin(APIView):
     def post(self, request):
 
         try:
-            email = request.data["email"]
+            email = request.data["email"].lower()
         except KeyError:
             return Response({"response": "Invalid Email"}, status.HTTP_400_BAD_REQUEST)
         # verify email exists

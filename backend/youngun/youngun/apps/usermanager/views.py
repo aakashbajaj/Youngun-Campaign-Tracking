@@ -54,7 +54,7 @@ class InviteSubUsersAPIView(CreateAPIView):
         if not request.user.profile.is_main_user:
             return Response({"response": "Not Allowed. Not Main User"}, status.HTTP_401_UNAUTHORIZED)
 
-        email = request.data["email"]
+        email = request.data["email"].lower()
 
         campaign_slug = request.data["campaign_slug"]
         try:
@@ -109,7 +109,7 @@ class RemoveInvitedUserAPIView(CreateAPIView):
         if not request.user.profile.is_main_user:
             return Response({"response": "Not Allowed. Not Main User"}, status.HTTP_401_UNAUTHORIZED)
 
-        email = request.data["email"]
+        email = request.data["email"].lower()
 
         campaign_slug = request.data["campaign_slug"]
         try:
