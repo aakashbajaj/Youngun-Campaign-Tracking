@@ -112,28 +112,6 @@ class LiveCampaignAdmin(admin.ModelAdmin):
         'live_tw_stories',
     )
 
-    # fields = [
-    #     'name',
-    #
-    #     'status',
-    #     'particaipating_profiles',
-    #     'unique_content_pieces',
-    #     'approved_content_pieces',
-    #     'last_updated',
-    #     'fb_posts',
-    #     'fb_stories',
-    #     'in_posts',
-    #     'in_stories',
-    #     'tw_posts',
-    #     'tw_stories',
-    #     'live_fb_posts',
-    #     'live_fb_stories',
-    #     'live_in_posts',
-    #     'live_in_stories',
-    #     'live_tw_posts',
-    #     'live_tw_stories',
-    # ]
-
     list_filter = ['status']
     save_on_top = True
 

@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext as _
 
+from django.urls import reverse
+
 from youngun.apps.campaigns.models import Campaign
 
 # Create your models here.
@@ -10,6 +12,11 @@ class Platform(models.TextChoices):
     FACEBOOK = "fb"
     INSTAGRAM = "in"
     TWITTER = "tw"
+
+
+class MediaType(models.TextChoices):
+    POST = "post"
+    VIDEO = "video"
 
 
 class PostVisibility(models.Choices):
@@ -26,12 +33,23 @@ class Post(models.Model):
 
     post_username = models.CharField(
         _("Post Upload Username"), max_length=100, blank=True, null=True)
+
+    social_id = models.CharField(
+        _("Post Social ID"), max_length=200, blank=True, null=True)
+    account_name = models.CharField(
+        _("Account Name"), max_length=200, blank=True, null=True)
+    upload_date = models.DateTimeField(
+        _("Upload DateTime"), auto_now=False, auto_now_add=False, blank=True, null=True)
+    caption = models.TextField(_("Post Caption"), blank=True, null=True)
+
     likes = models.IntegerField(_("likes"), default=0)
     comments = models.IntegerField(_("comments"), default=0)
     post_shares = models.IntegerField(_("post_shares"), default=0)
     post_saves = models.IntegerField(_("post_saves"), default=0)
     post_reach = models.IntegerField(_("post_reach"), default=0)
     date = models.DateTimeField(_("posted date"), auto_now_add=True)
+
+    alive = models.BooleanField(_("Post Health"), default=True)
 
     embed_code = models.TextField(_("embed code"), null=True, blank=True)
     alt_google_photo_url = models.URLField(
@@ -64,6 +82,26 @@ class Story(models.Model):
 
     # def __str__(self):
     #     return self.url
+
+
+class Media(models.Model):
+    parent_post = models.ForeignKey(Post, verbose_name=_(
+        "post"), related_name="medias", on_delete=models.CASCADE)
+    key = models.CharField(_("Media Key"), max_length=200)
+    url = models.URLField(_("Media URL"), max_length=2000)
+    media_type = models.CharField(
+        _("Media Type"), max_length=50, choices=MediaType.choices)
+    media_views = models.IntegerField(_("Media Views"), default=0)
+
+    class Meta:
+        verbose_name = _("Media")
+        verbose_name_plural = _("Media Objects")
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("Media_detail", kwargs={"pk": self.pk})
 
 
 class InstagramPostManager(models.Manager):
