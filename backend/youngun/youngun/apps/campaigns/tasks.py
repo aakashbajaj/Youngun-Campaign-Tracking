@@ -54,37 +54,41 @@ def update_live_cnts():
 def fetch_campaign_stories():
     for camp in Campaign.objects.all():
         if camp:
-            reg_str = r'\["(https:\/\/lh3\.googleusercontent\.com\/[a-zA-Z0-9\-_]*)"'
+            try:
+                reg_str = r'\["(https:\/\/lh3\.googleusercontent\.com\/[a-zA-Z0-9\-_]*)"'
 
-            resp = requests.get(camp.in_stories_google_photos_album_url)
-            resp_str = resp.text
+                resp = requests.get(camp.in_stories_google_photos_album_url)
+                resp_str = resp.text
 
-            matches = re.findall(reg_str, resp_str)
+                matches = re.findall(reg_str, resp_str)
 
-            camp.get_instagram_stories.delete()
+                camp.get_instagram_stories.delete()
 
-            for photo_url in matches:
-                obj, new_create = InstagramStory.objects.get_or_create(
-                    campaign=camp, url=photo_url)
+                for photo_url in matches:
+                    obj, new_create = InstagramStory.objects.get_or_create(
+                        campaign=camp, url=photo_url)
 
-            resp = requests.get(camp.fb_stories_google_photos_album_url)
-            resp_str = resp.text
+                resp = requests.get(camp.fb_stories_google_photos_album_url)
+                resp_str = resp.text
 
-            matches = re.findall(reg_str, resp_str)
+                matches = re.findall(reg_str, resp_str)
 
-            camp.get_facebook_stories.delete()
+                camp.get_facebook_stories.delete()
 
-            for photo_url in matches:
-                obj, new_create = FacebookStory.objects.get_or_create(
-                    campaign=camp, url=photo_url)
+                for photo_url in matches:
+                    obj, new_create = FacebookStory.objects.get_or_create(
+                        campaign=camp, url=photo_url)
 
-            resp = requests.get(camp.tw_stories_google_photos_album_url)
-            resp_str = resp.text
+                resp = requests.get(camp.tw_stories_google_photos_album_url)
+                resp_str = resp.text
 
-            matches = re.findall(reg_str, resp_str)
+                matches = re.findall(reg_str, resp_str)
 
-            camp.get_twitter_stories.delete()
+                camp.get_twitter_stories.delete()
 
-            for photo_url in matches:
-                obj, new_create = TwitterStory.objects.get_or_create(
-                    campaign=camp, url=photo_url)
+                for photo_url in matches:
+                    obj, new_create = TwitterStory.objects.get_or_create(
+                        campaign=camp, url=photo_url)
+                
+            except Exception as e:
+                print(str(e))
