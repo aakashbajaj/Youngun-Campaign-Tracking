@@ -35,7 +35,7 @@ class Post(models.Model):
 
     embed_code = models.TextField(_("embed code"), null=True, blank=True)
     alt_google_photo_url = models.URLField(
-        _("Alternate Google Photo URL"), max_length=4000, null=True, blank=True)
+        _("Alternate Google Photo URL"), max_length=8000, null=True, blank=True)
     visibility = models.CharField(
         _("post visibility"), choices=PostVisibility.choices, max_length=50, default='public')
 
