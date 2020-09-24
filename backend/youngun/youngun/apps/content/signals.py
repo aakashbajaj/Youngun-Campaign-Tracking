@@ -63,24 +63,29 @@ def save_facebook_info(sender, instance, *args, **kwargs):
 
 @receiver(post_save, sender=InstagramPost)
 def fetch_in_post(sender, instance, *args, **kwargs):
-    fill_in_post(instance.pk)
+    if not instance:
+        return
 
-
-@receiver(post_save, sender=TwitterPost)
-def fetch_tw_post(sender, instance, *args, **kwargs):
-    fill_tw_post(instance.pk)
-
-
-@receiver(post_save, sender=FacebookPost)
-def fetch_fb_post(sender, instance, *args, **kwargs):
-    fill_fb_post(instance.pk)
-
-
-@receiver(post_save, sender=Post)
-def fetch_insta_post(sender, instance, *args, **kwargs):
-    if instance.platform == "in":
+    if not instance.pre_fetched:
         fill_in_post(instance.pk)
-    if instance.platform == "in":
-        fill_tw_post(instance.pk)
-    if instance.platform == "in":
-        fill_fb_post(instance.pk)
+
+    
+
+# @receiver(post_save, sender=TwitterPost)
+# def fetch_tw_post(sender, instance, *args, **kwargs):
+#     fill_tw_post(instance.pk)
+
+
+# @receiver(post_save, sender=FacebookPost)
+# def fetch_fb_post(sender, instance, *args, **kwargs):
+#     fill_fb_post(instance.pk)
+
+
+# @receiver(post_save, sender=Post)
+# def fetch_insta_post(sender, instance, *args, **kwargs):
+#     if instance.platform == "in":
+#         fill_in_post(instance.pk)
+#     if instance.platform == "in":
+#         fill_tw_post(instance.pk)
+#     if instance.platform == "in":
+#         fill_fb_post(instance.pk)

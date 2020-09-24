@@ -14,9 +14,12 @@ class InstagramPostScraper:
         self.data = {"link": post_link,
                      "username": self.resp["owner"]["username"]}
 
+    def get_key(self):
+        return self.resp["id"]
+
     def get_timestamp(self):
-        # return datetime.strftime(datetime.fromtimestamp(self.resp["taken_at_timestamp"]), "%Y-%m-%d %H:%M:%S")
-        return datetime.fromtimestamp(self.resp["taken_at_timestamp"])
+        return datetime.strftime(datetime.fromtimestamp(self.resp["taken_at_timestamp"]), "%Y-%m-%d %H:%M:%S")
+        # return datetime.fromtimestamp(self.resp["taken_at_timestamp"])
 
     def get_comments(self):
         return self.resp["edge_media_to_parent_comment"]["count"]
@@ -44,7 +47,9 @@ class InstagramPostScraper:
             "likes": self.get_likes(),
             "comments": self.get_comments(),
             "total_views": self.get_view_count(),
+            "caption": self.get_caption(),
             "nodes": [{
+                "media_key": self.get_key(),
                 "view_count": self.get_view_count(),
                 "media_url": self.get_media_url(1),
                 "is_video": True
@@ -59,17 +64,20 @@ class InstagramPostScraper:
             "timestamp": self.get_timestamp(),
             "likes": self.get_likes(),
             "comments": self.get_comments(),
+            "caption": self.get_caption(),
             "nodes": [{
+                "media_key": self.get_key(),
                 "media_url": self.get_media_url(),
                 "is_video": False
             }]
         }
-    
+
         self.data = {**self.data, **X}
 
     def get_sidecar_data(self):
 
         X = {"likes": self.get_likes(),
+             "caption": self.get_caption(),
              "comments": self.get_comments(),
              "timestamp": self.get_timestamp()}
 

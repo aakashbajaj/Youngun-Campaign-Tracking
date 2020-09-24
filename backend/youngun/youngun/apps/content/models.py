@@ -42,6 +42,8 @@ class Post(models.Model):
         _("Upload DateTime"), auto_now=False, auto_now_add=False, blank=True, null=True)
     caption = models.TextField(_("Post Caption"), blank=True, null=True)
 
+    pre_fetched = models.BooleanField(_("Data Pre Fetched"), default=False)
+
     likes = models.IntegerField(_("likes"), default=0)
     comments = models.IntegerField(_("comments"), default=0)
     post_shares = models.IntegerField(_("post_shares"), default=0)
@@ -98,7 +100,7 @@ class Media(models.Model):
         verbose_name_plural = _("Media Objects")
 
     def __str__(self):
-        return self.name
+        return self.key
 
     def get_absolute_url(self):
         return reverse("Media_detail", kwargs={"pk": self.pk})

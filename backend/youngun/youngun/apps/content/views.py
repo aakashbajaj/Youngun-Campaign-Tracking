@@ -8,7 +8,7 @@ from rest_framework.response import Response
 
 
 # from .serializers import CreatePostSerializer
-from .models import Post, Campaign
+from youngun.apps.content.models import Post, Campaign
 
 # Create your views here.
 
