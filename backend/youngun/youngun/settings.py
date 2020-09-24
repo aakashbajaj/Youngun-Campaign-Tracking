@@ -187,3 +187,5 @@ AWS_ACCESS_KEY = get_secret("AWS_ACCESS_KEY")
 AWS_SECRET = get_secret("AWS_SECRET")
 AWS_SESSION_TOKEN = get_secret("AWS_SESSION_TOKEN")
 SENDER_ID = get_secret("SENDER_ID")
+
+SC_API_TOKEN = get_secret("SC_API_TOKEN")
