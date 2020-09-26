@@ -12,8 +12,9 @@ def send_otp_mail(email, otptkn):
     msg = "Hey!\n\nThe OTP for your login on Youngun Campaign Tracker is {0}".format(
         otptkn)
     subj = "Login OTP for Youngun Portal"
+    opts = {'group': "otp-email"}
     async_task('django.core.mail.send_mail', subj,
-               msg, "support@youngun.in", [email])
+               msg, "support@youngun.in", [email], q_options=opts)
 
 
 def senf_otp_sms(mobile, otptkn):
