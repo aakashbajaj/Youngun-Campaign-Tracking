@@ -64,11 +64,39 @@ class PostAdmin(admin.ModelAdmin):
 @admin.register(InstagramPost)
 class InstagramPostAdmin(admin.ModelAdmin):
     exclude = ('platform', 'post_type')
-    list_display = ('url', 'campaign', 'link_to_camp', 'upload_date', 'post_username', 'pre_fetched', 'alive', 'visibility', 'likes', 'comments')
+    list_display = (
+        'url',
+        'campaign',
+        'link_to_camp',
+        'upload_date',
+        'post_username',
+        # 'pre_fetched',
+        'alive',
+        'visibility',
+        'likes',
+        'comments'
+    )
 
     readonly_fields = ('date', 'link_to_camp')
-    fields = ('alive', 'url', 'campaign', 'link_to_camp', 'upload_date', 'post_username', 'account_name', 'alt_google_photo_url', 'pre_fetched',
-              'caption', 'likes', 'comments', 'post_shares', 'post_saves', 'post_reach', 'visibility', 'embed_code')
+    fields = (
+        'alive',
+        'url',
+        'campaign',
+        'link_to_camp',
+        'upload_date',
+        'post_username',
+        'account_name',
+        'alt_google_photo_url',
+        'pre_fetched',
+        'caption',
+        'likes',
+        'comments',
+        'post_shares',
+        'post_saves',
+        'post_reach',
+        'visibility',
+        'embed_code'
+    )
     # list_display_links = ('campaign', )
 
     # add_fields = ('url', 'campaign', 'date', 'likes', 'comments',
@@ -151,11 +179,26 @@ class FacebookPostAdmin(admin.ModelAdmin):
 @admin.register(TwitterPost)
 class TwitterPostAdmin(admin.ModelAdmin):
     exclude = ('platform', 'post_type')
-    list_display = ('url', 'campaign', 'link_to_camp', 'upload_date', 'visibility', 'pre_fetched', 'alive', 'likes', 'comments')
+    # list_display = ('url', 'campaign', 'link_to_camp', 'upload_date',
+    #                 'visibility', 'pre_fetched', 'alive', 'likes', 'comments')
 
     readonly_fields = ('date', 'link_to_camp')
     # fields = ('url', 'campaign', 'link_to_camp', 'upload_date', 'pre_fetched', 'likes', 'comments',
     #           'post_shares', 'post_saves', 'post_reach', 'embed_code', 'visibility', 'alt_google_photo_url')
+
+    list_display = (
+        'url',
+        'campaign',
+        'link_to_camp',
+        'upload_date',
+        'post_username',
+        'alive',
+        # 'pre_fetched',
+        'likes',
+        'comments',
+        'post_shares',
+        'visibility'
+    )
 
     fields = (
         'alive',
@@ -166,7 +209,7 @@ class TwitterPostAdmin(admin.ModelAdmin):
         'post_username',
         'account_name',
         'upload_date',
-        'like',
+        'likes',
         'comments',
         'post_shares',
         'embed_code',
