@@ -69,12 +69,17 @@ def in_post_filler(post_pk):
     post.pre_fetched = True
     post.save()
 
+    return data
+
 
 def tw_post_filler(post_pk):
     post = TwitterPost.objects.get(pk=post_pk)
     data = tw_post.get_tw_post_details(post.url)
 
-    if data["error"] is not None:
+    pprint(data)
+    print(data["error"])
+
+    if data["error"] is None:
         data = data["result"]
 
         post.alive = True
@@ -82,8 +87,9 @@ def tw_post_filler(post_pk):
         post.comments = data["comments"]
         post.post_username = data["username"]
         post.caption = data["caption"]
-        post.upload_date = data["timestamp"]
+        post.upload_date = datetime.strptime(data["timestamp"], "%Y-%m-%d %H:%M:%S")
         post.account_name = data["account_name"]
+        post.post_shares = data["retweets"]
 
         curr_media = post.medias.all()
         nodes = data["urls"]
@@ -93,22 +99,25 @@ def tw_post_filler(post_pk):
         # if data["view_count"] == None and nodes == []:
         #     post.medias.all().delete()
 
-        if data["view_count"] == None and len(nodes) > 0:
+        if data["total_views"] == None and len(nodes) > 0:
             for node in nodes:
-                if node["is_video"]:
-                    media_obj = Media.objects.create(
-                        parent_post=post, url=node["media_url"], key=node["media_key"], media_type="post")
-                    media_obj.save()
+                # if not node["is_video"]:
+                media_obj = Media.objects.create(
+                    parent_post=post, url=node["media_url"], key=node["media_key"], media_type="post")
+                media_obj.save()
 
-        elif (not data["view_count"] == None) and len(nodes) > 0:
+        elif (not data["total_views"] == None) and len(nodes) > 0:
+            node = nodes[0]
             media_obj = Media.objects.create(
-                parent_post=post, url=node["media_url"], key=node["media_key"], media_type="video", media_views=data["view_count"])
+                parent_post=post, url=node["media_url"], key=node["media_key"], media_type="video", media_views=data["total_views"])
             media_obj.save()
 
     else:
         post.alive = False
 
+    post.pre_fetched = True
     post.save()
+    return data
 
 
 def fb_post_filler(post_pk):

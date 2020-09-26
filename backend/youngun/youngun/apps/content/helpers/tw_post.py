@@ -1,13 +1,11 @@
 import requests
 import json
-from pprint import pprint
 from datetime import datetime, timedelta
 import pytz
 import re
 import dateutil.parser
 
 from django.conf import settings
-
 
 class TwitterPostScraper:
 
@@ -23,7 +21,7 @@ class TwitterPostScraper:
 
     def get_timestamp(self):
         dt = dateutil.parser.parse(self.resp.get('data')[0].get('created_at'))
-        return dt.astimezone(pytz.timezone("Asia/Kolkata"))
+        return datetime.strftime(dt.astimezone(pytz.timezone("Asia/Kolkata")), "%Y-%m-%d %H:%M:%S")
 
     def get_caption(self):
         return self.resp['data'][0].get('text')
@@ -47,7 +45,9 @@ class TwitterPostScraper:
                 'public_metrics').get('view_count')
             media_obj = {
                 'media_url': self.resp.get('includes').get('media')[0].get('preview_image_url'),
-                'media_key': self.resp.get('includes').get('media')[0].get('media_key')
+                'media_key': self.resp.get('includes').get('media')[0].get('media_key'),
+                'is_video': True,
+                'view_count': views
             }
             url.append(media_obj)
         else:
@@ -55,7 +55,8 @@ class TwitterPostScraper:
             for i in self.resp.get('includes').get('media'):
                 media_obj = {
                     'media_url': i.get('url'),
-                    'media_key': i.get('media_key')
+                    'media_key': i.get('media_key'),
+                    'is_video': False
                 }
                 url.append(media_obj)
         return views, url
@@ -69,8 +70,8 @@ class TwitterPostScraper:
             'caption': self.get_caption(),
             'comments': self.get_replies(),
             'retweets': self.get_retweet(),
-            'total_views': self.get_media()[0],
-            'urls': self.get_media()[1],
+            'total_views': self.get_media()[0] if self.media_exists() else None,
+            'urls': self.get_media()[1] if self.media_exists() else [],
         }
         self.data = {**self.data, **X}
         return self.data
@@ -101,5 +102,5 @@ def get_tw_post_details(post_link):
 
         return {"error": None, "result": data}
     except Exception as e:
-        print(e)
-        return {"error": "An error occurred!!", "result": None, "link": post_link}
+        # print(e)
+        return {"error": "An error occurred!!", "result": None, "link": post_link, "msg": str(e)}
