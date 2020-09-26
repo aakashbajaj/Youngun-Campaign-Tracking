@@ -71,21 +71,33 @@ def fetch_in_post(sender, instance, *args, **kwargs):
 
     
 
-# @receiver(post_save, sender=TwitterPost)
-# def fetch_tw_post(sender, instance, *args, **kwargs):
-#     fill_tw_post(instance.pk)
+@receiver(post_save, sender=TwitterPost)
+def fetch_tw_post(sender, instance, *args, **kwargs):
+    if not instance:
+        return
+
+    if not instance.pre_fetched:
+        fill_tw_post(instance.pk)
 
 
-# @receiver(post_save, sender=FacebookPost)
-# def fetch_fb_post(sender, instance, *args, **kwargs):
-#     fill_fb_post(instance.pk)
+@receiver(post_save, sender=FacebookPost)
+def fetch_fb_post(sender, instance, *args, **kwargs):
+    if not instance:
+        return
+
+    if not instance.pre_fetched:
+        fill_fb_post(instance.pk)
 
 
-# @receiver(post_save, sender=Post)
-# def fetch_insta_post(sender, instance, *args, **kwargs):
-#     if instance.platform == "in":
-#         fill_in_post(instance.pk)
-#     if instance.platform == "in":
-#         fill_tw_post(instance.pk)
-#     if instance.platform == "in":
-#         fill_fb_post(instance.pk)
+@receiver(post_save, sender=Post)
+def fetch_insta_post(sender, instance, *args, **kwargs):
+    if not instance:
+        return
+
+    if not instance.pre_fetched:
+        if instance.platform == "in":
+            fill_in_post(instance.pk)
+        if instance.platform == "in":
+            fill_tw_post(instance.pk)
+        if instance.platform == "in":
+            fill_fb_post(instance.pk)
