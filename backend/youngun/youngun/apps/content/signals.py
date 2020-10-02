@@ -1,9 +1,10 @@
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 
 import requests
 
-from .models import Post, PostVisibility, InstagramPost, TwitterPost, FacebookPost
+from youngun.apps.content.models import Post, PostVisibility, InstagramPost, TwitterPost, FacebookPost
+from youngun.apps.content.tasks import fill_in_post, fill_tw_post, fill_fb_post
 
 
 @receiver(pre_save, sender=InstagramPost)
@@ -58,3 +59,45 @@ def save_facebook_info(sender, instance, *args, **kwargs):
             instance.post_type = "p"
 
         instance.embed_code = ""
+
+
+@receiver(post_save, sender=InstagramPost)
+def fetch_in_post(sender, instance, *args, **kwargs):
+    if not instance:
+        return
+
+    if not instance.pre_fetched:
+        fill_in_post(instance.pk)
+
+    
+
+@receiver(post_save, sender=TwitterPost)
+def fetch_tw_post(sender, instance, *args, **kwargs):
+    if not instance:
+        return
+
+    if not instance.pre_fetched:
+        fill_tw_post(instance.pk)
+
+
+@receiver(post_save, sender=FacebookPost)
+def fetch_fb_post(sender, instance, *args, **kwargs):
+    if not instance:
+        return
+
+    if not instance.pre_fetched:
+        fill_fb_post(instance.pk)
+
+
+@receiver(post_save, sender=Post)
+def fetch_insta_post(sender, instance, *args, **kwargs):
+    if not instance:
+        return
+
+    if not instance.pre_fetched:
+        if instance.platform == "in":
+            fill_in_post(instance.pk)
+        if instance.platform == "in":
+            fill_tw_post(instance.pk)
+        if instance.platform == "in":
+            fill_fb_post(instance.pk)

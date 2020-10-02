@@ -10,5 +10,6 @@ def send_invite_mail(email, campaign_name, user_name):
     msg = "Hey!\n\nYou've been invited to view #{0} campaign by {1}.\n\nPlease login using your work mail ID on our portal https://tracking.youngun.in".format(
         campaign_name, user_name)
     subj = "{0} Meme Campaign Invite".format(campaign_name)
+    opts = {'group': "invite-email"}
     async_task('django.core.mail.send_mail', subj,
-               msg, "support@youngun.in", [email])
+               msg, "support@youngun.in", [email], q_options=opts)

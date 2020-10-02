@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 from django.utils.html import format_html
 
-from .models import InstagramPost, FacebookPost, TwitterPost, Post, Story, InstagramStory, FacebookStory, TwitterStory
+from .models import Media, InstagramPost, FacebookPost, TwitterPost, Post, Story, InstagramStory, FacebookStory, TwitterStory
 from youngun.apps.campaigns.models import Campaign
 
 # class CampaignFilter(admin.SimpleListFilter):
@@ -21,6 +21,14 @@ def custom_titled_filter(title):
     return Wrapper
 
 
+class MediaInline(admin.TabularInline):
+    model = Media
+    extra = 0
+
+    verbose_name = "Post Media"
+    verbose_name_plural = "Post Medias"
+
+
 @admin.register(Story)
 class StoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'campaign', 'platform', 'date')
@@ -34,12 +42,20 @@ class StoryAdmin(admin.ModelAdmin):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('url', 'campaign', 'platform', 'date', 'likes', 'comments',
+    list_display = ('url', 'campaign', 'platform', 'date', 'alive', 'likes', 'comments',
                     'post_shares', 'post_saves', 'post_reach')
+
+    inlines = [
+        MediaInline
+    ]
 
     list_filter = [
         'platform',
         ('campaign__name', custom_titled_filter("Campaign")),
+    ]
+
+    inlines = [
+        MediaInline
     ]
 
     save_on_top = True
@@ -48,12 +64,39 @@ class PostAdmin(admin.ModelAdmin):
 @admin.register(InstagramPost)
 class InstagramPostAdmin(admin.ModelAdmin):
     exclude = ('platform', 'post_type')
-    list_display = ('url', 'campaign', 'link_to_camp', 'date', 'post_username', 'visibility', 'likes', 'comments',
-                    'post_shares', 'post_saves', 'post_reach')
+    list_display = (
+        'url',
+        'campaign',
+        'link_to_camp',
+        'upload_date',
+        'post_username',
+        # 'pre_fetched',
+        'alive',
+        'visibility',
+        'likes',
+        'comments'
+    )
 
     readonly_fields = ('date', 'link_to_camp')
-    fields = ('url', 'campaign', 'link_to_camp', 'date', 'post_username', 'visibility', 'alt_google_photo_url',
-              'likes', 'comments', 'post_shares', 'post_saves', 'post_reach', 'embed_code')
+    fields = (
+        'alive',
+        'url',
+        'campaign',
+        'link_to_camp',
+        'upload_date',
+        'post_username',
+        'account_name',
+        'alt_google_photo_url',
+        'pre_fetched',
+        'caption',
+        'likes',
+        'comments',
+        'post_shares',
+        'post_saves',
+        'post_reach',
+        'visibility',
+        'embed_code'
+    )
     # list_display_links = ('campaign', )
 
     # add_fields = ('url', 'campaign', 'date', 'likes', 'comments',
@@ -67,6 +110,10 @@ class InstagramPostAdmin(admin.ModelAdmin):
     search_fields = ('post_username', 'url')
 
     save_on_top = True
+
+    inlines = [
+        MediaInline
+    ]
 
     def link_to_camp(self, obj):
         link = reverse("admin:campaigns_campaign_change",
@@ -96,7 +143,7 @@ class FacebookPostAdmin(admin.ModelAdmin):
                     'post_shares', 'post_saves', 'post_reach')
 
     readonly_fields = ('date', 'link_to_camp')
-    fields = ('url', 'campaign', 'link_to_camp', 'date', 'post_type', 'likes', 'comments',
+    fields = ('url', 'campaign', 'link_to_camp', 'date', 'post_type', 'pre_fetched', 'likes', 'comments',
               'post_shares', 'post_saves', 'post_reach',  'visibility', 'alt_google_photo_url')
     # list_display_links = ('campaign', )
 
@@ -132,12 +179,42 @@ class FacebookPostAdmin(admin.ModelAdmin):
 @admin.register(TwitterPost)
 class TwitterPostAdmin(admin.ModelAdmin):
     exclude = ('platform', 'post_type')
-    list_display = ('url', 'campaign', 'link_to_camp', 'date', 'visibility', 'likes', 'comments',
-                    'post_shares', 'post_saves', 'post_reach')
+    # list_display = ('url', 'campaign', 'link_to_camp', 'upload_date',
+    #                 'visibility', 'pre_fetched', 'alive', 'likes', 'comments')
 
     readonly_fields = ('date', 'link_to_camp')
-    fields = ('url', 'campaign', 'link_to_camp', 'date', 'likes', 'comments',
-              'post_shares', 'post_saves', 'post_reach', 'embed_code', 'visibility', 'alt_google_photo_url')
+    # fields = ('url', 'campaign', 'link_to_camp', 'upload_date', 'pre_fetched', 'likes', 'comments',
+    #           'post_shares', 'post_saves', 'post_reach', 'embed_code', 'visibility', 'alt_google_photo_url')
+
+    list_display = (
+        'url',
+        'campaign',
+        'link_to_camp',
+        'upload_date',
+        'post_username',
+        'alive',
+        # 'pre_fetched',
+        'likes',
+        'comments',
+        'post_shares',
+        'visibility'
+    )
+
+    fields = (
+        'alive',
+        'pre_fetched',
+        'url',
+        'campaign',
+        'link_to_camp',
+        'post_username',
+        'account_name',
+        'upload_date',
+        'likes',
+        'comments',
+        'post_shares',
+        'embed_code',
+        'alt_google_photo_url'
+    )
     # list_display_links = ('campaign', )
 
     # add_fields = ('url', 'campaign', 'date', 'likes', 'comments',
@@ -148,6 +225,10 @@ class TwitterPostAdmin(admin.ModelAdmin):
     ]
 
     save_on_top = True
+
+    inlines = [
+        MediaInline
+    ]
 
     def link_to_camp(self, obj):
         link = reverse("admin:campaigns_campaign_change",
