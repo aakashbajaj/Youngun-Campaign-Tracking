@@ -4,7 +4,7 @@ from datetime import datetime
 from youngun.apps.content.helpers import in_post, fb_post, tw_post
 from youngun.apps.content.models import InstagramPost, FacebookPost, TwitterPost, Post, Media
 
-from youngun.apps.core.utils import sendlogs
+# from youngun.apps.core.utils import sendlogs
 
 
 def in_post_filler(post_pk):
