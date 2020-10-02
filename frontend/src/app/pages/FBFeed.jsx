@@ -49,7 +49,7 @@ export default class FBFeed extends Component {
                   <div
                     className="fb-post"
                     data-href={`${post.url}`}
-                    data-width="50"
+                    data-width="500"
                   />
                 ) : (
                   <div
