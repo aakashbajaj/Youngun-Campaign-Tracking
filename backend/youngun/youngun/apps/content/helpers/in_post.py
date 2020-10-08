@@ -5,6 +5,8 @@ from datetime import datetime
 import re
 import dateutil.parser
 
+from django.conf import settings
+
 
 class InstagramPostScraper:
 
@@ -116,6 +118,13 @@ class InstagramPostScraper:
 
         return self.data
 
+def get_header():
+
+    return {
+        'user_agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36",
+        'accept': 'application/json',
+        'cookie': settings.INSTA_COOKIE
+    }
 
 def get_in_post_details(post_link):
     try:

@@ -191,3 +191,5 @@ SENDER_ID = get_secret("SENDER_ID")
 TWITTER_AUTH_TOKEN = get_secret("TWITTER_AUTH_TOKEN")
 
 SC_API_TOKEN = get_secret("SC_API_TOKEN")
+
+INSTA_COOKIE = get_secret("INSTA_COOKIE")

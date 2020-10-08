@@ -131,8 +131,9 @@ class InstagramPostAdmin(admin.ModelAdmin):
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         print(request)
         if db_field.name == "campaign":
-            kwargs["queryset"] = Campaign.objects.filter(
-                staff_profiles=request.user.usermanager_staffprofile)
+            if not request.user.is_superuser:
+                kwargs["queryset"] = Campaign.objects.filter(
+                    staff_profiles=request.user.usermanager_staffprofile)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
@@ -171,8 +172,9 @@ class FacebookPostAdmin(admin.ModelAdmin):
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "campaign":
-            kwargs["queryset"] = Campaign.objects.filter(
-                staff_profiles=request.user.usermanager_staffprofile)
+            if not request.user.is_superuser:
+                kwargs["queryset"] = Campaign.objects.filter(
+                    staff_profiles=request.user.usermanager_staffprofile)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
@@ -245,8 +247,9 @@ class TwitterPostAdmin(admin.ModelAdmin):
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "campaign":
-            kwargs["queryset"] = Campaign.objects.filter(
-                staff_profiles=request.user.usermanager_staffprofile)
+            if not request.user.is_superuser:
+                kwargs["queryset"] = Campaign.objects.filter(
+                    staff_profiles=request.user.usermanager_staffprofile)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
@@ -276,8 +279,9 @@ class InstagramStoryAdmin(admin.ModelAdmin):
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "campaign":
-            kwargs["queryset"] = Campaign.objects.filter(
-                staff_profiles=request.user.usermanager_staffprofile)
+            if not request.user.is_superuser:
+                kwargs["queryset"] = Campaign.objects.filter(
+                    staff_profiles=request.user.usermanager_staffprofile)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
@@ -307,8 +311,9 @@ class FacebookStoryAdmin(admin.ModelAdmin):
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "campaign":
-            kwargs["queryset"] = Campaign.objects.filter(
-                staff_profiles=request.user.usermanager_staffprofile)
+            if not request.user.is_superuser:
+                kwargs["queryset"] = Campaign.objects.filter(
+                    staff_profiles=request.user.usermanager_staffprofile)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
@@ -338,6 +343,7 @@ class TwitterStoryAdmin(admin.ModelAdmin):
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "campaign":
-            kwargs["queryset"] = Campaign.objects.filter(
-                staff_profiles=request.user.usermanager_staffprofile)
+            if not request.user.is_superuser:
+                kwargs["queryset"] = Campaign.objects.filter(
+                    staff_profiles=request.user.usermanager_staffprofile)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
