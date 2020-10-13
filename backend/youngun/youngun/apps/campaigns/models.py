@@ -92,7 +92,7 @@ class Campaign(models.Model):
         return self.posts.filter(platform="fb").count()
     @property
     def live_fb_stories_cnt(self):
-        return self.posts.filter(platform="fb").count()
+        return self.stories.filter(platform="fb").count()
     @property
     def live_in_posts_cnt(self):
         return self.posts.filter(platform="in").count()
@@ -101,7 +101,7 @@ class Campaign(models.Model):
         return self.stories.filter(platform="in").count()
     @property
     def live_tw_posts_cnt(self):
-        return self.stories.filter(platform="tw").count()
+        return self.posts.filter(platform="tw").count()
     @property
     def live_tw_stories_cnt(self):
         return self.stories.filter(platform="tw").count()
