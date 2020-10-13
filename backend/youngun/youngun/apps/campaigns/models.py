@@ -87,6 +87,25 @@ class Campaign(models.Model):
     tw_posts = models.IntegerField(_("twitter posts"), default=0)
     tw_stories = models.IntegerField(_("twitter stories"), default=0)
 
+    @property
+    def live_fb_posts_cnt(self):
+        return self.posts.filter(platform="in").count()
+    @property
+    def live_fb_stories_cnt(self):
+        return self.posts.filter(platform="fb").count()
+    @property
+    def live_in_posts_cnt(self):
+        return self.posts.filter(platform="tw").count()
+    @property
+    def live_in_stories_cnt(self):
+        return self.stories.filter(platform="in").count()
+    @property
+    def live_tw_posts_cnt(self):
+        return self.stories.filter(platform="fb").count()
+    @property
+    def live_tw_stories_cnt(self):
+        return self.stories.filter(platform="tw").count()
+
     live_fb_posts = models.IntegerField(_("live facebook posts"), default=0)
     live_fb_stories = models.IntegerField(
         _("live facebook stories"), default=0)

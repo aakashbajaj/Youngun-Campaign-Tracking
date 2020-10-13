@@ -52,6 +52,15 @@ export class Dashboard extends Component {
 
     live_tw_posts: "",
     live_tw_stories: "",
+
+    live_fb_posts_cnt: "",
+    live_fb_stories_cnt: "",
+
+    live_in_posts_cnt: "",
+    live_in_stories_cnt: "",
+
+    live_tw_posts_cnt: "",
+    live_tw_stories_cnt: "",
   };
   componentDidMount() {
     // this.setState({ currentCampaign: this.context.currentCampaignInView });
@@ -122,13 +131,13 @@ export class Dashboard extends Component {
             <StoryMetric
               platform="in"
               PostMainText={`Posts Live: ${this.zeroToDash(
-                liveCampMetrics.live_in_posts
+                liveCampMetrics.live_in_posts_cnt
               )}`}
               PostSubText={`Total Posts: ${this.zeroToDash(
                 liveCampMetrics.in_posts
               )}`}
               StoryMainText={`Stories Live: ${this.zeroToDash(
-                liveCampMetrics.live_in_stories
+                liveCampMetrics.live_in_stories_cnt
               )}`}
               StorySubText={`Total Stories: ${this.zeroToDash(
                 liveCampMetrics.in_stories
@@ -140,13 +149,13 @@ export class Dashboard extends Component {
             <StoryMetric
               platform="fb"
               PostMainText={`Posts Live: ${this.zeroToDash(
-                liveCampMetrics.live_fb_posts
+                liveCampMetrics.live_fb_posts_cnt
               )}`}
               PostSubText={`Total Posts: ${this.zeroToDash(
                 liveCampMetrics.fb_posts
               )}`}
               StoryMainText={`Stories Live: ${this.zeroToDash(
-                liveCampMetrics.live_fb_stories
+                liveCampMetrics.live_fb_stories_cnt
               )}`}
               StorySubText={`Total Stories: ${this.zeroToDash(
                 liveCampMetrics.fb_stories
@@ -158,13 +167,13 @@ export class Dashboard extends Component {
             <StoryMetric
               platform="tw"
               PostMainText={`Posts Live: ${this.zeroToDash(
-                liveCampMetrics.live_tw_posts
+                liveCampMetrics.live_tw_posts_cnt
               )}`}
               PostSubText={`Total Posts: ${this.zeroToDash(
                 liveCampMetrics.tw_posts
               )}`}
               StoryMainText={`Stories Live: ${this.zeroToDash(
-                liveCampMetrics.live_tw_stories
+                liveCampMetrics.live_tw_stories_cnt
               )}`}
               StorySubText={`Total Stories: ${this.zeroToDash(
                 liveCampMetrics.tw_stories
