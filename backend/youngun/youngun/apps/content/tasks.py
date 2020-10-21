@@ -4,8 +4,7 @@ from youngun.apps.content.utils.post_filler import in_post_filler, tw_post_fille
 from youngun.apps.campaigns.models import Campaign
 
 from django_q.tasks import async_task, schedule
-
-# Cron Jobs
+from django.conf import settings
 
 
 def update_all_active_camp_metrics():
@@ -28,12 +27,17 @@ def update_all_camp_metrics():
 def extract_username_from_posts():
     for post in InstagramPost.objects.all():
         post_url = post.url
-        fetch_url = "https://api.instagram.com/oembed"
+        fetch_url = "https://graph.facebook.com/v8.0/instagram_oembed"
         params = {
             'url': post_url
         }
 
-        res = requests.get(fetch_url, params=params)
+        headers = {
+            'Authorization': "Bearer " + settings.INSTA_AUTH_TOKEN
+        }
+
+        res = requests.get(fetch_url, params=params, headers=headers)
+        
         if res.status_code == 404:
             post.visibility = PostVisibility.PRIVATE
 
