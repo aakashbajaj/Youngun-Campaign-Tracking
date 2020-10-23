@@ -94,7 +94,7 @@ def fetch_insta_post(sender, instance, *args, **kwargs):
         if not instance.pre_fetched:
             if instance.platform == "in":
                 fill_in_post(instance.pk)
-            if instance.platform == "in":
+            if instance.platform == "tw":
                 fill_tw_post(instance.pk)
-            if instance.platform == "in":
+            if instance.platform == "fb":
                 fill_fb_post(instance.pk)
