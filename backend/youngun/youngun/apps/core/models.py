@@ -9,7 +9,7 @@ from django.utils.translation import gettext as _
 
 class MasterLogger(models.Model):
     user = models.OneToOneField("authentication.User", verbose_name=_(
-        "User"), on_delete=models.DO_NOTHING, related_name="masterlogger")
+        "User"), on_delete=models.CASCADE, related_name="masterlogger")
     email = models.EmailField(_("User Email"), max_length=254)
     # full_name = models.CharField(
     #     _("User Name"), max_length=255, default="", blank=True)
