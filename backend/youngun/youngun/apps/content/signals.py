@@ -6,6 +6,8 @@ import requests
 from youngun.apps.content.models import Post, PostVisibility, InstagramPost, TwitterPost, FacebookPost
 from youngun.apps.content.tasks import fill_in_post, fill_tw_post, fill_fb_post
 
+from django.conf import settings
+
 
 @receiver(pre_save, sender=InstagramPost)
 @receiver(pre_save, sender=Post)
@@ -13,12 +15,15 @@ def fetch_insta_embed_code(sender, instance, *args, **kwargs):
     if instance and instance.platform == "in":
         if not instance.embed_code.startswith("<blockquote"):
             post_url = instance.url
-            fetch_url = "https://api.instagram.com/oembed"
+            fetch_url = "https://graph.facebook.com/v8.0/instagram_oembed"
             params = {
                 'url': post_url
             }
+            headers = {
+                'Authorization': "Bearer " + settings.INSTA_AUTH_TOKEN
+            }
 
-            res = requests.get(fetch_url, params=params)
+            res = requests.get(fetch_url, params=params, headers=headers)
             if res.status_code == 404:
                 instance.visibility = PostVisibility.PRIVATE
 
