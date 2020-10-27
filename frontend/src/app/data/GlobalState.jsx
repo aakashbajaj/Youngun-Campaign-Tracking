@@ -59,7 +59,7 @@ export default class GlobalState extends Component {
 
         API.get(`/api/campaigns/${campaign.slug}/metrics`)
           .then((resp) => {
-            console.log("Metrics Data:")
+            console.log("Metrics Data:");
             console.log(resp.data);
             this.addLiveCampaignData(campaign.slug, resp.data.campaign);
           })
@@ -69,7 +69,7 @@ export default class GlobalState extends Component {
 
         API.get(`/api/campaigns/${campaign.slug}/feed`)
           .then((resp) => {
-            console.log("Feed Data:")
+            console.log("Feed Data:");
             console.log(resp.data);
             this.addLiveCampaignFeed(campaign.slug, resp.data.campaign);
           })
@@ -79,7 +79,7 @@ export default class GlobalState extends Component {
 
         API.get(`/api/campaigns/${campaign.slug}/report`)
           .then((resp) => {
-            console.log("Report Data:")
+            console.log("Report Data:");
             console.log(resp.data);
             this.addCampaignReportData(campaign.slug, resp.data.campaign);
           })
@@ -109,12 +109,12 @@ export default class GlobalState extends Component {
     this.setState(newState);
   }
 
-  sortFeedList(feedList) {
+  sortFeedList(feedList, direction = 1) {
     return feedList.sort(function (a, b) {
-      if (a.date == b.date) {
-        return b.id < a.id ? -1 : 1;
+      if (a.date === b.date) {
+        return direction * (b.id < a.id ? -1 : 1);
       } else {
-        return new Date(b.date) < new Date(a.date) ? -1 : 1;
+        return direction * (new Date(b.date) < new Date(a.date) ? -1 : 1);
       }
     });
   }
@@ -124,9 +124,9 @@ export default class GlobalState extends Component {
     // data.fb_posts = this.sortFeedList(data.fb_posts);
     // data.tw_posts = this.sortFeedList(data.tw_posts);
 
-    // data.instagram = this.sortFeedList(data.instagram);
-    // data.facebook = this.sortFeedList(data.facebook);
-    // data.twitter = this.sortFeedList(data.twitter);
+    data.instagram = this.sortFeedList(data.instagram);
+    data.facebook = this.sortFeedList(data.facebook);
+    data.twitter = this.sortFeedList(data.twitter);
 
     const newLiveCampFeed = {
       ...this.state.liveCampaignFeed,
@@ -140,6 +140,7 @@ export default class GlobalState extends Component {
   }
 
   addCampaignReportData(slug, data) {
+    data.posts = this.sortFeedList(data.posts, -1);
 
     const newCampaignReportData = {
       ...this.state.campaignReportData,
