@@ -59,6 +59,7 @@ export default class GlobalState extends Component {
 
         API.get(`/api/campaigns/${campaign.slug}/metrics`)
           .then((resp) => {
+            console.log("Metrics Data:")
             console.log(resp.data);
             this.addLiveCampaignData(campaign.slug, resp.data.campaign);
           })
@@ -68,8 +69,19 @@ export default class GlobalState extends Component {
 
         API.get(`/api/campaigns/${campaign.slug}/feed`)
           .then((resp) => {
+            console.log("Feed Data:")
             console.log(resp.data);
             this.addLiveCampaignFeed(campaign.slug, resp.data.campaign);
+          })
+          .catch((err) => {
+            console.log(err.response);
+          });
+
+        API.get(`/api/campaigns/${campaign.slug}/report`)
+          .then((resp) => {
+            console.log("Report Data:")
+            console.log(resp.data);
+            this.addCampaignReportData(campaign.slug, resp.data.campaign);
           })
           .catch((err) => {
             console.log(err.response);
@@ -112,9 +124,9 @@ export default class GlobalState extends Component {
     // data.fb_posts = this.sortFeedList(data.fb_posts);
     // data.tw_posts = this.sortFeedList(data.tw_posts);
 
-    data.instagram = this.sortFeedList(data.instagram);
-    data.facebook = this.sortFeedList(data.facebook);
-    data.twitter = this.sortFeedList(data.twitter);
+    // data.instagram = this.sortFeedList(data.instagram);
+    // data.facebook = this.sortFeedList(data.facebook);
+    // data.twitter = this.sortFeedList(data.twitter);
 
     const newLiveCampFeed = {
       ...this.state.liveCampaignFeed,
@@ -123,6 +135,19 @@ export default class GlobalState extends Component {
     const newState = {
       ...this.state,
       liveCampaignFeed: newLiveCampFeed,
+    };
+    this.setState(newState);
+  }
+
+  addCampaignReportData(slug, data) {
+
+    const newCampaignReportData = {
+      ...this.state.campaignReportData,
+      [slug]: data,
+    };
+    const newState = {
+      ...this.state,
+      campaignReportData: newCampaignReportData,
     };
     this.setState(newState);
   }
