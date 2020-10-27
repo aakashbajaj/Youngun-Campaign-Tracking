@@ -49,6 +49,7 @@ class Post(models.Model):
     post_shares = models.IntegerField(_("post_shares"), default=0)
     post_saves = models.IntegerField(_("post_saves"), default=0)
     post_reach = models.IntegerField(_("post_reach"), default=0)
+    post_engagement = models.IntegerField(_("post_engagement"), default=0)
     date = models.DateTimeField(_("posted date"), auto_now_add=True)
 
     alive = models.BooleanField(_("Post Health"), default=True)

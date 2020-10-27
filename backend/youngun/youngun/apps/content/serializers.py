@@ -73,6 +73,7 @@ class PostReportSerializer(ModelSerializer):
             'post_shares',
             'post_saves',
             'post_reach',
+            'post_engagement',
         ]
 
 
@@ -87,6 +88,7 @@ class InstagramPostReportSerializer(ModelSerializer):
             'post_shares',
             'post_saves',
             'post_reach',
+            'post_engagement',
         ]
 
 
@@ -101,6 +103,7 @@ class FacebookPostReportSerializer(ModelSerializer):
             'post_shares',
             'post_saves',
             'post_reach',
+            'post_engagement',
         ]
 
 
@@ -115,4 +118,5 @@ class TwitterPostReportSerializer(ModelSerializer):
             'post_shares',
             'post_saves',
             'post_reach',
+            'post_engagement',
         ]
