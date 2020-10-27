@@ -55,6 +55,7 @@ class CampaignAdmin(admin.ModelAdmin):
         'company_name',
         'hashtag',
         'status',
+        'campaign_module',
         'start_date',
         'end_date',
         # 'posts',
@@ -72,12 +73,13 @@ class CampaignAdmin(admin.ModelAdmin):
         'company_name',
         'hashtag',
         'status',
+        'campaign_module',
         'start_date',
         'end_date',
         'slide_url',
     ]
 
-    list_filter = ['status']
+    list_filter = ['status', 'campaign_module']
     save_on_top = True
 
     def get_queryset(self, request):

@@ -11,8 +11,18 @@ class Status(models.TextChoices):
     COMPLETED = 'completed'
 
 
+class Module(models.TextChoices):
+    V1 = 'v1'
+    V2 = 'v2'
+
+
 class Campaign(models.Model):
+
+    campaign_module = models.CharField(
+        _("Campaign Module"), choices=Module.choices, max_length=10, default=Module.V1)
+    
     name = models.CharField(_("Name"), max_length=255)
+
     hashtag = models.CharField(_("Hashtag"), max_length=100)
     company_name = models.CharField(
         _("Company Name"), blank=True, null=True, max_length=200)
@@ -88,20 +98,33 @@ class Campaign(models.Model):
     tw_stories = models.IntegerField(_("twitter stories"), default=0)
 
     @property
+    def live_posts_cnt(self):
+        return self.posts.all().count()
+
+    @property
+    def live_stories_cnt(self):
+        return self.stories.all().count()
+
+    @property
     def live_fb_posts_cnt(self):
         return self.posts.filter(platform="fb").count()
+
     @property
     def live_fb_stories_cnt(self):
         return self.stories.filter(platform="fb").count()
+
     @property
     def live_in_posts_cnt(self):
         return self.posts.filter(platform="in").count()
+
     @property
     def live_in_stories_cnt(self):
         return self.stories.filter(platform="in").count()
+
     @property
     def live_tw_posts_cnt(self):
         return self.posts.filter(platform="tw").count()
+
     @property
     def live_tw_stories_cnt(self):
         return self.stories.filter(platform="tw").count()
