@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
 from youngun.apps.usermanager.serializers import BrandSerializer
-from youngun.apps.content.serializers import InstagramPostDisplaySerializer, FacebookPostDisplaySerializer, TwitterPostDisplaySerializer, StoriesDisplaySerializer, InstagramPostReportSerializer, FacebookPostReportSerializer, TwitterPostReportSerializer
+from youngun.apps.content.serializers import InstagramPostDisplaySerializer, FacebookPostDisplaySerializer, TwitterPostDisplaySerializer, StoriesDisplaySerializer, InstagramPostReportSerializer, FacebookPostReportSerializer, TwitterPostReportSerializer, PostReportSerializer
 from .models import LiveCampaign, Campaign
 
 
@@ -94,14 +94,14 @@ class LiveCampaignFeedSerilaizer(ModelSerializer):
 
 
 class CampaignReportSerializer(ModelSerializer):
-    # posts = InstagramPostDisplaySerializer(many=True, read_only=True)
+    posts = PostReportSerializer(many=True, read_only=True)
 
-    instagram = InstagramPostReportSerializer(
-        source='get_instagram_posts', many=True, read_only=True)
-    facebook = FacebookPostReportSerializer(
-        source='get_facebook_posts', many=True, read_only=True)
-    twitter = TwitterPostReportSerializer(
-        source='get_twitter_posts', many=True, read_only=True)
+    # instagram = InstagramPostReportSerializer(
+    #     source='get_instagram_posts', many=True, read_only=True)
+    # facebook = FacebookPostReportSerializer(
+    #     source='get_facebook_posts', many=True, read_only=True)
+    # twitter = TwitterPostReportSerializer(
+    #     source='get_twitter_posts', many=True, read_only=True)
 
     # in_posts = InstagramPostDisplaySerializer(
     #     source='get_instagram_posts', many=True, read_only=True)
@@ -123,9 +123,9 @@ class CampaignReportSerializer(ModelSerializer):
         model = Campaign
         fields = [
             'name', 'company_name', 'hashtag', 'status', 'slug',
-            'instagram',
-            'facebook',
-            'twitter',
+            # 'instagram',
+            # 'facebook',
+            # 'twitter',
             # 'in_stories',
             # 'fb_stories',
             # 'tw_stories',
@@ -134,6 +134,7 @@ class CampaignReportSerializer(ModelSerializer):
             # 'tw_posts',
             # 'twitter_collection_url',
             # 'stories',
+            'posts',
             'num_posts',
             'num_stories',
             'post_stats',

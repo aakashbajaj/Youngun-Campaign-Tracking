@@ -61,6 +61,20 @@ class TwitterStoryDisplaySerializer(ModelSerializer):
         model = Story
         fields = ['id', 'url']
 
+class PostReportSerializer(ModelSerializer):
+    class Meta:
+        model = InstagramPost
+        fields = [
+            'date',
+            'url',
+            'platform',
+            'likes',
+            'comments',
+            'post_shares',
+            'post_saves',
+            'post_reach',
+        ]
+
 
 class InstagramPostReportSerializer(ModelSerializer):
     class Meta:
