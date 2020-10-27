@@ -7,6 +7,9 @@ export default class PostListTable extends Component {
 
   render() {
     var postsList = [];
+      if (this.context.currentCampaignInView === null || postsList === []) {
+        return <Spinner />;
+      }
     if (this.context.currentCampaignInView !== null) {
       if (this.context.campaignReportData !== null) {
         if (
@@ -24,10 +27,6 @@ export default class PostListTable extends Component {
           }
         }
       }
-    }
-
-    if (this.context.currentCampaignInView === null) {
-      return <Spinner />;
     }
 
     const childElements = postsList.map((post, idx) => {
@@ -66,7 +65,7 @@ export default class PostListTable extends Component {
           <h4 className="card-title">Post Statistics</h4>
           <p className="card-description"> Detailed engagement of each post</p>
           <div className="table-responsive">
-            <table className="table">
+            <table className="table table-hover table-striped">
               <thead>
                 <tr>
                   <th>S.No.</th>
