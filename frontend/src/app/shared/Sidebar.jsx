@@ -86,7 +86,18 @@ class Sidebar extends Component {
             </Link>
           </li>
 
-          {/* {this.context.campaigns[this.context.currentCampaignInView].status ===
+          {/* <li
+            className={
+              this.isPathActive("/report") ? "nav-item active" : "nav-item"
+            }
+          >
+            <Link className="nav-link" to="/report">
+              <i className="mdi mdi-fullscreen menu-icon"></i>
+              <span className="menu-title">Reporting</span>
+            </Link>
+          </li> */}
+
+          {this.context.currentCampaignInView != null && this.context.campaigns[this.context.currentCampaignInView].status ===
           "completed" ? (
             <li
               className={
@@ -95,10 +106,10 @@ class Sidebar extends Component {
             >
               <Link className="nav-link" to="/report">
                 <i className="mdi mdi-table-large menu-icon"></i>
-                <span className="menu-title">Report</span>
+                <span className="menu-title">Reporting</span>
               </Link>
             </li>
-          ) : null} */}
+          ) : null}
         </ul>
       </nav>
     );
