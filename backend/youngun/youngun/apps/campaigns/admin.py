@@ -8,7 +8,7 @@ from .forms import ImportPostForm
 # Register your models here.
 
 
-# class ProfileInline(admin.StackedInline):
+# class ProfileInline(admin.TabularInline):
 #     model = Profile.campaigns.through
 #     extra = 0
 #     max_num = 4
@@ -19,7 +19,7 @@ from .forms import ImportPostForm
 #         # return Profile.campaigns.through.all()
 
 
-class StaffProfileInline(admin.StackedInline):
+class StaffProfileInline(admin.TabularInline):
     model = StaffProfile.campaigns.through
     extra = 0
     # max_num = 4
@@ -33,7 +33,7 @@ class StaffProfileInline(admin.StackedInline):
     # return Profile.campaigns.through.all()
 
 
-class ClientProfileInline(admin.StackedInline):
+class ClientProfileInline(admin.TabularInline):
     model = ClientProfile.campaigns.through
     extra = 0
     # max_num = 4
