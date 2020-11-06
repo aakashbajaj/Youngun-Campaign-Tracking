@@ -55,7 +55,7 @@ def update_camp_post_metrics(camp_pk, camp_name):
         # Instagram post
         if post.platform == "in":
             insta_post_update(post.pk)
-            insta_post_insight_update(post.pk)
+            # insta_post_insight_update(post.pk)
 
         # Twitter Post
         if post.platform == "tw":
