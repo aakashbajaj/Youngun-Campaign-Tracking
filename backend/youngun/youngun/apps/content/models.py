@@ -49,6 +49,8 @@ class Post(models.Model):
     post_shares = models.IntegerField(_("post_shares"), default=0)
     post_saves = models.IntegerField(_("post_saves"), default=0)
     post_reach = models.IntegerField(_("post_reach"), default=0)
+    total_views = models.IntegerField(_("Total Views (for Video)"), default=0)
+    post_engagement = models.IntegerField(_("post_engagement"), default=0)
     date = models.DateTimeField(_("posted date"), auto_now_add=True)
 
     alive = models.BooleanField(_("Post Health"), default=True)
@@ -60,7 +62,7 @@ class Post(models.Model):
         _("post visibility"), choices=PostVisibility.choices, max_length=50, default='public')
 
     post_type = models.CharField(
-        _("post_type"), max_length=50, choices=[("p", "Post"), ("v", "Video")], null=True, blank=True)
+        _("post_type"), max_length=50, choices=[("p", "Post"), ("v", "Video"), ("a", "Album")], null=True, blank=True)
 
     def __str__(self):
         return self.url

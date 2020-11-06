@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import CampaignContext from "../data/CampaignContext";
-import Spinner from "../shared/Spinner";
+import CampaignContext from "../../data/CampaignContext";
+import Spinner from "../../shared/Spinner";
 
 import InfiniteScroll from "react-infinite-scroll-component";
 

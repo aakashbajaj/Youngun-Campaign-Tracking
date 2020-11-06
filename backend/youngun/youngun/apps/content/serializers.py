@@ -61,18 +61,38 @@ class TwitterStoryDisplaySerializer(ModelSerializer):
         model = Story
         fields = ['id', 'url']
 
+class PostReportSerializer(ModelSerializer):
+    class Meta:
+        model = InstagramPost
+        fields = [
+            'date',
+            'upload_date',
+            'url',
+            'platform',
+            'likes',
+            'comments',
+            'post_shares',
+            'post_saves',
+            'post_reach',
+            'post_engagement',
+            'total_views'
+        ]
+
 
 class InstagramPostReportSerializer(ModelSerializer):
     class Meta:
         model = InstagramPost
         fields = [
             'date',
+            'upload_date',
             'url',
             'likes',
             'comments',
             'post_shares',
             'post_saves',
             'post_reach',
+            'post_engagement',
+            'total_views'
         ]
 
 
@@ -81,12 +101,14 @@ class FacebookPostReportSerializer(ModelSerializer):
         model = FacebookPost
         fields = [
             'date',
+            'upload_date',
             'url',
             'likes',
             'comments',
             'post_shares',
             'post_saves',
             'post_reach',
+            'post_engagement',
         ]
 
 
@@ -95,10 +117,12 @@ class TwitterPostReportSerializer(ModelSerializer):
         model = TwitterPost
         fields = [
             'date',
+            'upload_date',
             'url',
             'likes',
             'comments',
             'post_shares',
             'post_saves',
             'post_reach',
+            'post_engagement',
         ]

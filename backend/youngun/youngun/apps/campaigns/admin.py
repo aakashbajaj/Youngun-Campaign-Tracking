@@ -55,6 +55,7 @@ class CampaignAdmin(admin.ModelAdmin):
         'company_name',
         'hashtag',
         'status',
+        'campaign_module',
         'start_date',
         'end_date',
         # 'posts',
@@ -72,12 +73,13 @@ class CampaignAdmin(admin.ModelAdmin):
         'company_name',
         'hashtag',
         'status',
+        'campaign_module',
         'start_date',
         'end_date',
         'slide_url',
     ]
 
-    list_filter = ['status']
+    list_filter = ['status', 'campaign_module']
     save_on_top = True
 
     def get_queryset(self, request):
@@ -141,15 +143,15 @@ class CampaignReportAdmin(admin.ModelAdmin):
         'status',
         'num_content_pieces',
         'num_posts',
-        'num_stories',
-        'post_stats',
+        'post_engagement',
         'post_shares',
         'post_saves',
+        'video_views',
         'post_reach',
+        'num_stories',
         'story_views',
-        'website_traffic',
         'cost_per_engagement',
-        'cost_per_post_impression',
+        'cost_per_reach',
         'total_post_engagement',
         'total_campaign_reach',
     )

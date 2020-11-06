@@ -7,8 +7,8 @@ from rest_framework.generics import RetrieveAPIView, CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from .serializers import CampaignDataSerializer, LiveCampaignMetricsSerializer, LiveCampaignFeedSerilaizer
-from .renderers import LiveCampaignMetricJSONRenderer, CampaignDataJSONRenderer
+from .serializers import CampaignDataSerializer, LiveCampaignMetricsSerializer, LiveCampaignFeedSerilaizer, CampaignReportSerializer
+from .renderers import LiveCampaignMetricJSONRenderer, CampaignDataJSONRenderer, CampaignReportJSONRenderer
 from .models import Campaign
 # Create your views here.
 
@@ -87,6 +87,22 @@ class LiveCampaignMetricsAPIView(RetrieveAPIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = LiveCampaignMetricsSerializer
     renderer_classes = (LiveCampaignMetricJSONRenderer, )
+
+    def retrieve(self, request, slug, *args, **kwargs):
+        try:
+            campaign = request.user.profile.campaigns.all().get(slug=slug)
+        except Campaign.DoesNotExist:
+            raise
+
+        serializer = self.serializer_class(campaign)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class CampaignReportAPIView(RetrieveAPIView):
+    permission_classes = (IsAuthenticated, )
+    serializer_class = CampaignReportSerializer
+    renderer_classes = (CampaignReportJSONRenderer, )
 
     def retrieve(self, request, slug, *args, **kwargs):
         try:

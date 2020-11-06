@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
 from youngun.apps.usermanager.serializers import BrandSerializer
-from youngun.apps.content.serializers import InstagramPostDisplaySerializer, FacebookPostDisplaySerializer, TwitterPostDisplaySerializer, StoriesDisplaySerializer
+from youngun.apps.content.serializers import InstagramPostDisplaySerializer, FacebookPostDisplaySerializer, TwitterPostDisplaySerializer, StoriesDisplaySerializer, InstagramPostReportSerializer, FacebookPostReportSerializer, TwitterPostReportSerializer, PostReportSerializer
 from .models import LiveCampaign, Campaign
 
 
@@ -13,7 +13,7 @@ class CampaignDataSerializer(ModelSerializer):
         fields = [
             'name', 'company_name', 'hashtag', 'status',
             'start_date', 'end_date',
-            'slide_url', 'live_google_sheet', 'slug',
+            'slide_url', 'live_google_sheet', 'slug', 'campaign_module'
         ]
 
 
@@ -90,4 +90,62 @@ class LiveCampaignFeedSerilaizer(ModelSerializer):
             # 'tw_posts',
             # 'twitter_collection_url',
             'stories',
+        ]
+
+
+class CampaignReportSerializer(ModelSerializer):
+    posts = PostReportSerializer(many=True, read_only=True)
+
+    # instagram = InstagramPostReportSerializer(
+    #     source='get_instagram_posts', many=True, read_only=True)
+    # facebook = FacebookPostReportSerializer(
+    #     source='get_facebook_posts', many=True, read_only=True)
+    # twitter = TwitterPostReportSerializer(
+    #     source='get_twitter_posts', many=True, read_only=True)
+
+    # in_posts = InstagramPostDisplaySerializer(
+    #     source='get_instagram_posts', many=True, read_only=True)
+    # fb_posts = FacebookPostDisplaySerializer(
+    #     source='get_facebook_posts', many=True, read_only=True)
+    # tw_posts = TwitterPostDisplaySerializer(
+    #     source='get_twitter_posts', many=True, read_only=True)
+
+    # in_stories = InstagramPostDisplaySerializer(
+    #     source='get_instagram_stories', many=True, read_only=True)
+    # fb_stories = FacebookPostDisplaySerializer(
+    #     source='get_facebook_stories', many=True, read_only=True)
+    # tw_stories = TwitterPostDisplaySerializer(
+    #     source='get_twitter_stories', many=True, read_only=True)
+
+    # stories = StoriesDisplaySerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Campaign
+        fields = [
+            'name', 'company_name', 'hashtag', 'status', 'slug',
+            # 'instagram',
+            # 'facebook',
+            # 'twitter',
+            # 'in_stories',
+            # 'fb_stories',
+            # 'tw_stories',
+            # 'in_posts',
+            # 'fb_posts',
+            # 'tw_posts',
+            # 'twitter_collection_url',
+            # 'stories',
+            'posts',
+            'num_content_pieces',
+            'num_posts',
+            'post_engagement',
+            'post_shares',
+            'post_saves',
+            'video_views',
+            'post_reach',
+            'num_stories',
+            'story_views',
+            'cost_per_engagement',
+            'cost_per_reach',
+            'total_post_engagement',
+            'total_campaign_reach',
         ]

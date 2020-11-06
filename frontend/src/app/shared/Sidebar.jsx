@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import CampaignContext from "../data/CampaignContext";
-// import { Collapse } from "react-bootstrap";
+import { Collapse } from "react-bootstrap";
+import Spinner from "./Spinner";
 // import { Dropdown } from "react-bootstrap";
 
 class Sidebar extends Component {
@@ -32,8 +33,26 @@ class Sidebar extends Component {
     Object.keys(this.state).forEach((i) => {
       this.setState({ [i]: false });
     });
+
+    const dropdownPaths = [
+      { path: "/dashboard", state: "dashboardMenuOpen" },
+      { path: "/posts-feed", state: "postsFeedMenuOpen" },
+      { path: "/tables", state: "tablesMenuOpen" },
+      { path: "/icons", state: "iconsMenuOpen" },
+      { path: "/charts", state: "chartsMenuOpen" },
+      { path: "/report", state: "reportPageMenuOpen" },
+    ];
+
+    dropdownPaths.forEach((obj) => {
+      if (this.isPathActive(obj.path)) {
+        this.setState({ [obj.state]: true });
+      }
+    });
   }
   render() {
+    // if (this.context.currentCampaignInView != null) {
+    //   return <Spinner />;
+    // }
     return (
       <nav className="sidebar sidebar-offcanvas" id="sidebar">
         <div className="text-center sidebar-brand-wrapper d-flex align-items-center">
@@ -70,7 +89,7 @@ class Sidebar extends Component {
             }
           >
             <Link className="nav-link" to="/postsfeed">
-              <i className="mdi mdi-fullscreen menu-icon"></i>
+              <i className="mdi mdi-image menu-icon"></i>
               <span className="menu-title">Posts Feed</span>
             </Link>
           </li>
@@ -81,24 +100,85 @@ class Sidebar extends Component {
             }
           >
             <Link className="nav-link" to="/storiesfeed">
-              <i className="mdi mdi-fullscreen menu-icon"></i>
+              <i className="mdi mdi-history menu-icon"></i>
               <span className="menu-title">Stories Feed</span>
             </Link>
           </li>
 
-          {/* {this.context.campaigns[this.context.currentCampaignInView].status ===
-          "completed" ? (
+          {/* <li
+            className={
+              this.isPathActive("/report") ? "nav-item active" : "nav-item"
+            }
+          >
+            <Link className="nav-link" to="/report">
+              <i className="mdi mdi-fullscreen menu-icon"></i>
+              <span className="menu-title">Reporting</span>
+            </Link>
+          </li> */}
+
+          {this.context.currentCampaignInView != null ? (
+            // && this.context.campaigns[this.context.currentCampaignInView].status === "completed"
+            // <li
+            //   className={
+            //     this.isPathActive("/report") ? "nav-item active" : "nav-item"
+            //   }
+            // >
+            //   <Link className="nav-link" to="/report">
+            //     <i className="mdi mdi-table-large menu-icon"></i>
+            //     <span className="menu-title">Reporting</span>
+            //   </Link>
+            // </li>
+
             <li
               className={
                 this.isPathActive("/report") ? "nav-item active" : "nav-item"
               }
             >
-              <Link className="nav-link" to="/report">
+              <div
+                className={
+                  this.state.reportPageMenuOpen
+                    ? "nav-link menu-expanded"
+                    : "nav-link"
+                }
+                onClick={() => this.toggleMenuState("reportPageMenuOpen")}
+                data-toggle="collapse"
+              >
                 <i className="mdi mdi-table-large menu-icon"></i>
-                <span className="menu-title">Report</span>
-              </Link>
+                <span className="menu-title">Reporting</span>
+                <i className="menu-arrow"></i>
+              </div>
+              <Collapse in={this.state.reportPageMenuOpen}>
+                <ul className="nav flex-column sub-menu">
+                  <li className="nav-item">
+                    {" "}
+                    <Link
+                      className={
+                        this.isPathActive("/report/overview")
+                          ? "nav-link active"
+                          : "nav-link"
+                      }
+                      to="/report/overview"
+                    >
+                      Campaign Overview
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    {" "}
+                    <Link
+                      className={
+                        this.isPathActive("/report/post-stats")
+                          ? "nav-link active"
+                          : "nav-link"
+                      }
+                      to="/report/post-stats"
+                    >
+                      Post Statistics
+                    </Link>
+                  </li>
+                </ul>
+              </Collapse>
             </li>
-          ) : null} */}
+          ) : null}
         </ul>
       </nav>
     );

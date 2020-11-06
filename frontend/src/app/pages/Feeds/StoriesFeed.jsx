@@ -1,17 +1,9 @@
-import React, { Component, lazy } from "react";
-import CampaignContext from "../data/CampaignContext";
-import Spinner from "../shared/Spinner";
+import React, { Component } from "react";
+import CampaignContext from "../../data/CampaignContext";
+import Spinner from "../../shared/Spinner";
 import { Dropdown } from "react-bootstrap";
 
-// import InstaFeed from "./InstaFeed";
-// import FBFeed from "./FBFeed";
-// import TwitterFeed from "./TwitterFeed";
-
-const InstaFeed = lazy(() => import("./InstaFeed"));
-const FBFeed = lazy(() => import("./FBFeed"));
-const TwitterFeed = lazy(() => import("./TwitterFeed"));
-
-export default class PostsFeed extends Component {
+export default class StoriesFeed extends Component {
   static contextType = CampaignContext;
 
   createMarkup(embed_code) {
@@ -27,7 +19,7 @@ export default class PostsFeed extends Component {
   }
 
   componentDidMount() {
-    console.log("in PostsFeed CDM");
+    console.log("in Stories CDM");
     // window.fbAsyncInit();
   }
 
@@ -46,20 +38,27 @@ export default class PostsFeed extends Component {
     this.setState({ curr_platform: evt.target.id });
   };
 
-  getPlatformName(id) {
-    switch (id) {
-      case "in":
-        return "Instagram";
-      case "fb":
-        return "Facebook";
-      case "tw":
-        return "Twitter";
-      default:
-        return "";
-    }
-  }
-
   render() {
+    var stories = [];
+    if (
+      this.context.currentCampaignInView !== null &&
+      this.context.liveCampaignFeed[this.context.currentCampaignInView] !==
+        null &&
+      this.context.liveCampaignFeed[this.context.currentCampaignInView][
+        this.state.curr_platform + "_stories"
+      ] !== null
+    ) {
+      stories = this.context.liveCampaignFeed[
+        this.context.currentCampaignInView
+      ][this.state.curr_platform + "_stories"];
+    }
+
+    if (!stories) {
+      return <Spinner />;
+    } else if (stories === []) {
+      return <div>Nothing to show</div>;
+    }
+    // const iframe_str = `<iframe src=${stories_url}></iframe>`;
     return (
       <div>
         <div className="page-header">
@@ -153,15 +152,27 @@ export default class PostsFeed extends Component {
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-          <h3 className="page-title">Posts</h3>
         </div>
-        {this.state.curr_platform === "in" ? (
-          <InstaFeed />
-        ) : this.state.curr_platform === "fb" ? (
-          <FBFeed />
-        ) : (
-          <TwitterFeed />
-        )}
+        <div className="row">
+          {/* <div>
+            <div dangerouslySetInnerHTML={this.createMarkup(iframe_str)}></div>
+          </div> */}
+          {stories.map((post, idx) => {
+            return (
+              <div
+                key={idx}
+                className="col-xl-4 col-lg-4 col-md-6 col-sm-6 grid-margin stretch-card "
+              >
+                <img
+                  key={post.url}
+                  src={post.url}
+                  alt={"Story"}
+                  loader={<Spinner />}
+                />
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   }

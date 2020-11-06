@@ -20,11 +20,13 @@ import { ProtectedRoute } from "./ProtectedRoute";
 // const BlankPage = lazy(() => import("./user-pages/BlankPage"));
 
 const Dashboard = lazy(() => import("./pages/Dashboard"));
-const Login = lazy(() => import("./pages/Login"));
-const VerifyOtp = lazy(() => import("./pages/VerifyOtp"));
+const Reporting = lazy(() => import("./pages/Reporting"));
+const PostStats = lazy(() => import("./pages/PostStats"));
+const Login = lazy(() => import("./pages/Login/Login"));
+const VerifyOtp = lazy(() => import("./pages/Login/VerifyOtp"));
 const Error404 = lazy(() => import("./shared/Error404"));
-const StoriesFeed = lazy(() => import("./pages/StoriesFeed"));
-const PostsFeed = lazy(() => import("./pages/PostsFeed"));
+const StoriesFeed = lazy(() => import("./pages/Feeds/StoriesFeed"));
+const PostsFeed = lazy(() => import("./pages/Feeds/PostsFeed"));
 
 class AppRoutes extends Component {
   render() {
@@ -37,6 +39,8 @@ class AppRoutes extends Component {
           <Route exact path="/verify" component={VerifyOtp} />
           <ProtectedRoute exact path="/storiesfeed" component={StoriesFeed} />
           <ProtectedRoute exact path="/postsfeed" component={PostsFeed} />
+          <ProtectedRoute exact path="/report/post-stats" component={PostStats} />
+          <ProtectedRoute exact path="/report/overview" component={Reporting} />
 
           <ProtectedRoute path="/404" component={Error404} />
 

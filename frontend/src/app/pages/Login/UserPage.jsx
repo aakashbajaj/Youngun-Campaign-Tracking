@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Form, Button } from "react-bootstrap";
-import CampaignContext from "../data/CampaignContext";
+import CampaignContext from "../../data/CampaignContext";
 import Login from "./Login";
-import VerifyOtp from "./VerifyOtp";
+import VerifyOtp from "../VerifyOtp";
 
 export class UserPage extends Component {
   static contextType = CampaignContext;

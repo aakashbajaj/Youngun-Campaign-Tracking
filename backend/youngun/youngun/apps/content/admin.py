@@ -91,9 +91,11 @@ class InstagramPostAdmin(admin.ModelAdmin):
         'caption',
         'likes',
         'comments',
+        'post_engagement',
         'post_shares',
         'post_saves',
         'post_reach',
+        'total_views',
         'visibility',
         'embed_code'
     )
