@@ -84,8 +84,8 @@ export class Dashboard extends Component {
   render() {
     var liveCampMetrics = this.currentCampLiveMetrics;
     if (
-      this.context.currentCampaignInView !== null &&
-      this.context.liveCampaignData[this.context.currentCampaignInView] !== null
+      this.context.currentCampaignInView &&
+      this.context.liveCampaignData[this.context.currentCampaignInView]
     ) {
       liveCampMetrics = this.context.liveCampaignData[
         this.context.currentCampaignInView

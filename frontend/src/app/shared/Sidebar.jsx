@@ -53,6 +53,20 @@ class Sidebar extends Component {
     // if (this.context.currentCampaignInView != null) {
     //   return <Spinner />;
     // }
+
+    var showReport = false;
+
+    var currentCampaignInView = this.context.currentCampaignInView;
+
+    if (currentCampaignInView) {
+      if (this.context.campaigns[currentCampaignInView]) {
+        if (
+          this.context.campaigns[currentCampaignInView].campaign_module == "v2"
+        ) {
+          showReport = true;
+        }
+      }
+    }
     return (
       <nav className="sidebar sidebar-offcanvas" id="sidebar">
         <div className="text-center sidebar-brand-wrapper d-flex align-items-center">
@@ -116,7 +130,7 @@ class Sidebar extends Component {
             </Link>
           </li> */}
 
-          {this.context.currentCampaignInView != null ? (
+          {showReport ? (
             // && this.context.campaigns[this.context.currentCampaignInView].status === "completed"
             // <li
             //   className={

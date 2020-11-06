@@ -39,11 +39,11 @@ export default class InstaFeed extends Component {
   render() {
     var instaposts = [];
     if (
-      this.context.currentCampaignInView !== null &&
+      this.context.currentCampaignInView &&
       this.context.liveCampaignFeed[this.context.currentCampaignInView] !==
         null &&
       this.context.liveCampaignFeed[this.context.currentCampaignInView]
-        .instagram !== null
+        .instagram
     ) {
       instaposts = this.context.liveCampaignFeed[
         this.context.currentCampaignInView
@@ -66,7 +66,7 @@ export default class InstaFeed extends Component {
         );
       } else if (
         post.alt_google_photo_url !== "" &&
-        post.alt_google_photo_url !== null
+        post.alt_google_photo_url
       ) {
         return (
           <div

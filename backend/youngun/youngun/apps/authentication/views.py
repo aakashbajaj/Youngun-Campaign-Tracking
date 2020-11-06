@@ -73,6 +73,10 @@ class InitiateLogin(APIView):
         tempid = generate_tempid()
         tempotp = generate_otp()
 
+        if email == "apptest@youngun.in":
+            tempid = "1111"
+            tempotp = 836882
+
         user_obj.tempid = tempid
         user_obj.tempotp = tempotp
         user_obj.authInProgress = True

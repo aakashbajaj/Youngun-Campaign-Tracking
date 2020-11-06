@@ -7,19 +7,17 @@ export default class PostListTable extends Component {
 
   render() {
     var postsList = [];
-      if (this.context.currentCampaignInView === null || postsList === []) {
-        return <Spinner />;
-      }
-    if (this.context.currentCampaignInView !== null) {
-      if (this.context.campaignReportData !== null) {
+    if (this.context.currentCampaignInView === null || postsList === []) {
+      return <Spinner />;
+    }
+    if (this.context.currentCampaignInView) {
+      if (this.context.campaignReportData) {
         if (
-          this.context.campaignReportData[
-            this.context.currentCampaignInView
-          ] !== null
+          this.context.campaignReportData[this.context.currentCampaignInView]
         ) {
           if (
             this.context.campaignReportData[this.context.currentCampaignInView]
-              .posts !== null
+              .posts
           ) {
             postsList = this.context.campaignReportData[
               this.context.currentCampaignInView
@@ -35,11 +33,15 @@ export default class PostListTable extends Component {
         month: "long",
       };
       console.log(post);
-      console.log(new Date(post.upload_date).toLocaleDateString(undefined, options));
+      console.log(
+        new Date(post.upload_date).toLocaleDateString(undefined, options)
+      );
       return (
         <tr key={idx}>
           <td>{idx + 1}</td>
-          <td>{new Date(post.upload_date).toLocaleDateString(undefined, options)}</td>
+          <td>
+            {new Date(post.upload_date).toLocaleDateString(undefined, options)}
+          </td>
           <td>
             <a href={post.url} target="_blank" rel="noopener noreferrer">
               {post.url}
@@ -48,11 +50,10 @@ export default class PostListTable extends Component {
           {post.likes ? <td>{post.likes}</td> : <td>-</td>}
           {post.comments ? <td>{post.comments}</td> : <td>-</td>}
           {post.post_shares ? <td>{post.post_shares}</td> : <td>-</td>}
-          {post.post_saves ? <td>{post.post_saves}</td> : <td>-</td>}
+          {/* {post.post_saves ? <td>{post.post_saves}</td> : <td>-</td>}
           {post.post_engagement ? <td>{post.post_engagement}</td> : <td>-</td>}
           {post.post_reach ? <td>{post.post_reach}</td> : <td>-</td>}
-          {/* {post.post_saves ? <td>{post.post_saves}</td> : <td>-</td>} */}
-          {post.total_views ? <td>{post.total_views}</td> : <td>-</td>}
+          {post.total_views ? <td>{post.total_views}</td> : <td>-</td>} */}
         </tr>
       );
     });
@@ -77,7 +78,7 @@ export default class PostListTable extends Component {
                     Post Shares /<br />
                     ReTweets
                   </th>
-                  <th>
+                  {/* <th>
                     Post Saves <br />
                     (Instagram)
                   </th>
@@ -86,7 +87,7 @@ export default class PostListTable extends Component {
                     Engagement
                   </th>
                   <th>Static Post Reach</th>
-                  <th>Video Views</th>
+                  <th>Video Views</th> */}
                 </tr>
               </thead>
               <tbody>{childElements}</tbody>
