@@ -35,11 +35,11 @@ export default class PostListTable extends Component {
         month: "long",
       };
       console.log(post);
-      console.log(new Date(post.date).toLocaleDateString(undefined, options));
+      console.log(new Date(post.upload_date).toLocaleDateString(undefined, options));
       return (
         <tr key={idx}>
           <td>{idx + 1}</td>
-          <td>{new Date(post.date).toLocaleDateString(undefined, options)}</td>
+          <td>{new Date(post.upload_date).toLocaleDateString(undefined, options)}</td>
           <td>
             <a href={post.url} target="_blank" rel="noopener noreferrer">
               {post.url}
@@ -52,7 +52,7 @@ export default class PostListTable extends Component {
           {post.post_engagement ? <td>{post.post_engagement}</td> : <td>-</td>}
           {post.post_reach ? <td>{post.post_reach}</td> : <td>-</td>}
           {/* {post.post_saves ? <td>{post.post_saves}</td> : <td>-</td>} */}
-          <td>-</td>
+          {post.total_views ? <td>{post.total_views}</td> : <td>-</td>}
         </tr>
       );
     });

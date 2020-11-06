@@ -111,10 +111,10 @@ export default class GlobalState extends Component {
 
   sortFeedList(feedList, direction = 1) {
     return feedList.sort(function (a, b) {
-      if (a.date === b.date) {
+      if (a.upload_date === b.upload_date) {
         return direction * (b.id < a.id ? -1 : 1);
       } else {
-        return direction * (new Date(b.date) < new Date(a.date) ? -1 : 1);
+        return direction * (new Date(b.upload_date) < new Date(a.upload_date) ? -1 : 1);
       }
     });
   }

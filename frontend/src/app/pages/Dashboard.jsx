@@ -211,17 +211,21 @@ export class Dashboard extends Component {
               particaipating_profiles={liveCampMetrics.particaipating_profiles}
             />
           </div>
-          <div className="col-sm-6 col-md-6 col-lg-6 grid-margin stretch-card">
-            <ContentSlideCard slide_url={liveCampMetrics.slide_url} />
-          </div>
-        </div>
-        <div className="row">
-          {/* <div className="col-sm-6 col-md-6 col-lg-6 grid-margin stretch-card"></div> */}
-          {this.context.user.is_main_user ? (
-            <div className="col-sm-6 col-md-6 col-lg-6 grid-margin stretch-card">
-              <InviteUserCard />
+          <div className="col-sm-6 col-md-6 col-lg-6">
+            <div className="row">
+              <div className="col-sm-12 col-md-12 col-lg-12 grid-margin stretch-card">
+                <ContentSlideCard slide_url={liveCampMetrics.slide_url} />
+              </div>
             </div>
-          ) : null}
+            <div className="row">
+              {this.context.user.is_main_user ? (
+                <div className="col-sm-12 col-md-12 col-lg-12 grid-margin stretch-card">
+                  <InviteUserCard />
+                </div>
+              ) : null}
+            </div>
+          </div>
+          {/* <div className="col-sm-6 col-md-6 col-lg-6 grid-margin stretch-card"></div> */}
         </div>
       </div>
     );

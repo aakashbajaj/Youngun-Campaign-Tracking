@@ -21,6 +21,7 @@ import { ProtectedRoute } from "./ProtectedRoute";
 
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Reporting = lazy(() => import("./pages/Reporting"));
+const PostStats = lazy(() => import("./pages/PostStats"));
 const Login = lazy(() => import("./pages/Login/Login"));
 const VerifyOtp = lazy(() => import("./pages/Login/VerifyOtp"));
 const Error404 = lazy(() => import("./shared/Error404"));
@@ -38,7 +39,8 @@ class AppRoutes extends Component {
           <Route exact path="/verify" component={VerifyOtp} />
           <ProtectedRoute exact path="/storiesfeed" component={StoriesFeed} />
           <ProtectedRoute exact path="/postsfeed" component={PostsFeed} />
-          <ProtectedRoute exact path="/report" component={Reporting} />
+          <ProtectedRoute exact path="/report/post-stats" component={PostStats} />
+          <ProtectedRoute exact path="/report/overview" component={Reporting} />
 
           <ProtectedRoute path="/404" component={Error404} />
 

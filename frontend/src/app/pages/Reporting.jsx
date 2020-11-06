@@ -180,6 +180,29 @@ export default class Reporting extends Component {
               </div>
             </div>
           </div>
+
+          <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 grid-margin stretch-card">
+            <div className="card card-revenue">
+              <a
+                href="https://forms.gle/EiLXkNfhuBMHWhff8"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="card-body">
+                  <div className="d-flex w-100 h-100 justify-content-between align-items-center">
+                    <div className="mr-auto">
+                      <p className="highlight-text text-white">
+                        {" "}
+                        Add Inventory{" "}
+                      </p>
+                      {/* <p className="text-white"> This Month </p> */}
+                      <div className="badge badge-pill mr-5">+</div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
         </div>
         <div className="row">
           <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 grid-margin stretch-card">
@@ -231,9 +254,13 @@ export default class Reporting extends Component {
                   <div className="ml-4">
                     {/* <p className="text-muted card-text mt-2 mb-1">₹ 0.34</p> */}
                     <h6 className={`font-weight-semibold mt-2 mb-1`}>
-                      Total Campaign<br/>Enagagement
+                      Total Campaign
+                      <br />
+                      Enagagement
                     </h6>
-                    <h6 className={`font-weight-bold mt-2`}>{campReportData.total_post_engagement}</h6>
+                    <h6 className={`font-weight-bold mt-2`}>
+                      {campReportData.total_post_engagement}
+                    </h6>
                   </div>
                   {/* <div className="ml-2"></div> */}
                 </div>
@@ -245,13 +272,19 @@ export default class Reporting extends Component {
             <div className="card">
               <div className="card-body py-4">
                 <div className="d-flex flex-row justify-content-center align-items">
-                  <i className={`mdi mdi-human-greeting text-success icon-lg`}></i>
+                  <i
+                    className={`mdi mdi-human-greeting text-success icon-lg`}
+                  ></i>
                   <div className="ml-4">
                     {/* <p className="text-muted card-text mt-2 mb-1">₹ 0.34</p> */}
                     <h6 className={`font-weight-semibold mt-2 mb-1`}>
-                      Total Campaign<br/>Reach
+                      Total Campaign
+                      <br />
+                      Reach
                     </h6>
-                    <h6 className={`font-weight-bold mt-2`}>{campReportData.total_campaign_reach}</h6>
+                    <h6 className={`font-weight-bold mt-2`}>
+                      {campReportData.total_campaign_reach}
+                    </h6>
                   </div>
                   {/* <div className="ml-2"></div> */}
                 </div>
