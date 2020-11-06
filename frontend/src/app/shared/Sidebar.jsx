@@ -167,19 +167,6 @@ class Sidebar extends Component {
                     {" "}
                     <Link
                       className={
-                        this.isPathActive("/report/overview")
-                          ? "nav-link active"
-                          : "nav-link"
-                      }
-                      to="/report/overview"
-                    >
-                      Campaign Overview
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    {" "}
-                    <Link
-                      className={
                         this.isPathActive("/report/post-stats")
                           ? "nav-link active"
                           : "nav-link"
@@ -187,6 +174,20 @@ class Sidebar extends Component {
                       to="/report/post-stats"
                     >
                       Post Statistics
+                    </Link>
+                  </li>
+
+                  <li className="nav-item">
+                    {" "}
+                    <Link
+                      className={
+                        this.isPathActive("/report/overview")
+                          ? "nav-link active"
+                          : "nav-link"
+                      }
+                      to="/report/overview"
+                    >
+                      Campaign Overview
                     </Link>
                   </li>
                 </ul>
