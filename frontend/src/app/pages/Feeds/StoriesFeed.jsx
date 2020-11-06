@@ -41,7 +41,7 @@ export default class StoriesFeed extends Component {
   render() {
     var stories = [];
     if (
-      this.context.currentCampaignInView !== null &&
+      this.context.currentCampaignInView &&
       this.context.liveCampaignFeed[this.context.currentCampaignInView] !==
         null &&
       this.context.liveCampaignFeed[this.context.currentCampaignInView][

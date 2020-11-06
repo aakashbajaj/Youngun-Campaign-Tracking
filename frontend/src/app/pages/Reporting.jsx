@@ -13,12 +13,10 @@ export default class Reporting extends Component {
       return <Spinner />;
     }
     var campReportData = [];
-    if (this.context.currentCampaignInView !== null) {
-      if (this.context.campaignReportData !== null) {
+    if (this.context.currentCampaignInView) {
+      if (this.context.campaignReportData) {
         if (
-          this.context.campaignReportData[
-            this.context.currentCampaignInView
-          ] !== null
+          this.context.campaignReportData[this.context.currentCampaignInView]
         ) {
           campReportData = this.context.campaignReportData[
             this.context.currentCampaignInView
