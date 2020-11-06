@@ -94,13 +94,13 @@ export default class Reporting extends Component {
           </div>
 
           {/* Post Shares */}
-          <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 grid-margin stretch-card">
+          {/* <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 grid-margin stretch-card">
             <div className="card">
               <div className="card-body py-4">
                 <div className="d-flex flex-row justify-content-center align-items">
                   <i className={`mdi mdi-share text-info icon-lg`}></i>
                   <div className="ml-4">
-                    {/* <p className="text-muted card-text mt-2 mb-1">₹ 0.34</p> */}
+                  
                     <h6 className={`font-weight-semibold mt-2 mb-1`}>
                       Post Shares
                     </h6>
@@ -108,14 +108,14 @@ export default class Reporting extends Component {
                       {campReportData.post_shares}
                     </h6>
                   </div>
-                  {/* <div className="ml-2"></div> */}
+                  
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Post Saves */}
-          <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 grid-margin stretch-card">
+          {/* <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 grid-margin stretch-card">
             <div className="card">
               <div className="card-body py-4">
                 <div className="d-flex flex-row justify-content-center align-items">
@@ -123,7 +123,7 @@ export default class Reporting extends Component {
                     className={`mdi mdi-content-save-all text-danger icon-lg`}
                   ></i>
                   <div className="ml-4">
-                    {/* <p className="text-muted card-text mt-2 mb-1">₹ 0.34</p> */}
+                    
                     <h6 className={`font-weight-semibold mt-2 mb-1`}>
                       Post Saves
                     </h6>
@@ -131,20 +131,19 @@ export default class Reporting extends Component {
                       {campReportData.post_saves}
                     </h6>
                   </div>
-                  {/* <div className="ml-2"></div> */}
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Video Views */}
-          <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 grid-margin stretch-card">
+          {/* <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 grid-margin stretch-card">
             <div className="card">
               <div className="card-body py-4">
                 <div className="d-flex flex-row justify-content-center align-items">
                   <i className={`mdi mdi-video text-warning icon-lg`}></i>
                   <div className="ml-4">
-                    {/* <p className="text-muted card-text mt-2 mb-1">₹ 0.34</p> */}
+                  
                     <h6 className={`font-weight-semibold mt-2 mb-1`}>
                       Video Views
                     </h6>
@@ -152,20 +151,19 @@ export default class Reporting extends Component {
                       {campReportData.video_views}
                     </h6>
                   </div>
-                  {/* <div className="ml-2"></div> */}
+                  
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Static Post Reach */}
-          <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 grid-margin stretch-card">
+          {/* <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 grid-margin stretch-card">
             <div className="card">
               <div className="card-body py-4">
                 <div className="d-flex flex-row justify-content-center align-items">
                   <i className={`mdi mdi-airplane text-success icon-lg`}></i>
                   <div className="ml-4">
-                    {/* <p className="text-muted card-text mt-2 mb-1">₹ 0.34</p> */}
                     <h6 className={`font-weight-semibold mt-2 mb-1`}>
                       Static Post Reach
                     </h6>
@@ -173,36 +171,11 @@ export default class Reporting extends Component {
                       {campReportData.post_reach}
                     </h6>
                   </div>
-                  {/* <div className="ml-2"></div> */}
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
-          <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 grid-margin stretch-card">
-            <div className="card card-revenue">
-              <a
-                href="https://forms.gle/EiLXkNfhuBMHWhff8"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <div className="card-body">
-                  <div className="d-flex w-100 h-100 justify-content-between align-items-center">
-                    <div className="mr-auto">
-                      <p className="highlight-text text-white">
-                        {" "}
-                        Add Inventory{" "}
-                      </p>
-                      {/* <p className="text-white"> This Month </p> */}
-                      <div className="badge badge-pill mr-5">+</div>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div className="row">
           <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 grid-margin stretch-card">
             <div className="card">
               <div className="card-body py-4">
@@ -287,6 +260,29 @@ export default class Reporting extends Component {
                   {/* <div className="ml-2"></div> */}
                 </div>
               </div>
+            </div>
+          </div>
+
+          <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 grid-margin stretch-card">
+            <div className="card card-revenue">
+              <a
+                href="https://forms.gle/EiLXkNfhuBMHWhff8"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="card-body">
+                  <div className="d-flex w-100 h-100 justify-content-between align-items-center">
+                    <div className="mr-auto">
+                      <p className="highlight-text text-white">
+                        {" "}
+                        Add Post Inventory{" "}
+                      </p>
+                      {/* <p className="text-white"> This Month </p> */}
+                      <div className="badge badge-pill mr-5">+</div>
+                    </div>
+                  </div>
+                </div>
+              </a>
             </div>
           </div>
         </div>

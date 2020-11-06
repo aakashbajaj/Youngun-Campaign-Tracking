@@ -70,7 +70,7 @@ export default class PostListTable extends Component {
               <thead>
                 <tr>
                   <th>S.No.</th>
-                  <th>Date</th>
+                  <th>TimeStamp</th>
                   <th>Post Link</th>
                   <th>Likes</th>
                   <th>Comments</th>

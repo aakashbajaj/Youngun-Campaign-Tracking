@@ -226,6 +226,7 @@ class TwitterPostAdmin(admin.ModelAdmin):
 
     list_filter = [
         ('campaign__name', custom_titled_filter("Campaign")),
+        'post_username'
     ]
 
     save_on_top = True
