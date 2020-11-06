@@ -66,6 +66,7 @@ class PostReportSerializer(ModelSerializer):
         model = InstagramPost
         fields = [
             'date',
+            'upload_date',
             'url',
             'platform',
             'likes',
@@ -74,6 +75,7 @@ class PostReportSerializer(ModelSerializer):
             'post_saves',
             'post_reach',
             'post_engagement',
+            'total_views'
         ]
 
 
@@ -82,6 +84,7 @@ class InstagramPostReportSerializer(ModelSerializer):
         model = InstagramPost
         fields = [
             'date',
+            'upload_date',
             'url',
             'likes',
             'comments',
@@ -89,6 +92,7 @@ class InstagramPostReportSerializer(ModelSerializer):
             'post_saves',
             'post_reach',
             'post_engagement',
+            'total_views'
         ]
 
 
@@ -97,6 +101,7 @@ class FacebookPostReportSerializer(ModelSerializer):
         model = FacebookPost
         fields = [
             'date',
+            'upload_date',
             'url',
             'likes',
             'comments',
@@ -112,6 +117,7 @@ class TwitterPostReportSerializer(ModelSerializer):
         model = TwitterPost
         fields = [
             'date',
+            'upload_date',
             'url',
             'likes',
             'comments',

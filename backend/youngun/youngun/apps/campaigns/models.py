@@ -160,17 +160,24 @@ class Campaign(models.Model):
     num_content_pieces = models.IntegerField(
         _("num content pieces"), default=0)
     num_posts = models.IntegerField(_("num posts"), default=0)
-    num_stories = models.IntegerField(_("num stories"), default=0)
-    post_stats = models.IntegerField(_("post stats"), default=0)
+    post_engagement = models.IntegerField(_("post engagement"), default=0)
     post_shares = models.IntegerField(_("post shares"), default=0)
     post_saves = models.IntegerField(_("post saves"), default=0)
+    video_views = models.IntegerField(_("video views"), default=0)
     post_reach = models.IntegerField(_("post reach"), default=0)
+
+    num_stories = models.IntegerField(_("num stories"), default=0)
+    # post_stats = models.IntegerField(_("post stats"), default=0)
     story_views = models.IntegerField(_("story views"), default=0)
-    website_traffic = models.IntegerField(_("website traffic"), default=0)
+    # website_traffic = models.IntegerField(_("website traffic"), default=0)
+    # cost_per_post_impression = models.CharField(
+    #     _("cost per post impression"), max_length=50, blank=True)
+
+
     cost_per_engagement = models.CharField(
         _("cost per engagement"), max_length=50, blank=True)
-    cost_per_post_impression = models.CharField(
-        _("cost per post impression"), max_length=50, blank=True)
+    cost_per_reach = models.CharField(
+        _("cost per reach"), max_length=50, blank=True)
     total_post_engagement = models.CharField(
         _("total post engagement"), max_length=50, blank=True)
     total_campaign_reach = models.CharField(

@@ -4,7 +4,7 @@ from django.dispatch import receiver
 import requests
 
 from youngun.apps.content.models import Post, PostVisibility, InstagramPost, TwitterPost, FacebookPost
-from youngun.apps.content.tasks import fill_in_post, fill_tw_post, fill_fb_post
+from youngun.apps.content.tasks import fill_in_post, fill_tw_post, fill_fb_post, fill_in_post_graphapi
 
 from django.conf import settings
 
@@ -66,11 +66,18 @@ def save_facebook_info(sender, instance, *args, **kwargs):
         instance.embed_code = ""
 
 
+# @receiver(post_save, sender=InstagramPost)
+# def fetch_in_post(sender, instance, *args, **kwargs):
+#     if instance and instance.platform == "in":
+#         if not instance.pre_fetched:
+#             fill_in_post(instance.pk)
+
 @receiver(post_save, sender=InstagramPost)
 def fetch_in_post(sender, instance, *args, **kwargs):
     if instance and instance.platform == "in":
-        if not instance.pre_fetched:
-            fill_in_post(instance.pk)
+        if instance.campaign.campaign_module == "v2":
+            if not instance.pre_fetched:
+                fill_in_post_graphapi(instance.pk)
 
     
 
@@ -81,20 +88,20 @@ def fetch_tw_post(sender, instance, *args, **kwargs):
             fill_tw_post(instance.pk)
 
 
-@receiver(post_save, sender=FacebookPost)
-def fetch_fb_post(sender, instance, *args, **kwargs):
-    if instance and instance.platform == "fb":
-        if not instance.pre_fetched:
-            fill_fb_post(instance.pk)
+# @receiver(post_save, sender=FacebookPost)
+# def fetch_fb_post(sender, instance, *args, **kwargs):
+#     if instance and instance.platform == "fb":
+#         if not instance.pre_fetched:
+#             fill_fb_post(instance.pk)
 
 
 @receiver(post_save, sender=Post)
 def fetch_insta_post(sender, instance, *args, **kwargs):
     if instance:
         if not instance.pre_fetched:
-            if instance.platform == "in":
-                fill_in_post(instance.pk)
+            # if instance.platform == "in":
+            #     fill_in_post(instance.pk)
             if instance.platform == "tw":
                 fill_tw_post(instance.pk)
-            if instance.platform == "fb":
-                fill_fb_post(instance.pk)
+            # if instance.platform == "fb":
+            #     fill_fb_post(instance.pk)

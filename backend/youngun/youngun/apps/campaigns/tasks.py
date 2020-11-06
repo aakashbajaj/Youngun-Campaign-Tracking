@@ -8,6 +8,50 @@ from youngun.apps.content.models import Post
 from youngun.apps.content.models import InstagramStory, FacebookStory, TwitterStory
 
 
+def update_v2_active_camp_metrics():
+    opts = {'group': 'update_v2_active_camp_metrics'}
+    for camp in Campaign.objects.all():
+        if camp.status == "active" and camp.campaign_module == "v2":
+            async_task("youngun.apps.content.tasks.update_camp_post_metrics",
+                       camp.pk, camp.name, q_options=opts)
+
+
+def trigger_update_campaign_report_metrics():
+    opts = {'group': 'update_campaign_report_metrics'}
+    for camp in Campaign.objects.all():
+        if camp.status == "active" and camp.campaign_module == "v2":
+            async_task("youngun.apps.campaigns.tasks.update_campaign_report_metrics",
+                       camp.pk, camp.name, q_options=opts)
+
+def update_campaign_report_metrics(camp_pk, camp_name):
+    print(f"Processing {camp_name}")
+    camp = Campaign.objects.get(pk=camp_pk)
+    
+    camp.num_posts = camp.posts.all().count()
+
+    engagement = 0
+    shares = 0
+    saves = 0
+    video_views = 0
+    reach = 0
+    
+    for post in camp.posts.all():
+        engagement = engagement + post.post_engagement
+        shares = shares + post.post_shares
+        saves = saves + post.post_saves
+        video_views = video_views + post.total_views
+        reach = reach + post.post_reach
+
+    camp.post_engagement = engagement
+    camp.post_shares = shares
+    camp.post_saves = saves
+    camp.video_views = video_views
+    camp.post_reach = reach
+
+    camp.save()
+
+    return f"Success: {camp.name}"
+
 def bulk_upload_csv(posts_list, campaign_id):
     opts = {'group': "csv-bulk-post-upload"}
     async_task('youngun.apps.campaigns.tasks.upload_posts_lists',
@@ -90,6 +134,6 @@ def fetch_campaign_stories():
                 for photo_url in matches:
                     obj, new_create = TwitterStory.objects.get_or_create(
                         campaign=camp, url=photo_url)
-                
+
             except Exception as e:
                 print(str(e))
