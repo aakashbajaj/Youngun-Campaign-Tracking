@@ -22,7 +22,7 @@ from .forms import ImportPostForm
 class StaffProfileInline(admin.StackedInline):
     model = StaffProfile.campaigns.through
     extra = 0
-    max_num = 4
+    # max_num = 4
 
     verbose_name = "Staff Profile"
     verbose_name_plural = "Staff Profiles"
@@ -36,7 +36,7 @@ class StaffProfileInline(admin.StackedInline):
 class ClientProfileInline(admin.StackedInline):
     model = ClientProfile.campaigns.through
     extra = 0
-    max_num = 4
+    # max_num = 4
 
     verbose_name = "Client Profile"
     verbose_name_plural = "Client Profiles"
