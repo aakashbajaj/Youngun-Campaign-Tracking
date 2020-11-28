@@ -67,7 +67,7 @@ class InstagramPostAdmin(admin.ModelAdmin):
     list_display = (
         'url',
         'campaign',
-        'link_to_camp',
+        # 'link_to_camp',
         'upload_date',
         'post_username',
         # 'pre_fetched',
@@ -193,7 +193,7 @@ class TwitterPostAdmin(admin.ModelAdmin):
     list_display = (
         'url',
         'campaign',
-        'link_to_camp',
+        # 'link_to_camp',
         'upload_date',
         'post_username',
         'alive',

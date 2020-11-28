@@ -37,6 +37,8 @@ def fetch_insta_embed_code(sender, instance, *args, **kwargs):
 @receiver(pre_save, sender=Post)
 def fetch_twitter_embed_code(sender, instance, *args, **kwargs):
     if instance and instance.platform == "tw":
+        if "?" in instance.url:
+            instance.url = instance.url[:(instance.url.index("?"))]
         if not instance.embed_code.startswith("<blockquote"):
             post_url = instance.url
             fetch_url = "https://publish.twitter.com/oembed"
