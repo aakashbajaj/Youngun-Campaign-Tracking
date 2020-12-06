@@ -59,6 +59,9 @@ INSTALLED_APPS = [
     'django_q',
     'drf_yasg',
 
+    'django_otp',
+    'django_otp.plugins.otp_totp',
+
     'youngun.apps.authentication',
     'youngun.apps.usermanager',
     'youngun.apps.campaigns',
@@ -95,9 +98,12 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django_otp.middleware.OTPMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+OTP_TOTP_ISSUER = 'Youngun Auth'
 
 CORS_ORIGIN_ALLOW_ALL = True
 
