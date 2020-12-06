@@ -7,6 +7,8 @@ from django.utils.html import format_html
 from .models import Media, InstagramPost, FacebookPost, TwitterPost, Post, Story, InstagramStory, FacebookStory, TwitterStory
 from youngun.apps.campaigns.models import Campaign
 
+from youngun.apps.content.mixins.exportcsv import ExportCsvMixin
+
 # class CampaignFilter(admin.SimpleListFilter):
 #     title = _("Campiagn")
 #     parameter_name = "campaign__name"
@@ -41,7 +43,7 @@ class StoryAdmin(admin.ModelAdmin):
 
 
 @admin.register(Post)
-class PostAdmin(admin.ModelAdmin):
+class PostAdmin(admin.ModelAdmin, ExportCsvMixin):
     list_display = ('url', 'campaign', 'platform', 'date', 'alive', 'likes', 'comments',
                     'post_shares', 'post_saves', 'post_reach')
 
@@ -58,11 +60,13 @@ class PostAdmin(admin.ModelAdmin):
         MediaInline
     ]
 
+    actions = ['export_as_csv']
+
     save_on_top = True
 
 
 @admin.register(InstagramPost)
-class InstagramPostAdmin(admin.ModelAdmin):
+class InstagramPostAdmin(admin.ModelAdmin, ExportCsvMixin):
     exclude = ('platform', 'post_type')
     list_display = (
         'url',
@@ -117,6 +121,8 @@ class InstagramPostAdmin(admin.ModelAdmin):
         MediaInline
     ]
 
+    actions = ['export_as_csv']
+
     def link_to_camp(self, obj):
         link = reverse("admin:campaigns_campaign_change",
                        args=[obj.campaign.id])
@@ -140,7 +146,7 @@ class InstagramPostAdmin(admin.ModelAdmin):
 
 
 @admin.register(FacebookPost)
-class FacebookPostAdmin(admin.ModelAdmin):
+class FacebookPostAdmin(admin.ModelAdmin, ExportCsvMixin):
     exclude = ('platform', 'embed_code')
     list_display = ('url', 'campaign', 'post_type', 'link_to_camp', 'date', 'likes', 'comments',
                     'post_shares', 'post_saves', 'post_reach')
@@ -158,6 +164,8 @@ class FacebookPostAdmin(admin.ModelAdmin):
     ]
 
     save_on_top = True
+
+    actions = ['export_as_csv']
 
     def link_to_camp(self, obj):
         link = reverse("admin:campaigns_campaign_change",
@@ -181,7 +189,7 @@ class FacebookPostAdmin(admin.ModelAdmin):
 
 
 @admin.register(TwitterPost)
-class TwitterPostAdmin(admin.ModelAdmin):
+class TwitterPostAdmin(admin.ModelAdmin, ExportCsvMixin):
     exclude = ('platform', 'post_type')
     # list_display = ('url', 'campaign', 'link_to_camp', 'upload_date',
     #                 'visibility', 'pre_fetched', 'alive', 'likes', 'comments')
@@ -235,6 +243,8 @@ class TwitterPostAdmin(admin.ModelAdmin):
         MediaInline
     ]
 
+    actions = ['export_as_csv']
+
     def link_to_camp(self, obj):
         link = reverse("admin:campaigns_campaign_change",
                        args=[obj.campaign.id])
@@ -257,7 +267,7 @@ class TwitterPostAdmin(admin.ModelAdmin):
 
 
 @admin.register(InstagramStory)
-class InstagramStoryAdmin(admin.ModelAdmin):
+class InstagramStoryAdmin(admin.ModelAdmin, ExportCsvMixin):
     exclude = ('platform', )
     list_display = ('url', 'campaign', 'date')
 
@@ -266,6 +276,8 @@ class InstagramStoryAdmin(admin.ModelAdmin):
     ]
 
     save_on_top = True
+
+    actions = ['export_as_csv']
 
     def link_to_camp(self, obj):
         link = reverse("admin:campaigns_campaign_change",
@@ -289,7 +301,7 @@ class InstagramStoryAdmin(admin.ModelAdmin):
 
 
 @admin.register(FacebookStory)
-class FacebookStoryAdmin(admin.ModelAdmin):
+class FacebookStoryAdmin(admin.ModelAdmin, ExportCsvMixin):
     exclude = ('platform', )
     list_display = ('url', 'campaign', 'date')
 
@@ -298,6 +310,8 @@ class FacebookStoryAdmin(admin.ModelAdmin):
     ]
 
     save_on_top = True
+
+    actions = ['export_as_csv']
 
     def link_to_camp(self, obj):
         link = reverse("admin:campaigns_campaign_change",
@@ -321,13 +335,15 @@ class FacebookStoryAdmin(admin.ModelAdmin):
 
 
 @admin.register(TwitterStory)
-class TwitterStoryAdmin(admin.ModelAdmin):
+class TwitterStoryAdmin(admin.ModelAdmin, ExportCsvMixin):
     exclude = ('platform', )
     list_display = ('url', 'campaign', 'date')
 
     list_filter = [
         ('campaign__name', custom_titled_filter("Campaign")),
     ]
+
+    actions = ['export_as_csv']
 
     save_on_top = True
 
