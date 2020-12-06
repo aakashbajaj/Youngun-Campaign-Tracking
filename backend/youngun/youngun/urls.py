@@ -49,7 +49,7 @@ urlpatterns = [
 #    re_path(r'^redoc/$', schema_view.with_ui('redoc',
 #                                             cache_timeout=0), name='schema-redoc'),
 
-    path('admin/', admin.site.urls),
+    path('campmanager/', admin.site.urls),
     path("api/", include('youngun.apps.campaigns.urls', namespace="campaigns")),
     path("api/", include('youngun.apps.authentication.urls', namespace="users")),
     path("api/", include('youngun.apps.content.urls', namespace="content")),
