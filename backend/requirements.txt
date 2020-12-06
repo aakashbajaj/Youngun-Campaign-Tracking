@@ -9,3 +9,5 @@ django-q
 drf-yasg
 boto3
 psycopg2-binary
+django-otp
+qrcode
