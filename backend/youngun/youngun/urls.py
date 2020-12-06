@@ -23,6 +23,11 @@ from rest_framework import permissions
 from django.conf.urls.static import static
 from django.conf import settings
 
+from django_otp.admin import OTPAdminSite
+
+
+# admin.site.__class__ = OTPAdminSite
+
 #schema_view = get_schema_view(
 #    openapi.Info(
 #        title="Snippets API",
@@ -55,3 +60,4 @@ urlpatterns = [
 
 admin.site.site_header = "Youngun Campaign Tracker Admin"
 admin.site.site_url = "https://youngun.in"
+admin.site.site_title = "Youngun Campaign Tracker Admin"
