@@ -4,7 +4,7 @@ drfpasswordless
 django-extensions
 requests
 django-cors-headers
-pylint-django
+# pylint-django
 django-q
 drf-yasg
 boto3
