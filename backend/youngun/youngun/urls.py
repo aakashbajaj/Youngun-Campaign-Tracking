@@ -26,7 +26,7 @@ from django.conf import settings
 from django_otp.admin import OTPAdminSite
 
 
-# admin.site.__class__ = OTPAdminSite
+admin.site.__class__ = OTPAdminSite
 
 #schema_view = get_schema_view(
 #    openapi.Info(
