@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import CampaignContext from "../data/CampaignContext";
 import { Collapse } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
 import Spinner from "./Spinner";
 // import { Dropdown } from "react-bootstrap";
 
@@ -56,6 +57,13 @@ class Sidebar extends Component {
 
     var showReport = false;
 
+    var currCampName = null;
+
+    if (this.context.currentCampaignInView) {
+      console.log("Changing " + this.context.currentCampaignInView);
+      currCampName = this.context.currentCampaignInView;
+    }
+
     var currentCampaignInView = this.context.currentCampaignInView;
 
     if (currentCampaignInView) {
@@ -88,6 +96,41 @@ class Sidebar extends Component {
           </a>
         </div>
         <ul className="nav mt-5 pt-5">
+          {currCampName === null ? (
+            <li className="nav-item d-xl-flex nav-link">
+              <Dropdown alignRight>
+                <Dropdown.Toggle className="nav-link count-indicator bg-transparent">
+                  <span className="profile-text">Loading....</span>
+                </Dropdown.Toggle>
+              </Dropdown>
+            </li>
+          ) : (
+            <li className="nav-item d-xl-flex nav-link">
+              <Dropdown alignRight>
+                <Dropdown.Toggle className="nav-link bg-transparent dropdown-toggle">
+                  <span>
+                    <i className="mdi mdi-elevation-rise"></i>
+                    {this.context.campaigns[currCampName].name}
+                  </span>
+                </Dropdown.Toggle>
+                <Dropdown.Menu className="preview-list navbar-dropdown pb-3">
+                  {Object.keys(this.context.campaigns).map((keyName, i) => {
+                    return (
+                      <Dropdown.Item
+                        className="dropdown-item preview-item d-flex align-items-center border-0 mt-2"
+                        key={keyName}
+                        id={keyName}
+                        onClick={this.context.setCurrentCampaign}
+                      >
+                        <i className="mdi mdi-elevation-rise"></i>
+                        {this.context.campaigns[keyName].name}
+                      </Dropdown.Item>
+                    );
+                  })}
+                </Dropdown.Menu>
+              </Dropdown>
+            </li>
+          )}
           <li
             className={this.isPathActive("/") ? "nav-item active" : "nav-item"}
           >

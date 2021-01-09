@@ -9,12 +9,37 @@ class Navbar extends Component {
     document.querySelector(".sidebar-offcanvas").classList.toggle("active");
   }
 
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     currCampName: "Loading....",
+  //   };
+  // }
+
   onSignOutBtnClick = (evt) => {
     evt.preventDefault();
     this.context.logout();
   };
 
+  componentDidMount() {
+    // if (this.context.currentCampaignInView) {
+    //   console.log("Changing " + this.context.currentCampaignInView);
+    //   this.setState({ currCampName: this.context.currentCampaignInView });
+    // }
+  }
+  componentDidUpdate(prevProps, prevState) {
+    // if (this.context.currentCampaignInView) {
+    //   console.log("Changing " + this.context.currentCampaignInView);
+    //   this.setState({ currCampName: this.context.currentCampaignInView });
+    // }
+  }
+
   render() {
+    var currCampName = null;
+    if (this.context.currentCampaignInView) {
+      console.log("Changing " + this.context.currentCampaignInView);
+      currCampName = this.context.currentCampaignInView;
+    }
     return (
       <nav className="navbar col-lg-12 col-12 p-lg-0 fixed-top d-flex flex-row">
         <div className="navbar-menu-wrapper d-flex align-items-center justify-content-between">
@@ -36,7 +61,23 @@ class Navbar extends Component {
             <i className="mdi mdi-menu"></i>
           </button>
           <ul className="navbar-nav navbar-nav-left header-links">
-            {Object.keys(this.context.campaigns).map((keyName, i) => {
+            {currCampName === null ? (
+              <li className="nav-item d-none d-xl-flex nav-link">
+                <Dropdown alignRight>
+                  <Dropdown.Toggle className="nav-link count-indicator bg-transparent">
+                    <span className="profile-text">Loading....</span>
+                  </Dropdown.Toggle>
+                </Dropdown>
+              </li>
+            ) : (
+              <li className="nav-item d-none d-xl-flex nav-link">
+                <span>
+                  {/* <i className="mdi mdi-elevation-rise"></i> */}
+                  {this.context.campaigns[currCampName].name}
+                </span>
+              </li>
+            )}
+            {/* {Object.keys(this.context.campaigns).map((keyName, i) => {
               var classes = "nav-item d-none d-xl-flex nav-link";
               if (this.context.currentCampaignInView === keyName) {
                 classes = classes + " active";
@@ -54,7 +95,7 @@ class Navbar extends Component {
                   </a>
                 </li>
               );
-            })}
+            })} */}
           </ul>
           <ul className="navbar-nav navbar-nav-right ml-lg-auto">
             <li className="nav-item  nav-profile border-0">
