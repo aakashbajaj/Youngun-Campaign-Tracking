@@ -67,6 +67,11 @@ class CampaignAdmin(admin.ModelAdmin):
         ClientProfileInline
     ]
 
+    list_editable =[
+        'status',
+        'campaign_module',
+    ]
+
     fields = [
         'name',
         'slug',
