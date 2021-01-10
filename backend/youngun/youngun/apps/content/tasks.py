@@ -1,11 +1,16 @@
 import requests
 from youngun.apps.content.models import Post, InstagramPost, TwitterPost, FacebookPost, PostVisibility
 from youngun.apps.content.utils.post_filler import in_post_filler, tw_post_filler, fb_post_filler
+from youngun.apps.content.utils.post_update import tw_post_updater
 from youngun.apps.content.utils.insta_filler import insta_post_update, insta_post_insight_update
 from youngun.apps.campaigns.models import Campaign
 
 from django_q.tasks import async_task, schedule
 from django.conf import settings
+from django.db.models import Count, Sum
+
+import time
+import datetime
 
 
 def update_all_active_camp_metrics():
@@ -21,6 +26,56 @@ def update_all_camp_metrics():
     for camp in Campaign.objects.all():
         async_task(
             "youngun.apps.content.tasks.update_camp_post_metrics", camp.pk, camp.name, q_options=opts)
+
+
+def update_latest_tweets_metrics():
+    today_min = datetime.datetime.combine(
+        datetime.date.today(), datetime.time.min)
+    days_3_ago = today_min - datetime.timedelta(days=3)
+    results = TwitterPost.objects.filter(
+        campaign__status="active").filter(upload_date__gte=days_3_ago)
+    pk_list = [x for x in results.values_list('pk', flat=True)]
+
+    opts = {'group': 'update_latest_tweets_metrics'}
+    async_task("youngun.apps.content.tasks.update_tw_post_metric",
+               pk_list, q_options=opts)
+
+
+def update_all_tweets_metrics():
+    results = TwitterPost.objects.filter(campaign__status="active")
+    pk_list = [x for x in results.values_list('pk', flat=True)]
+
+    opts = {'group': 'update_all_tweets_metrics'}
+    async_task("youngun.apps.content.tasks.update_tw_post_metric",
+               pk_list, q_options=opts)
+
+# Worker Tasks
+
+
+def update_tw_post_metric(post_pk_list):
+    for post_pk in post_pk_list:
+        tw_post_updater(post_pk)
+        time.sleep(3)
+
+    # call fn to update campaign engagement metric
+    update_all_active_camp_engagement_data()
+
+
+def update_all_active_camp_engagement_data():
+    # opts = {'group': 'update_all_active_camp_metrics'}
+    for camp in Campaign.objects.all():
+        if camp.status == "active":
+            camp_reach = camp.posts.all().aggregate(Sum('post_reach'))[
+                'post_reach__sum'] + camp.posts.all().aggregate(Sum('total_views'))['total_views__sum']
+            camp_engagement = camp.posts.all().aggregate(
+                Sum('post_engagement'))['post_engagement__sum']
+
+            camp.total_post_engagement = camp_engagement
+            camp.total_campaign_reach = camp_reach
+
+            camp.save()
+
+            pass
 
 # Utility Tasks
 

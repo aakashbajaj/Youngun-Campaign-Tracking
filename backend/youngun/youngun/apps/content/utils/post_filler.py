@@ -1,5 +1,6 @@
 from pprint import pprint
 from datetime import datetime
+import math
 
 from youngun.apps.content.helpers import in_post, fb_post, tw_post
 from youngun.apps.content.models import InstagramPost, FacebookPost, TwitterPost, Post, Media
@@ -90,27 +91,43 @@ def tw_post_filler(post_pk):
         post.upload_date = datetime.strptime(data["timestamp"], "%Y-%m-%d %H:%M:%S")
         post.account_name = data["account_name"]
         post.post_shares = data["retweets"]
+        post.total_views = 0 if data["total_views"] == None else data["total_views"]
 
         curr_media = post.medias.all()
         nodes = data["urls"]
+        data_engagement = data["likes"] + data["comments"] + data["retweets"]
+        total_engagement = data_engagement
 
         post.medias.all().delete()
 
         # if data["view_count"] == None and nodes == []:
         #     post.medias.all().delete()
 
+        # Media Post
         if data["total_views"] == None and len(nodes) > 0:
+            post.post_type = 'a'
+            total_engagement = math.ceil(data_engagement/0.76)
             for node in nodes:
                 # if not node["is_video"]:
                 media_obj = Media.objects.create(
                     parent_post=post, url=node["media_url"], key=node["media_key"], media_type="post")
                 media_obj.save()
 
+        # Video Post
         elif (not data["total_views"] == None) and len(nodes) > 0:
+            post.post_type = 'v'
+            # total_engagement = data_engagement + data["total_views"]
             node = nodes[0]
             media_obj = Media.objects.create(
                 parent_post=post, url=node["media_url"], key=node["media_key"], media_type="video", media_views=data["total_views"])
             media_obj.save()
+
+        # Text Tweet
+        else:
+            post.post_type = 'p'
+
+        post.post_engagement = total_engagement
+        post.post_reach = math.ceil(total_engagement/0.042)
 
     else:
         post.alive = False
