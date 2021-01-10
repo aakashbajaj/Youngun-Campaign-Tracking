@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 import pytz
 import re
 import dateutil.parser
+from pprint import pprint
 
 from django.conf import settings
 
@@ -101,6 +102,7 @@ def get_tw_post_details(post_link):
     try:
         resp = requests.get(f'https://api.twitter.com/2/tweets?ids={num}', headers=tw_headers_and_params()[
                             0], params=tw_headers_and_params()[1]).json()
+        # pprint(resp)
         tw = TwitterPostScraper(post_link, resp)
         data = tw.get_data()
 

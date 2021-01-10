@@ -23,7 +23,9 @@ def tw_post_updater(post_pk):
         post.upload_date = datetime.strptime(data["timestamp"], "%Y-%m-%d %H:%M:%S")
         post.account_name = data["account_name"]
         post.post_shares = data["retweets"]
+        
         post.total_views = 0 if data["total_views"] == None else data["total_views"]
+        post.prof_img_url = data["profile_image_url"]
 
         nodes = data["urls"]
 
