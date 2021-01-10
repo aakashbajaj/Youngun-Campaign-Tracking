@@ -25,7 +25,7 @@ class PostVisibility(models.Choices):
 
 
 class Post(models.Model):
-    url = models.URLField(_("post url"), max_length=1000, unique=True)
+    url = models.URLField(_("post url"), max_length=2000, unique=True)
     platform = models.CharField(
         _("platform"), max_length=50, choices=Platform.choices)
     campaign = models.ForeignKey(Campaign, verbose_name=_(
@@ -41,6 +41,8 @@ class Post(models.Model):
     upload_date = models.DateTimeField(
         _("Upload DateTime"), auto_now=False, auto_now_add=False, blank=True, null=True)
     caption = models.TextField(_("Post Caption"), blank=True, null=True)
+
+    prof_img_url = models.URLField(_("profile image url"), max_length=2000, default="")
 
     pre_fetched = models.BooleanField(_("Data Pre Fetched"), default=False)
 

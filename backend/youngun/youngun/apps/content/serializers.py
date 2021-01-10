@@ -19,7 +19,8 @@ class InstagramPostDisplaySerializer(ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['id', 'url', 'date', 'embed_code', 'alt_google_photo_url', 'media_objs']
+        fields = ['id', 'url', 'date', 'embed_code',
+                  'alt_google_photo_url', 'media_objs']
 
 
 class FacebookPostDisplaySerializer(ModelSerializer):
@@ -27,7 +28,8 @@ class FacebookPostDisplaySerializer(ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['id', 'url', 'date', 'post_type', 'alt_google_photo_url', 'media_objs']
+        fields = ['id', 'url', 'date', 'post_type',
+                  'alt_google_photo_url', 'media_objs']
 
 
 class TwitterPostDisplaySerializer(ModelSerializer):
@@ -35,7 +37,24 @@ class TwitterPostDisplaySerializer(ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['id', 'url', 'date', 'embed_code', 'alt_google_photo_url', 'media_objs']
+        fields = [
+            'id',
+            'url',
+            'date',
+            'embed_code',
+            'alt_google_photo_url',
+            'account_name',
+            'post_username',
+            'prof_img_url',
+            'caption',
+            'post_type',
+            'likes',
+            'comments',
+            'total_views',
+            'post_shares',
+            'upload_date',
+            'media_objs',
+        ]
 
 
 class StoriesDisplaySerializer(ModelSerializer):
@@ -60,6 +79,7 @@ class TwitterStoryDisplaySerializer(ModelSerializer):
     class Meta:
         model = Story
         fields = ['id', 'url']
+
 
 class PostReportSerializer(ModelSerializer):
     class Meta:

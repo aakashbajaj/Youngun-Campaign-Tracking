@@ -2,6 +2,7 @@ import requests
 import re
 
 from django_q.tasks import async_task, schedule
+from django.db.models import Count, Sum
 
 from youngun.apps.campaigns.models import Campaign
 from youngun.apps.content.models import Post
@@ -22,6 +23,20 @@ def trigger_update_campaign_report_metrics():
         if camp.status == "active" and camp.campaign_module == "v2":
             async_task("youngun.apps.campaigns.tasks.update_campaign_report_metrics",
                        camp.pk, camp.name, q_options=opts)
+
+def update_all_active_camp_engagement_data():
+    # opts = {'group': 'update_all_active_camp_metrics'}
+    for camp in Campaign.objects.all():
+        if camp.status == "active":
+            camp_reach = camp.posts.all().aggregate(Sum('post_reach'))[
+                'post_reach__sum'] + camp.posts.all().aggregate(Sum('total_views'))['total_views__sum']
+            camp_engagement = camp.posts.all().aggregate(
+                Sum('post_engagement'))['post_engagement__sum']
+
+            camp.total_post_engagement = camp_engagement
+            camp.total_campaign_reach = camp_reach
+
+            camp.save()
 
 def update_campaign_report_metrics(camp_pk, camp_name):
     print(f"Processing {camp_name}")

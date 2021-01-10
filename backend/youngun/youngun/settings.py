@@ -80,6 +80,7 @@ REST_FRAMEWORK = {
 Q_CLUSTER = {
     "name": "youngun",
     "orm": "default",
+    "max_attempts": 1
 }
 
 PASSWORDLESS_AUTH = {

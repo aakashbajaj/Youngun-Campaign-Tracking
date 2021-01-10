@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 import pytz
 import re
 import dateutil.parser
+from pprint import pprint
 
 from django.conf import settings
 
@@ -15,6 +16,9 @@ class TwitterPostScraper:
 
     def get_username(self):
         return self.resp.get('includes').get('users')[0].get('username')
+
+    def get_profile_img_url(self):
+        return self.resp.get('includes').get('users')[0].get('profile_image_url')
 
     def get_account_name(self):
         return self.resp.get('includes').get('users')[0].get('name')
@@ -65,6 +69,7 @@ class TwitterPostScraper:
         X = {
             'username': self.get_username(),
             'account_name': self.get_account_name(),
+            'profile_image_url': self.get_profile_img_url(),
             'timestamp': self.get_timestamp(),
             'likes': self.get_likes(),
             'caption': self.get_caption(),
@@ -86,7 +91,7 @@ def tw_headers_and_params():
     params = (
         ('expansions', 'author_id,attachments.media_keys'),
         ('tweet.fields', 'public_metrics,created_at'),
-        ('user.fields', 'username,verified'),
+        ('user.fields', 'username,verified,profile_image_url'),
         ('media.fields', 'public_metrics,preview_image_url,url'),
     )
     return headers, params
@@ -97,6 +102,7 @@ def get_tw_post_details(post_link):
     try:
         resp = requests.get(f'https://api.twitter.com/2/tweets?ids={num}', headers=tw_headers_and_params()[
                             0], params=tw_headers_and_params()[1]).json()
+        # pprint(resp)
         tw = TwitterPostScraper(post_link, resp)
         data = tw.get_data()
 
