@@ -4,6 +4,7 @@ from youngun.apps.content.utils.post_filler import in_post_filler, tw_post_fille
 from youngun.apps.content.utils.post_update import tw_post_updater
 from youngun.apps.content.utils.insta_filler import insta_post_update, insta_post_insight_update
 from youngun.apps.campaigns.models import Campaign
+from youngun.apps.campaigns.tasks import update_all_active_camp_engagement_data
 
 from django_q.tasks import async_task, schedule
 from django.conf import settings
@@ -59,23 +60,6 @@ def update_tw_post_metric(post_pk_list):
 
     # call fn to update campaign engagement metric
     update_all_active_camp_engagement_data()
-
-
-def update_all_active_camp_engagement_data():
-    # opts = {'group': 'update_all_active_camp_metrics'}
-    for camp in Campaign.objects.all():
-        if camp.status == "active":
-            camp_reach = camp.posts.all().aggregate(Sum('post_reach'))[
-                'post_reach__sum'] + camp.posts.all().aggregate(Sum('total_views'))['total_views__sum']
-            camp_engagement = camp.posts.all().aggregate(
-                Sum('post_engagement'))['post_engagement__sum']
-
-            camp.total_post_engagement = camp_engagement
-            camp.total_campaign_reach = camp_reach
-
-            camp.save()
-
-            pass
 
 # Utility Tasks
 
