@@ -41,7 +41,7 @@ class TwitterPostDisplaySerializer(ModelSerializer):
             'id',
             'url',
             'date',
-            # 'embed_code',
+            'embed_code',
             'alt_google_photo_url',
             'account_name',
             'post_username',
