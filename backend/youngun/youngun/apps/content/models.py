@@ -42,7 +42,7 @@ class Post(models.Model):
         _("Upload DateTime"), auto_now=False, auto_now_add=False, blank=True, null=True)
     caption = models.TextField(_("Post Caption"), blank=True, null=True)
 
-    prof_img_url = models.URLField(_("profile image url"), max_length=2000)
+    prof_img_url = models.URLField(_("profile image url"), max_length=2000, default="")
 
     pre_fetched = models.BooleanField(_("Data Pre Fetched"), default=False)
 
