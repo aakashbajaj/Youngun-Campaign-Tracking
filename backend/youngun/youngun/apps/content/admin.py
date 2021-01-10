@@ -209,6 +209,9 @@ class TwitterPostAdmin(admin.ModelAdmin, ExportCsvMixin):
         'likes',
         'comments',
         'post_shares',
+        'total_views',
+        'post_engagement',
+        'post_reach',
         'visibility'
     )
 
@@ -219,11 +222,16 @@ class TwitterPostAdmin(admin.ModelAdmin, ExportCsvMixin):
         'campaign',
         'link_to_camp',
         'post_username',
+        'prof_img_url',
         'account_name',
+        'caption',
         'upload_date',
         'likes',
         'comments',
         'post_shares',
+        'total_views',
+        'post_engagement',
+        'post_reach',
         'embed_code',
         'alt_google_photo_url'
     )
