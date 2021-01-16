@@ -5,7 +5,6 @@ import Spinner from "../../shared/Spinner";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 
 // import InfiniteScroll from "react-infinite-scroll-component";
-// import TwitterCard from "./TwitterCard";
 import Tweet from "../../components/Tweet";
 
 export default class TwitterFeed extends Component {
