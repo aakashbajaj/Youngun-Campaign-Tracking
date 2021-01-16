@@ -1,13 +1,14 @@
 import React, { Component, lazy } from "react";
 import CampaignContext from "../../data/CampaignContext";
-import Spinner from "../../shared/Spinner";
+// import Spinner from "../../shared/Spinner";
 import { Dropdown } from "react-bootstrap";
 
 // import InstaFeed from "./InstaFeed";
 // import FBFeed from "./FBFeed";
 // import TwitterFeed from "./TwitterFeed";
 
-const InstaFeed = lazy(() => import("./InstaFeed"));
+// const InstaFeed = lazy(() => import("./InstaFeed"));
+const InstaFeedNew = lazy(() => import("./InstaFeed_new"));
 const FBFeed = lazy(() => import("./FBFeed"));
 const TwitterFeed = lazy(() => import("./TwitterFeed"));
 
@@ -156,7 +157,7 @@ export default class PostsFeed extends Component {
           <h3 className="page-title">Posts</h3>
         </div>
         {this.state.curr_platform === "in" ? (
-          <InstaFeed />
+          <InstaFeedNew />
         ) : this.state.curr_platform === "fb" ? (
           <FBFeed />
         ) : (
