@@ -33,13 +33,13 @@ export default class StoryMetric extends Component {
               >
                 {this.props.PostMainText}
               </h6>
-              <p className="text-muted card-text">{this.props.PostSubText}</p>
+              {/* <p className="text-muted card-text">{this.props.PostSubText}</p> */}
               <h6
                 className={`text-${icon_name} font-weight-semibold mb-1 mt-2`}
               >
                 {this.props.StoryMainText}
               </h6>
-              <p className="text-muted card-text">{this.props.StorySubText}</p>
+              {/* <p className="text-muted card-text">{this.props.StorySubText}</p> */}
             </div>
             {/* <div className="ml-2"></div> */}
           </div>
