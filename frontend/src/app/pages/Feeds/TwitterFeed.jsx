@@ -42,7 +42,7 @@ export default class TwitterFeed extends Component {
   // };
 
   componentDidMount() {
-    console.log("in TW CDM");
+    // console.log("in TW CDM");
     // window.twttr.widgets.load();
 
     this.setState({
