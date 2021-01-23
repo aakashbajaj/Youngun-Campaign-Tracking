@@ -20,7 +20,7 @@ class Campaign(models.Model):
 
     campaign_module = models.CharField(
         _("Campaign Module"), choices=Module.choices, max_length=10, default=Module.V1)
-    
+
     name = models.CharField(_("Name"), max_length=255)
 
     hashtag = models.CharField(_("Hashtag"), max_length=100)
@@ -90,12 +90,12 @@ class Campaign(models.Model):
 
     last_updated = models.DateTimeField(_("last updated"), auto_now=True)
 
-    fb_posts = models.IntegerField(_("facebook posts"), default=0)
-    fb_stories = models.IntegerField(_("facebook stories"), default=0)
-    in_posts = models.IntegerField(_("instagram posts"), default=0)
-    in_stories = models.IntegerField(_("instagram stories"), default=0)
-    tw_posts = models.IntegerField(_("twitter posts"), default=0)
-    tw_stories = models.IntegerField(_("twitter stories"), default=0)
+    fb_posts = models.IntegerField(_("Target facebook posts"), default=0)
+    fb_stories = models.IntegerField(_("Target facebook stories"), default=0)
+    in_posts = models.IntegerField(_("Target instagram posts"), default=0)
+    in_stories = models.IntegerField(_("Target instagram stories"), default=0)
+    tw_posts = models.IntegerField(_("Target twitter posts"), default=0)
+    tw_stories = models.IntegerField(_("Target twitter stories"), default=0)
 
     @property
     def live_posts_cnt(self):
@@ -129,14 +129,14 @@ class Campaign(models.Model):
     def live_tw_stories_cnt(self):
         return self.stories.filter(platform="tw").count()
 
-    live_fb_posts = models.IntegerField(_("live facebook posts"), default=0)
-    live_fb_stories = models.IntegerField(
-        _("live facebook stories"), default=0)
-    live_in_posts = models.IntegerField(_("live instagram posts"), default=0)
-    live_in_stories = models.IntegerField(
-        _("live instagram stories"), default=0)
-    live_tw_posts = models.IntegerField(_("live twitter posts"), default=0)
-    live_tw_stories = models.IntegerField(_("live twitter stories"), default=0)
+    # live_fb_posts = models.IntegerField(_("live facebook posts"), default=0)
+    # live_fb_stories = models.IntegerField(
+    #     _("live facebook stories"), default=0)
+    # live_in_posts = models.IntegerField(_("live instagram posts"), default=0)
+    # live_in_stories = models.IntegerField(
+    #     _("live instagram stories"), default=0)
+    # live_tw_posts = models.IntegerField(_("live twitter posts"), default=0)
+    # live_tw_stories = models.IntegerField(_("live twitter stories"), default=0)
 
     in_stories_google_photos_album_url = models.URLField(
         _("Instagram Stories Album URL"), max_length=500, default="http://example.com", blank=True)
@@ -173,6 +173,13 @@ class Campaign(models.Model):
     # cost_per_post_impression = models.CharField(
     #     _("cost per post impression"), max_length=50, blank=True)
 
+    in_engagement = models.IntegerField(_("in_engagement"), default=0)
+    tw_engagement = models.IntegerField(_("tw_engagement"), default=0)
+    fb_engagement = models.IntegerField(_("fb_engagement"), default=0)
+
+    in_reach = models.IntegerField(_("in_reach"), default=0)
+    tw_reach = models.IntegerField(_("tw_reach"), default=0)
+    fb_reach = models.IntegerField(_("fb_reach"), default=0)
 
     cost_per_engagement = models.CharField(
         _("cost per engagement"), max_length=50, blank=True)
