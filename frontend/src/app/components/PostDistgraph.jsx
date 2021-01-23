@@ -2,19 +2,6 @@ import React, { Component } from "react";
 import { Doughnut } from "react-chartjs-2";
 
 export default class PostDistGraph extends Component {
-  getChartData(param1, param2) {
-    return {
-      datasets: [
-        {
-          data: [param1, param2],
-          backgroundColor: ["#19d895", "#2196f3", "#dde4eb"],
-          borderColor: ["#19d895", "#2196f3", "#dde4eb"],
-        },
-      ],
-      labels: ["Approved", "Remaining"],
-    };
-  }
-
   genChartData(in_num, tw_num, fb_num) {
     var data = [];
     var backgroundColor = [];
@@ -89,6 +76,9 @@ export default class PostDistGraph extends Component {
               />
             </div>
             <div className="col-md-7">
+              <h4 className="card-title font-weight-bold mb-3 mt-2">
+                Post Distribution
+              </h4>
               {/* <h4 className="card-title font-weight-medium mb-2 d-none d-md-block">
                 Participating Profiles: {this.props.unique_content_pieces}
                 <p className="mb-0 font-weight-medium"></p>
@@ -106,26 +96,29 @@ export default class PostDistGraph extends Component {
                 </h4> */}
 
                 {this.props.in_num > 0 ? (
-                  <h4 className="card-title font-weight-medium mb-2 ">
+                  <h4 className="card-title font-weight-light mb-3 ">
                     Instagram:
-                    <span style={{
-                      display:"inline-block",
-                      width: "100px"
-                    }}>{this.props.in_num}</span>
+                    <span className="font-weight-medium">
+                      {this.props.in_num}
+                    </span>
                   </h4>
                 ) : null}
 
                 {this.props.tw_num > 0 ? (
-                  <h4 className="card-title font-weight-medium mb-2 ">
+                  <h4 className="card-title font-weight-light mb-3 ">
                     Twitter:
-                    <span>{this.props.tw_num}</span>
+                    <span className="font-weight-medium">
+                      {this.props.tw_num}
+                    </span>
                   </h4>
                 ) : null}
 
                 {this.props.fb_num > 0 ? (
-                  <h4 className="card-title font-weight-medium mb-2 ">
+                  <h4 className="card-title font-weight-light mb-3 ">
                     Facebook:
-                    <span>{this.props.fb_num}</span>
+                    <span className="font-weight-medium">
+                      {this.props.fb_num}
+                    </span>
                   </h4>
                 ) : null}
 
