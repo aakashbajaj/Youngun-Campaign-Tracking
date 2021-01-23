@@ -40,12 +40,20 @@ class LiveCampaignMetricsSerializer(ModelSerializer):
             'fb_posts', 'fb_stories',
             'in_posts', 'in_stories',
             'tw_posts', 'tw_stories',
+            'live_posts_cnt',
+            'live_stories_cnt',
             'live_fb_posts_cnt', 'live_fb_stories_cnt',
             'live_in_posts_cnt', 'live_in_stories_cnt',
             'live_tw_posts_cnt', 'live_tw_stories_cnt',
-            'live_fb_posts', 'live_fb_stories',
-            'live_in_posts', 'live_in_stories',
-            'live_tw_posts', 'live_tw_stories',
+            'in_engagement',
+            'tw_engagement',
+            'fb_engagement',
+            'in_reach',
+            'tw_reach',
+            'fb_reach'
+            # 'live_fb_posts', 'live_fb_stories',
+            # 'live_in_posts', 'live_in_stories',
+            # 'live_tw_posts', 'live_tw_stories',
         ]
 
 

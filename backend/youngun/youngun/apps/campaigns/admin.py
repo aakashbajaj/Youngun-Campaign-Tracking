@@ -67,7 +67,7 @@ class CampaignAdmin(admin.ModelAdmin):
         ClientProfileInline
     ]
 
-    list_editable =[
+    list_editable = [
         'status',
         'campaign_module',
     ]
@@ -106,17 +106,24 @@ class LiveCampaignAdmin(admin.ModelAdmin):
         'unique_content_pieces',
         'approved_content_pieces',
         'in_posts',
-        'live_in_posts',
+        'live_in_posts_cnt',
         'in_stories',
-        'live_in_stories',
+        'live_in_stories_cnt',
         'fb_posts',
-        'live_fb_posts',
+        'live_fb_posts_cnt',
         'fb_stories',
-        'live_fb_stories',
+        'live_fb_stories_cnt',
         'tw_posts',
-        'live_tw_posts',
+        'live_tw_posts_cnt',
         'tw_stories',
-        'live_tw_stories',
+        'live_tw_stories_cnt',
+
+        'in_engagement',
+        'tw_engagement',
+        'fb_engagement',
+        'in_reach',
+        'tw_reach',
+        'fb_reach'
     )
 
     list_filter = ['status']

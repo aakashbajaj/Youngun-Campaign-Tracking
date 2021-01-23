@@ -24,6 +24,7 @@ def trigger_update_campaign_report_metrics():
             async_task("youngun.apps.campaigns.tasks.update_campaign_report_metrics",
                        camp.pk, camp.name, q_options=opts)
 
+
 def update_all_active_camp_engagement_data():
     # opts = {'group': 'update_all_active_camp_metrics'}
     for camp in Campaign.objects.all():
@@ -33,15 +34,40 @@ def update_all_active_camp_engagement_data():
             camp_engagement = camp.posts.all().aggregate(
                 Sum('post_engagement'))['post_engagement__sum']
 
+            in_reach = camp.posts.filter(platform="in").aggregate(Sum('post_reach'))[
+                'post_reach__sum'] + camp.posts.all().aggregate(Sum('total_views'))['total_views__sum']
+            tw_reach = camp.posts.filter(platform="tw").aggregate(Sum('post_reach'))[
+                'post_reach__sum'] + camp.posts.all().aggregate(Sum('total_views'))['total_views__sum']
+            fb_reach = camp.posts.filter(platform="fb").aggregate(Sum('post_reach'))[
+                'post_reach__sum'] + camp.posts.all().aggregate(Sum('total_views'))['total_views__sum']
+
+            in_engagement = camp.posts.filter(platform="in").aggregate(
+                Sum('post_engagement'))['post_engagement__sum']
+            tw_engagement = camp.posts.filter(platform="fb").aggregate(
+                Sum('post_engagement'))['post_engagement__sum']
+            fb_engagement = camp.posts.filter(platform="tw").aggregate(
+                Sum('post_engagement'))['post_engagement__sum']
+
             camp.total_post_engagement = camp_engagement
             camp.total_campaign_reach = camp_reach
 
+            camp.in_engagement = in_engagement
+            camp.tw_engagement = tw_engagement
+            camp.fb_engagement = fb_engagement
+
+            camp.in_reach = in_reach
+            camp.tw_reach = tw_reach
+            camp.fb_reach = fb_reach
+
+            camp.num_posts = camp.posts.all().count()
+
             camp.save()
+
 
 def update_campaign_report_metrics(camp_pk, camp_name):
     print(f"Processing {camp_name}")
     camp = Campaign.objects.get(pk=camp_pk)
-    
+
     camp.num_posts = camp.posts.all().count()
 
     engagement = 0
@@ -49,7 +75,7 @@ def update_campaign_report_metrics(camp_pk, camp_name):
     saves = 0
     video_views = 0
     reach = 0
-    
+
     for post in camp.posts.all():
         engagement = engagement + post.post_engagement
         shares = shares + post.post_shares
@@ -66,6 +92,7 @@ def update_campaign_report_metrics(camp_pk, camp_name):
     camp.save()
 
     return f"Success: {camp.name}"
+
 
 def bulk_upload_csv(posts_list, campaign_id):
     opts = {'group': "csv-bulk-post-upload"}
@@ -97,18 +124,18 @@ def upload_posts_lists(posts_list, campaign_id):
         p_obj.save()
 
 
-def update_live_cnts():
-    for camp in Campaign.objects.all():
-        if camp:
-            camp.live_fb_posts = camp.get_facebook_posts.count()
-            camp.live_in_posts = camp.get_instagram_posts.count()
-            camp.live_tw_posts = camp.get_twitter_posts.count()
+# def update_live_cnts():
+#     for camp in Campaign.objects.all():
+#         if camp:
+#             camp.live_fb_posts = camp.get_facebook_posts.count()
+#             camp.live_in_posts = camp.get_instagram_posts.count()
+#             camp.live_tw_posts = camp.get_twitter_posts.count()
 
-            camp.live_fb_stories = camp.get_facebook_stories.count()
-            camp.live_in_stories = camp.get_instagram_stories.count()
-            camp.live_tw_stories = camp.get_twitter_stories.count()
+#             camp.live_fb_stories = camp.get_facebook_stories.count()
+#             camp.live_in_stories = camp.get_instagram_stories.count()
+#             camp.live_tw_stories = camp.get_twitter_stories.count()
 
-            camp.save()
+#             camp.save()
 
 
 def fetch_campaign_stories():

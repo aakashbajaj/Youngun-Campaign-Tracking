@@ -56,7 +56,7 @@ def update_all_tweets_metrics():
 def update_tw_post_metric(post_pk_list):
     for post_pk in post_pk_list:
         tw_post_updater(post_pk)
-        time.sleep(3)
+        time.sleep(4)
 
     # call fn to update campaign engagement metric
     update_all_active_camp_engagement_data()
