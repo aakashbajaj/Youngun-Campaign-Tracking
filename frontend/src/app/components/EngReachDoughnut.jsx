@@ -27,9 +27,9 @@ export default class EngReachDoughnut extends Component {
       labels.push("Facebook");
     }
 
-    console.log(data);
-    console.log(backgroundColor);
-    console.log(labels);
+    // console.log(data);
+    // console.log(backgroundColor);
+    // console.log(labels);
 
     return {
       datasets: [
