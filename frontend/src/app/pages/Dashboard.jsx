@@ -2,10 +2,10 @@ import React, { Component } from "react";
 
 import CampaignContext from "../data/CampaignContext";
 import StoryMetric from "../components/StoryMetric";
-import CardDoughnut from "../components/CardDoughnut";
 import Spinner from "../shared/Spinner";
 import ContentSlideCard from "../components/ContentSlideCard";
 import InviteUserCard from "../components/InviteUserCard";
+import Reporting from "./Reporting";
 // import ContentSlideCard from "../components/ContentSlideCard";
 // import DatePicker from 'react-datepicker';
 // import { Dropdown } from 'react-bootstrap';
@@ -44,14 +44,14 @@ export class Dashboard extends Component {
     tw_posts: "",
     tw_stories: "",
 
-    live_fb_posts: "",
-    live_fb_stories: "",
+    // live_fb_posts: "",
+    // live_fb_stories: "",
 
-    live_in_posts: "",
-    live_in_stories: "",
+    // live_in_posts: "",
+    // live_in_stories: "",
 
-    live_tw_posts: "",
-    live_tw_stories: "",
+    // live_tw_posts: "",
+    // live_tw_stories: "",
 
     live_fb_posts_cnt: "",
     live_fb_stories_cnt: "",
@@ -83,6 +83,34 @@ export class Dashboard extends Component {
 
   render() {
     var liveCampMetrics = this.currentCampLiveMetrics;
+    var showReport = false;
+    var showCosts = false;
+
+    var currentCampaignInView = this.context.currentCampaignInView;
+
+    if (currentCampaignInView) {
+      if (this.context.campaigns[currentCampaignInView]) {
+        if (
+          this.context.campaigns[currentCampaignInView].campaign_module === "v2"
+        ) {
+          showReport = true;
+        }
+      }
+    }
+
+    if (currentCampaignInView) {
+      if (this.context.campaigns[currentCampaignInView]) {
+        if (
+          this.context.campaigns[currentCampaignInView].campaign_module === "v2"
+        ) {
+          if (
+            this.context.campaigns[currentCampaignInView].status === "completed"
+          )
+            showCosts = true;
+        }
+      }
+    }
+
     if (
       this.context.currentCampaignInView &&
       this.context.liveCampaignData[this.context.currentCampaignInView]
@@ -202,19 +230,24 @@ export class Dashboard extends Component {
         </div> */}
         <div className="row">
           <div className="col-sm-6 col-md-6 col-lg-6 grid-margin stretch-card">
-            <CardDoughnut
-              unique_content_pieces={liveCampMetrics.unique_content_pieces}
-              approved_content_pieces={liveCampMetrics.approved_content_pieces}
-              remaining_content_pieces={
-                liveCampMetrics.remaining_content_pieces
-              }
-              particaipating_profiles={liveCampMetrics.particaipating_profiles}
+            <Reporting
+              total_posts={liveCampMetrics.live_posts_cnt}
+              in_num={liveCampMetrics.live_in_posts_cnt}
+              tw_num={liveCampMetrics.live_tw_posts_cnt}
+              fb_num={liveCampMetrics.live_fb_posts_cnt}
+              in_eng={liveCampMetrics.in_engagement}
+              tw_eng={liveCampMetrics.tw_engagement}
+              fb_eng={liveCampMetrics.fb_engagement}
+              in_reach={liveCampMetrics.in_reach}
+              tw_reach={liveCampMetrics.tw_reach}
+              fb_reach={liveCampMetrics.fb_reach}
+              showCosts={showCosts}
             />
           </div>
           <div className="col-sm-6 col-md-6 col-lg-6">
             <div className="row">
               <div className="col-sm-12 col-md-12 col-lg-12 grid-margin stretch-card">
-                <ContentSlideCard slide_url={liveCampMetrics.slide_url} />
+                <ContentSlideCard showReport={showReport} />
               </div>
             </div>
             <div className="row">
@@ -224,6 +257,27 @@ export class Dashboard extends Component {
                 </div>
               ) : null}
             </div>
+            {/* <div className="row">
+              <div className="col-sm-8 col-md-8 col-lg-8 grid-margin stretch-card">
+                <PostDistGraph
+                  in_num={liveCampMetrics.live_in_posts_cnt}
+                  tw_num={liveCampMetrics.live_tw_posts_cnt}
+                  fb_num={liveCampMetrics.live_fb_posts_cnt}
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-sm-8 col-md-8 col-lg-8 grid-margin stretch-card">
+                <EngReachDoughnut
+                  in_eng={liveCampMetrics.in_engagement}
+                  tw_eng={liveCampMetrics.tw_engagement}
+                  fb_eng={liveCampMetrics.fb_engagement}
+                  in_reach={liveCampMetrics.in_reach}
+                  tw_reach={liveCampMetrics.tw_reach}
+                  fb_reach={liveCampMetrics.fb_reach}
+                />
+              </div>
+            </div> */}
           </div>
           {/* <div className="col-sm-6 col-md-6 col-lg-6 grid-margin stretch-card"></div> */}
         </div>
