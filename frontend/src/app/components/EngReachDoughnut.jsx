@@ -75,23 +75,23 @@ export default class EngReachDoughnut extends Component {
       metrics = (
         <div>
           {this.props.in_eng > 0 ? (
-            <h4 className="card-title font-weight-medium mb-2 ">
+            <h4 className="card-title font-weight-light mb-2 ">
               Instagram:
-              <span>{this.props.in_eng}</span>
+              <span className="font-weight-medium">{this.props.in_eng}</span>
             </h4>
           ) : null}
 
           {this.props.tw_eng > 0 ? (
-            <h4 className="card-title font-weight-medium mb-2 ">
+            <h4 className="card-title font-weight-light mb-2 ">
               Twitter:
-              <span>{this.props.tw_eng}</span>
+              <span className="font-weight-medium">{this.props.tw_eng}</span>
             </h4>
           ) : null}
 
           {this.props.fb_eng > 0 ? (
-            <h4 className="card-title font-weight-medium mb-2 ">
+            <h4 className="card-title font-weight-light mb-2 ">
               Facebook:
-              <span>{this.props.fb_eng}</span>
+              <span className="font-weight-medium">{this.props.fb_eng}</span>
             </h4>
           ) : null}
         </div>
@@ -102,23 +102,23 @@ export default class EngReachDoughnut extends Component {
       metrics = (
         <div>
           {this.props.in_reach > 0 ? (
-            <h4 className="card-title font-weight-medium mb-2 ">
+            <h4 className="card-title font-weight-light mb-2 ">
               Instagram:
-              <span>{this.props.in_reach}</span>
+              <span className="font-weight-medium">{this.props.in_reach}</span>
             </h4>
           ) : null}
 
           {this.props.tw_reach > 0 ? (
-            <h4 className="card-title font-weight-medium mb-2 ">
+            <h4 className="card-title font-weight-light mb-2 ">
               Twitter:
-              <span>{this.props.tw_reach}</span>
+              <span className="font-weight-medium">{this.props.tw_reach}</span>
             </h4>
           ) : null}
 
           {this.props.fb_reach > 0 ? (
-            <h4 className="card-title font-weight-medium mb-2 ">
+            <h4 className="card-title font-weight-light mb-2 ">
               Facebook:
-              <span>{this.props.fb_reach}</span>
+              <span className="font-weight-medium">{this.props.fb_reach}</span>
             </h4>
           ) : null}
         </div>
@@ -155,9 +155,9 @@ export default class EngReachDoughnut extends Component {
               )}
             </div>
             <div className="col-md-7">
-              <h4 className="card-title font-weight-bold mb-1 mt-2">
+              {/* <h4 className="card-title font-weight-bold mb-1 mt-2">
                 Post Distribution
-              </h4>
+              </h4> */}
               <div className="row proBanner">
                 <div className="col-8">
                   <span className="mt-2 d-flex purchase-popup align-items-center">
