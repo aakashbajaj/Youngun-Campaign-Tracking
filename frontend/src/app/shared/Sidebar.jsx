@@ -59,8 +59,10 @@ class Sidebar extends Component {
 
     var currCampName = null;
 
+    var showStories = false;
+
     if (this.context.currentCampaignInView) {
-      console.log("Changing " + this.context.currentCampaignInView);
+      // console.log("Changing " + this.context.currentCampaignInView);
       currCampName = this.context.currentCampaignInView;
     }
 
@@ -69,12 +71,26 @@ class Sidebar extends Component {
     if (currentCampaignInView) {
       if (this.context.campaigns[currentCampaignInView]) {
         if (
-          this.context.campaigns[currentCampaignInView].campaign_module == "v2"
+          this.context.campaigns[currentCampaignInView].campaign_module === "v2"
         ) {
           showReport = true;
         }
+
+        if (this.context.liveCampaignData[currentCampaignInView]) {
+          if (
+            this.context.liveCampaignData[currentCampaignInView]
+              .live_stories_cnt > 0
+          )
+            showStories = true;
+          console.log(showStories);
+        }
       }
     }
+
+    // if (!currentCampaignInView) {
+    //   return <Spinner />;
+    // }
+
     return (
       <nav className="sidebar sidebar-offcanvas" id="sidebar">
         <div className="text-center sidebar-brand-wrapper d-flex align-items-center">
@@ -150,17 +166,20 @@ class Sidebar extends Component {
               <span className="menu-title">Posts Feed</span>
             </Link>
           </li>
-
-          <li
-            className={
-              this.isPathActive("/storiesfeed") ? "nav-item active" : "nav-item"
-            }
-          >
-            <Link className="nav-link" to="/storiesfeed">
-              <i className="mdi mdi-history menu-icon"></i>
-              <span className="menu-title">Stories Feed</span>
-            </Link>
-          </li>
+          {showStories ? (
+            <li
+              className={
+                this.isPathActive("/storiesfeed")
+                  ? "nav-item active"
+                  : "nav-item"
+              }
+            >
+              <Link className="nav-link" to="/storiesfeed">
+                <i className="mdi mdi-history menu-icon"></i>
+                <span className="menu-title">Stories Feed</span>
+              </Link>
+            </li>
+          ) : null}
 
           {/* <li
             className={
@@ -174,69 +193,69 @@ class Sidebar extends Component {
           </li> */}
 
           {showReport ? (
-            // && this.context.campaigns[this.context.currentCampaignInView].status === "completed"
-            // <li
-            //   className={
-            //     this.isPathActive("/report") ? "nav-item active" : "nav-item"
-            //   }
-            // >
-            //   <Link className="nav-link" to="/report">
-            //     <i className="mdi mdi-table-large menu-icon"></i>
-            //     <span className="menu-title">Reporting</span>
-            //   </Link>
-            // </li>
-
             <li
               className={
-                this.isPathActive("/report") ? "nav-item active" : "nav-item"
+                this.isPathActive("/report/post-stats")
+                  ? "nav-item active"
+                  : "nav-item"
               }
             >
-              <div
-                className={
-                  this.state.reportPageMenuOpen
-                    ? "nav-link menu-expanded"
-                    : "nav-link"
-                }
-                onClick={() => this.toggleMenuState("reportPageMenuOpen")}
-                data-toggle="collapse"
-              >
-                <i className="mdi mdi-table-large menu-icon"></i>
-                <span className="menu-title">Reporting</span>
-                <i className="menu-arrow"></i>
-              </div>
-              <Collapse in={this.state.reportPageMenuOpen}>
-                <ul className="nav flex-column sub-menu">
-                  <li className="nav-item">
-                    {" "}
-                    <Link
-                      className={
-                        this.isPathActive("/report/post-stats")
-                          ? "nav-link active"
-                          : "nav-link"
-                      }
-                      to="/report/post-stats"
-                    >
-                      Post Statistics
-                    </Link>
-                  </li>
-
-                  <li className="nav-item">
-                    {" "}
-                    <Link
-                      className={
-                        this.isPathActive("/report/overview")
-                          ? "nav-link active"
-                          : "nav-link"
-                      }
-                      to="/report/overview"
-                    >
-                      Campaign Overview
-                    </Link>
-                  </li>
-                </ul>
-              </Collapse>
+              <Link className="nav-link" to="/report/post-stats">
+                <i className="mdi mdi-history menu-icon"></i>
+                <span className="menu-title">Post Statistics</span>
+              </Link>
             </li>
-          ) : null}
+          ) : // <li
+          //   className={
+          //     this.isPathActive("/report") ? "nav-item active" : "nav-item"
+          //   }
+          // >
+          //   <div
+          //     className={
+          //       this.state.reportPageMenuOpen
+          //         ? "nav-link menu-expanded"
+          //         : "nav-link"
+          //     }
+          //     onClick={() => this.toggleMenuState("reportPageMenuOpen")}
+          //     data-toggle="collapse"
+          //   >
+          //     <i className="mdi mdi-table-large menu-icon"></i>
+          //     <span className="menu-title">Reporting</span>
+          //     <i className="menu-arrow"></i>
+          //   </div>
+          //   <Collapse in={this.state.reportPageMenuOpen}>
+          //     <ul className="nav flex-column sub-menu">
+          //       <li className="nav-item">
+          //         {" "}
+          //         <Link
+          //           className={
+          //             this.isPathActive("/report/post-stats")
+          //               ? "nav-link active"
+          //               : "nav-link"
+          //           }
+          //           to="/report/post-stats"
+          //         >
+          //           Post Statistics
+          //         </Link>
+          //       </li>
+
+          //       <li className="nav-item">
+          //         {" "}
+          //         <Link
+          //           className={
+          //             this.isPathActive("/report/overview")
+          //               ? "nav-link active"
+          //               : "nav-link"
+          //           }
+          //           to="/report/overview"
+          //         >
+          //           Campaign Overview
+          //         </Link>
+          //       </li>
+          //     </ul>
+          //   </Collapse>
+          // </li>
+          null}
         </ul>
       </nav>
     );

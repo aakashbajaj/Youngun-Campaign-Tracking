@@ -5,6 +5,8 @@ import StoryMetric from "../components/StoryMetric";
 import CardDoughnut from "../components/CardDoughnut";
 import Spinner from "../shared/Spinner";
 import PostListTable from "../components/PostListTable";
+import PostDistGraph from "../components/PostDistgraph";
+import EngReachDoughnut from "../components/EngReachDoughnut";
 
 export default class Reporting extends Component {
   static contextType = CampaignContext;
@@ -28,20 +30,21 @@ export default class Reporting extends Component {
     return (
       <div>
         <div className="row">
-          {/* Number of Content Pieces */}
-          <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 grid-margin stretch-card">
+          {/* Number of Live Posts */}
+          <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12 grid-margin stretch-card">
             <div className="card">
               <div className="card-body py-4">
                 <div className="d-flex flex-row justify-content-center align-items">
-                  <i className={`mdi mdi-cube text-danger icon-lg`}></i>
+                  <i
+                    className={`mdi mt-5 ml-3 mdi-account-box-multiple text-warning icon-lg`}
+                  ></i>
                   <div className="ml-4">
                     {/* <p className="text-muted card-text mt-2 mb-1">₹ 0.34</p> */}
-                    <h6 className={`font-weight-semibold mt-2 mb-1`}>
-                      Number of <br />
-                      Content Pieces
+                    <h6 className={`font-weight-semibold mt-5 mb-1`}>
+                      Number of Posts
                     </h6>
                     <h6 className={`font-weight-bold mt-2`}>
-                      {campReportData.num_content_pieces}
+                      {this.props.total_posts}
                     </h6>
                   </div>
                   {/* <div className="ml-2"></div> */}
@@ -50,51 +53,80 @@ export default class Reporting extends Component {
             </div>
           </div>
 
-          <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 grid-margin stretch-card">
-            <div className="card">
-              <div className="card-body py-4">
-                <div className="d-flex flex-row justify-content-center align-items">
-                  <i
-                    className={`mdi mdi-account-box-multiple text-warning icon-lg`}
-                  ></i>
-                  <div className="ml-4">
-                    {/* <p className="text-muted card-text mt-2 mb-1">₹ 0.34</p> */}
-                    <h6 className={`font-weight-semibold mt-2 mb-1`}>
-                      Number of Posts
-                    </h6>
-                    <h6 className={`font-weight-bold mt-2`}>
-                      {campReportData.num_posts}
-                    </h6>
+          {/* Live Posts Graphs */}
+          <div className="col-xl-8 col-lg-8 col-md-12 col-sm-12 grid-margin stretch-card">
+            <PostDistGraph
+              in_num={this.props.in_num}
+              tw_num={this.props.tw_num}
+              fb_num={this.props.fb_num}
+            />
+          </div>
+
+          <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+            <div className="row">
+              <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 grid-margin stretch-card">
+                <div className="card">
+                  <div className="card-body py-4">
+                    <div className="d-flex flex-row justify-content-center align-items">
+                      <i className={`mdi mdi-lan text-info icon-lg`}></i>
+                      <div className="ml-4">
+                        {/* <p className="text-muted card-text mt-2 mb-1">₹ 0.34</p> */}
+                        <h6 className={`font-weight-semibold mt-2 mb-1`}>
+                          Total Campaign
+                          <br />
+                          Enagagement
+                        </h6>
+                        <h6 className={`font-weight-bold mt-2`}>
+                          {campReportData.total_post_engagement}
+                        </h6>
+                      </div>
+                      {/* <div className="ml-2"></div> */}
+                    </div>
                   </div>
-                  {/* <div className="ml-2"></div> */}
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 grid-margin stretch-card">
+                <div className="card">
+                  <div className="card-body py-4">
+                    <div className="d-flex flex-row justify-content-center align-items">
+                      <i
+                        className={`mdi mdi-human-greeting text-success icon-lg`}
+                      ></i>
+                      <div className="ml-4">
+                        {/* <p className="text-muted card-text mt-2 mb-1">₹ 0.34</p> */}
+                        <h6 className={`font-weight-semibold mt-2 mb-1`}>
+                          Total Campaign
+                          <br />
+                          Reach
+                        </h6>
+                        <h6 className={`font-weight-bold mt-2`}>
+                          {campReportData.total_campaign_reach}
+                        </h6>
+                      </div>
+                      {/* <div className="ml-2"></div> */}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Post Engagement */}
-          <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 grid-margin stretch-card">
-            <div className="card">
-              <div className="card-body py-4">
-                <div className="d-flex flex-row justify-content-center align-items">
-                  <i className={`mdi mdi-poll-box text-success icon-lg`}></i>
-                  <div className="ml-4">
-                    {/* <p className="text-muted card-text mt-2 mb-1">₹ 0.34</p> */}
-                    <h6 className={`font-weight-semibold mt-2 mb-1`}>
-                      Post Engagement
-                    </h6>
-                    <h6 className={`font-weight-bold mt-2`}>
-                      {campReportData.post_engagement}
-                    </h6>
-                  </div>
-                  {/* <div className="ml-2"></div> */}
-                </div>
-              </div>
-            </div>
+          <div className="col-xl-8 col-lg-8 col-md-12 col-sm-12 grid-margin stretch-card">
+            <EngReachDoughnut
+              in_eng={this.props.in_eng}
+              tw_eng={this.props.tw_eng}
+              fb_eng={this.props.fb_eng}
+              in_reach={this.props.in_reach}
+              tw_reach={this.props.tw_reach}
+              fb_reach={this.props.fb_reach}
+            />
           </div>
 
           {/* Post Shares */}
-          {/* <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 grid-margin stretch-card">
+          {/* <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12 grid-margin stretch-card">
             <div className="card">
               <div className="card-body py-4">
                 <div className="d-flex flex-row justify-content-center align-items">
@@ -115,7 +147,7 @@ export default class Reporting extends Component {
           </div> */}
 
           {/* Post Saves */}
-          {/* <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 grid-margin stretch-card">
+          {/* <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12 grid-margin stretch-card">
             <div className="card">
               <div className="card-body py-4">
                 <div className="d-flex flex-row justify-content-center align-items">
@@ -137,7 +169,7 @@ export default class Reporting extends Component {
           </div> */}
 
           {/* Video Views */}
-          {/* <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 grid-margin stretch-card">
+          {/* <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12 grid-margin stretch-card">
             <div className="card">
               <div className="card-body py-4">
                 <div className="d-flex flex-row justify-content-center align-items">
@@ -158,7 +190,7 @@ export default class Reporting extends Component {
           </div> */}
 
           {/* Static Post Reach */}
-          {/* <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 grid-margin stretch-card">
+          {/* <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12 grid-margin stretch-card">
             <div className="card">
               <div className="card-body py-4">
                 <div className="d-flex flex-row justify-content-center align-items">
@@ -176,115 +208,50 @@ export default class Reporting extends Component {
             </div>
           </div> */}
 
-          <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 grid-margin stretch-card">
-            <div className="card">
-              <div className="card-body py-4">
-                <div className="d-flex flex-row justify-content-center align-items">
-                  <i className={`mdi mdi-receipt text-info icon-lg`}></i>
-                  <div className="ml-4">
-                    {/* <p className="text-muted card-text mt-2 mb-1">₹ 0.34</p> */}
-                    <h6 className={`font-weight-semibold mt-2 mb-1`}>
-                      Cost Per Reach
-                    </h6>
-                    <h6 className={`font-weight-bold mt-2`}>
-                      {campReportData.cost_per_reach}
-                    </h6>
-                  </div>
-                  {/* <div className="ml-2"></div> */}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 grid-margin stretch-card">
-            <div className="card">
-              <div className="card-body py-4">
-                <div className="d-flex flex-row justify-content-center align-items">
-                  <i className={`mdi mdi-receipt text-danger icon-lg`}></i>
-                  <div className="ml-4">
-                    {/* <p className="text-muted card-text mt-2 mb-1">₹ 0.34</p> */}
-                    <h6 className={`font-weight-semibold mt-2 mb-1`}>
-                      Cost Per <br />
-                      Engagement
-                    </h6>
-                    <h6 className={`font-weight-bold mt-2`}>
-                      {campReportData.cost_per_engagement}
-                    </h6>
-                  </div>
-                  {/* <div className="ml-2"></div> */}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 grid-margin stretch-card">
-            <div className="card">
-              <div className="card-body py-4">
-                <div className="d-flex flex-row justify-content-center align-items">
-                  <i className={`mdi mdi-lan text-info icon-lg`}></i>
-                  <div className="ml-4">
-                    {/* <p className="text-muted card-text mt-2 mb-1">₹ 0.34</p> */}
-                    <h6 className={`font-weight-semibold mt-2 mb-1`}>
-                      Total Campaign
-                      <br />
-                      Enagagement
-                    </h6>
-                    <h6 className={`font-weight-bold mt-2`}>
-                      {campReportData.total_post_engagement}
-                    </h6>
-                  </div>
-                  {/* <div className="ml-2"></div> */}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 grid-margin stretch-card">
-            <div className="card">
-              <div className="card-body py-4">
-                <div className="d-flex flex-row justify-content-center align-items">
-                  <i
-                    className={`mdi mdi-human-greeting text-success icon-lg`}
-                  ></i>
-                  <div className="ml-4">
-                    {/* <p className="text-muted card-text mt-2 mb-1">₹ 0.34</p> */}
-                    <h6 className={`font-weight-semibold mt-2 mb-1`}>
-                      Total Campaign
-                      <br />
-                      Reach
-                    </h6>
-                    <h6 className={`font-weight-bold mt-2`}>
-                      {campReportData.total_campaign_reach}
-                    </h6>
-                  </div>
-                  {/* <div className="ml-2"></div> */}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 grid-margin stretch-card">
-            <div className="card card-revenue">
-              <a
-                href="https://forms.gle/EiLXkNfhuBMHWhff8"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <div className="card-body">
-                  <div className="d-flex w-100 h-100 justify-content-between align-items-center">
-                    <div className="mr-auto">
-                      <p className="highlight-text text-white">
-                        {" "}
-                        Add Post Inventory{" "}
-                      </p>
-                      {/* <p className="text-white"> This Month </p> */}
-                      <div className="badge badge-pill mr-5">+</div>
+          {this.props.showCosts ? (
+            <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 grid-margin stretch-card">
+              <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12 grid-margin stretch-card">
+                <div className="card">
+                  <div className="card-body py-4">
+                    <div className="d-flex flex-row justify-content-center align-items">
+                      <i className={`mdi mdi-receipt text-info icon-lg`}></i>
+                      <div className="ml-4">
+                        {/* <p className="text-muted card-text mt-2 mb-1">₹ 0.34</p> */}
+                        <h6 className={`font-weight-semibold mt-2 mb-1`}>
+                          Cost Per Reach
+                        </h6>
+                        <h6 className={`font-weight-bold mt-2`}>
+                          {campReportData.cost_per_reach}
+                        </h6>
+                      </div>
+                      {/* <div className="ml-2"></div> */}
                     </div>
                   </div>
                 </div>
-              </a>
+              </div>
+
+              <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12 grid-margin stretch-card">
+                <div className="card">
+                  <div className="card-body py-4">
+                    <div className="d-flex flex-row justify-content-center align-items">
+                      <i className={`mdi mdi-receipt text-danger icon-lg`}></i>
+                      <div className="ml-4">
+                        {/* <p className="text-muted card-text mt-2 mb-1">₹ 0.34</p> */}
+                        <h6 className={`font-weight-semibold mt-2 mb-1`}>
+                          Cost Per <br />
+                          Engagement
+                        </h6>
+                        <h6 className={`font-weight-bold mt-2`}>
+                          {campReportData.cost_per_engagement}
+                        </h6>
+                      </div>
+                      {/* <div className="ml-2"></div> */}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
+          ) : null}
         </div>
       </div>
     );
