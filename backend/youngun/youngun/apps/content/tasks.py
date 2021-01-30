@@ -1,8 +1,7 @@
-import requests
 from youngun.apps.content.models import Post, InstagramPost, TwitterPost, FacebookPost, PostVisibility
 from youngun.apps.content.utils.post_filler import in_post_filler, tw_post_filler, fb_post_filler
-from youngun.apps.content.utils.post_update import tw_post_updater
-from youngun.apps.content.utils.insta_filler import insta_post_update, insta_post_insight_update
+from youngun.apps.content.utils.post_update import tw_post_updater, insta_post_update
+from youngun.apps.content.utils.insta_filler import insta_post_filler
 from youngun.apps.campaigns.models import Campaign
 from youngun.apps.campaigns.tasks import update_all_active_camp_engagement_data
 
@@ -10,8 +9,11 @@ from django_q.tasks import async_task, schedule
 from django.conf import settings
 from django.db.models import Count, Sum
 
+import requests
 import time
+import json
 import datetime
+from pprint import pprint
 
 
 def update_all_active_camp_metrics():
@@ -46,8 +48,34 @@ def update_all_tweets_metrics():
     results = TwitterPost.objects.filter(campaign__status="active")
     pk_list = [x for x in results.values_list('pk', flat=True)]
 
+    print("Trigger All Twitter Update")
+
     opts = {'group': 'update_all_tweets_metrics'}
     async_task("youngun.apps.content.tasks.update_tw_post_metric",
+               pk_list, q_options=opts)
+
+
+def update_latest_insta_metrics():
+    today_min = datetime.datetime.combine(
+        datetime.date.today(), datetime.time.min)
+    days_3_ago = today_min - datetime.timedelta(days=3)
+    results = InstagramPost.objects.filter(
+        campaign__status="active").filter(upload_date__gte=days_3_ago)
+    pk_list = [x for x in results.values_list('pk', flat=True)]
+
+    opts = {'group': 'update_latest_insta_metrics'}
+    async_task("youngun.apps.content.tasks.update_in_post_metric",
+               pk_list, q_options=opts)
+
+
+def update_all_insta_metrics():
+    results = InstagramPost.objects.filter(campaign__status="active")
+    pk_list = [x for x in results.values_list('pk', flat=True)]
+
+    print("Trigger All Insta Update")
+
+    opts = {'group': 'update_all_insta_metrics'}
+    async_task("youngun.apps.content.tasks.update_in_post_metric",
                pk_list, q_options=opts)
 
 # Worker Tasks
@@ -61,8 +89,19 @@ def update_tw_post_metric(post_pk_list):
     # call fn to update campaign engagement metric
     update_all_active_camp_engagement_data()
 
-# Utility Tasks
 
+
+def update_in_post_metric(post_pk_list):
+    for post_pk in post_pk_list:
+        insta_post_filler(post_pk)
+        time.sleep(4)
+
+    # call fn to update campaign engagement metric
+    update_all_active_camp_engagement_data()
+
+
+
+# Utility Tasks
 
 def extract_username_from_posts():
     for post in InstagramPost.objects.all():
@@ -93,7 +132,7 @@ def update_camp_post_metrics(camp_pk, camp_name):
     for post in camp.posts.all():
         # Instagram post
         if post.platform == "in":
-            insta_post_update(post.pk)
+            insta_post_filler(post.pk)
             # insta_post_insight_update(post.pk)
 
         # Twitter Post
@@ -144,13 +183,13 @@ def fill_fb_post(post_pk):
 
 def fill_in_post_graphapi(post_pk):
     opts = {'group': "graphapi-single-post-metric-fetch"}
-    async_task("youngun.apps.content.utils.insta_filler.insta_post_fill",
+    async_task("youngun.apps.content.utils.insta_filler.insta_post_filler",
                post_pk, q_options=opts)
 
 
 def update_in_post_graphapi(post_pk):
     opts = {'group': "graphapi-single-post-metric-update"}
-    async_task("youngun.apps.content.utils.insta_filler.insta_post_update",
+    async_task("youngun.apps.content.utils.insta_filler.insta_post_filler",
                post_pk, q_options=opts)
 
 
