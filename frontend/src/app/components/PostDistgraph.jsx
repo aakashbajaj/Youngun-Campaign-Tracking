@@ -95,7 +95,31 @@ export default class PostDistGraph extends Component {
                   Unique Content Pieces: {this.props.unique_content_pieces}
                 </h4> */}
 
-                {this.props.in_num > 0 ? (
+                <table className="table table-hover table-striped">
+                  <tbody>
+                    {this.props.in_num > 0 ? (
+                      <tr>
+                        <td>Instagram:</td>
+                        <td>{this.props.in_num}</td>
+                      </tr>
+                    ) : null}
+
+                    {this.props.tw_num > 0 ? (
+                      <tr>
+                        <td>Twitter:</td>
+                        <td>{this.props.tw_num}</td>
+                      </tr>
+                    ) : null}
+
+                    {this.props.fb_num > 0 ? (
+                      <tr>
+                        <td>Facebook:</td>
+                        <td>{this.props.fb_num}</td>
+                      </tr>
+                    ) : null}
+                  </tbody>
+                </table>
+                {/* {this.props.in_num > 0 ? (
                   <h4 className="card-title font-weight-light mb-3 ">
                     Instagram:
                     <span className="font-weight-medium">
@@ -120,7 +144,7 @@ export default class PostDistGraph extends Component {
                       {this.props.fb_num}
                     </span>
                   </h4>
-                ) : null}
+                ) : null} */}
 
                 {/* <ProgressBar variant="primary" now={80} /> */}
               </div>

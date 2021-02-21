@@ -40,7 +40,7 @@ export class VerifyOtp extends Component {
               <div className="auth-form-light text-left py-5 px-4 px-sm-5">
                 <div className="brand-logo text-center">
                   <img
-                    src={require("../../../assets/images/youngun-logo.png")}
+                    src={require("../../../assets/images/youngunnew.jpg")}
                     alt="logo"
                   />
                 </div>

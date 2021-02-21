@@ -97,7 +97,7 @@ function formatLargeNumeric(string) {
 
 function sanitCap(caption) {
   var lastidx = caption.lastIndexOf("https://");
-  console.log(lastidx);
+  // console.log(lastidx);
   if (lastidx > 0) return caption.substring(0, lastidx);
   else return caption;
 }
@@ -115,7 +115,7 @@ export default function Tweet(props) {
   };
 
   var hasMedia = false;
-  console.log(props.media_objs);
+  // console.log(props.media_objs);
   if (props.media_objs) {
     if (props.media_objs.length > 0) {
       hasMedia = true;

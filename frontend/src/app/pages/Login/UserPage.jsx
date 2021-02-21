@@ -19,7 +19,7 @@ export class UserPage extends Component {
   onSendOTPBtnClick = (evt) => {
     evt.preventDefault();
     const { email } = this.state;
-    console.log(email);
+    // console.log(email);
     this.context.login(email, () => {
       this.props.history.push("/verify");
     });

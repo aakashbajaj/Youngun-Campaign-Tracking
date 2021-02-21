@@ -73,55 +73,84 @@ export default class EngReachDoughnut extends Component {
     var metrics, eng_btn_class, reach_btn_class;
     if (this.state.currentMetric === "en") {
       metrics = (
-        <div>
-          {this.props.in_eng > 0 ? (
-            <h4 className="card-title font-weight-light mb-2 ">
-              Instagram:
-              <span className="font-weight-medium">{this.props.in_eng}</span>
-            </h4>
-          ) : null}
+        <table className="table table-hover table-striped">
+          <tbody>
+            {this.props.in_eng > 0 ? (
+              <tr>
+                <td>Instagram:</td>
+                <td>{this.props.in_eng}</td>
+              </tr>
+            ) : null}
 
-          {this.props.tw_eng > 0 ? (
-            <h4 className="card-title font-weight-light mb-2 ">
-              Twitter:
-              <span className="font-weight-medium">{this.props.tw_eng}</span>
-            </h4>
-          ) : null}
+            {this.props.tw_eng > 0 ? (
+              <tr>
+                <td>Twitter:</td>
+                <td>{this.props.tw_eng}</td>
+              </tr>
+            ) : null}
 
-          {this.props.fb_eng > 0 ? (
-            <h4 className="card-title font-weight-light mb-2 ">
-              Facebook:
-              <span className="font-weight-medium">{this.props.fb_eng}</span>
-            </h4>
-          ) : null}
-        </div>
+            {this.props.fb_eng > 0 ? (
+              <tr>
+                <td>Facebook:</td>
+                <td>{this.props.fb_eng}</td>
+              </tr>
+            ) : null}
+          </tbody>
+        </table>
       );
       eng_btn_class = "btn purchase-button";
       reach_btn_class = "btn download-button";
     } else {
+      // metrics = (
+      //   <div>
+      //     {this.props.in_reach > 0 ? (
+      //       <h4 className="card-title font-weight-light mb-2 ">
+      //         Instagram:
+      //         <span className="font-weight-medium">{this.props.in_reach}</span>
+      //       </h4>
+      //     ) : null}
+
+      //     {this.props.tw_reach > 0 ? (
+      //       <h4 className="card-title font-weight-light mb-2 ">
+      //         Twitter:
+      //         <span className="font-weight-medium">{this.props.tw_reach}</span>
+      //       </h4>
+      //     ) : null}
+
+      //     {this.props.fb_reach > 0 ? (
+      //       <h4 className="card-title font-weight-light mb-2 ">
+      //         Facebook:
+      //         <span className="font-weight-medium">{this.props.fb_reach}</span>
+      //       </h4>
+      //     ) : null}
+      //   </div>
+      // );
+
       metrics = (
-        <div>
-          {this.props.in_reach > 0 ? (
-            <h4 className="card-title font-weight-light mb-2 ">
-              Instagram:
-              <span className="font-weight-medium">{this.props.in_reach}</span>
-            </h4>
-          ) : null}
+        <table className="table table-hover table-striped">
+          <tbody>
+            {this.props.in_reach > 0 ? (
+              <tr>
+                <td>Instagram:</td>
+                <td>{this.props.in_reach}</td>
+              </tr>
+            ) : null}
 
-          {this.props.tw_reach > 0 ? (
-            <h4 className="card-title font-weight-light mb-2 ">
-              Twitter:
-              <span className="font-weight-medium">{this.props.tw_reach}</span>
-            </h4>
-          ) : null}
+            {this.props.tw_reach > 0 ? (
+              <tr>
+                <td>Twitter:</td>
+                <td>{this.props.tw_reach}</td>
+              </tr>
+            ) : null}
 
-          {this.props.fb_reach > 0 ? (
-            <h4 className="card-title font-weight-light mb-2 ">
-              Facebook:
-              <span className="font-weight-medium">{this.props.fb_reach}</span>
-            </h4>
-          ) : null}
-        </div>
+            {this.props.fb_reach > 0 ? (
+              <tr>
+                <td>Facebook:</td>
+                <td>{this.props.fb_reach}</td>
+              </tr>
+            ) : null}
+          </tbody>
+        </table>
       );
       eng_btn_class = "btn download-button";
       reach_btn_class = "btn purchase-button";
@@ -130,7 +159,7 @@ export default class EngReachDoughnut extends Component {
     return (
       <div className="card">
         <div className="card-body">
-          <div className="row">
+          <div className="row mt-1">
             <div className="col-md-5 d-flex align-items-center">
               {this.state.currentMetric === "en" ? (
                 <Doughnut
@@ -159,6 +188,7 @@ export default class EngReachDoughnut extends Component {
                 Post Distribution
               </h4> */}
               <div className="row proBanner">
+              <div className="col-1"></div>
                 <div className="col-8">
                   <span className="mt-2 d-flex purchase-popup align-items-center">
                     <div
