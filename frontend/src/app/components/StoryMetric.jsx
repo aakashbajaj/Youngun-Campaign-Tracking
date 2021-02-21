@@ -29,16 +29,19 @@ export default class StoryMetric extends Component {
             ></i>
             <div className="ml-4">
               <h6
-                className={`text-${icon_name} font-weight-semibold mb-1 mt-2`}
+                className={`text-${icon_name} font-weight-semibold mb-1 mt-3`}
               >
                 {this.props.PostMainText}
               </h6>
               {/* <p className="text-muted card-text">{this.props.PostSubText}</p> */}
-              <h6
-                className={`text-${icon_name} font-weight-semibold mb-1 mt-2`}
-              >
-                {this.props.StoryMainText}
-              </h6>
+              {this.props.StoryMainText !== "Stories Live: --" ? (
+                <h6
+                  className={`text-${icon_name} font-weight-semibold mb-1 mt-2`}
+                >
+                  {this.props.StoryMainText}
+                </h6>
+              ) : null}
+
               {/* <p className="text-muted card-text">{this.props.StorySubText}</p> */}
             </div>
             {/* <div className="ml-2"></div> */}
