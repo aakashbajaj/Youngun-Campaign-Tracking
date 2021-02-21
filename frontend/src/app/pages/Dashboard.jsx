@@ -229,7 +229,7 @@ export class Dashboard extends Component {
           </div>
         </div> */}
         <div className="row">
-          <div className="col-sm-6 col-md-6 col-lg-6 grid-margin stretch-card">
+          <div className="col-sm-6 col-md-7 col-lg-7 grid-margin stretch-card">
             <Reporting
               total_posts={liveCampMetrics.live_posts_cnt}
               in_num={liveCampMetrics.live_in_posts_cnt}
@@ -244,7 +244,7 @@ export class Dashboard extends Component {
               showCosts={showCosts}
             />
           </div>
-          <div className="col-sm-6 col-md-6 col-lg-6">
+          <div className="col-sm-6 col-md-5 col-lg-5">
             <div className="row">
               <div className="col-sm-12 col-md-12 col-lg-12 grid-margin stretch-card">
                 <ContentSlideCard showReport={showReport} />
