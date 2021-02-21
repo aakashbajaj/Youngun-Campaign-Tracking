@@ -4,7 +4,7 @@ import CampaignContext from "../data/CampaignContext";
 import { Collapse } from "react-bootstrap";
 import { Dropdown } from "react-bootstrap";
 import Spinner from "./Spinner";
-// import { Dropdown } from "react-bootstrap";
+import "./Sidebar.css";
 
 class Sidebar extends Component {
   static contextType = CampaignContext;
@@ -99,14 +99,14 @@ class Sidebar extends Component {
           </a> */}
           <div className="brand-logo text-center mt-5">
             <img
-              src={require("../../assets/images/youngun-logo.png")}
+              src={require("../../assets/images/youngunnew.jpg")}
               alt="logo"
               style={{ width: "50%", height: "31%" }}
             />
           </div>
           <a className="sidebar-brand brand-logo-mini pt-3" href="index.html">
             <img
-              src={require("../../assets/images/logo-mini.svg")}
+              src={require("../../assets/images/youngunnew.jpg")}
               alt="logo"
             />
           </a>
@@ -148,7 +148,7 @@ class Sidebar extends Component {
             </li>
           )}
           <li
-            className={this.isPathActive("/") ? "nav-item active" : "nav-item"}
+            className={this.isPathActive("/") ? "nav-item active activetab" : "nav-item"}
           >
             <Link className="nav-link" to="/">
               <i className="mdi mdi-television menu-icon"></i>
@@ -158,7 +158,7 @@ class Sidebar extends Component {
 
           <li
             className={
-              this.isPathActive("/postsfeed") ? "nav-item active" : "nav-item"
+              this.isPathActive("/postsfeed") ? "nav-item active activetab" : "nav-item"
             }
           >
             <Link className="nav-link" to="/postsfeed">
@@ -170,7 +170,7 @@ class Sidebar extends Component {
             <li
               className={
                 this.isPathActive("/storiesfeed")
-                  ? "nav-item active"
+                  ? "nav-item active activetab"
                   : "nav-item"
               }
             >
@@ -183,7 +183,7 @@ class Sidebar extends Component {
 
           {/* <li
             className={
-              this.isPathActive("/report") ? "nav-item active" : "nav-item"
+              this.isPathActive("/report") ? "nav-item active activetab" : "nav-item"
             }
           >
             <Link className="nav-link" to="/report">
@@ -196,7 +196,7 @@ class Sidebar extends Component {
             <li
               className={
                 this.isPathActive("/report/post-stats")
-                  ? "nav-item active"
+                  ? "nav-item active activetab"
                   : "nav-item"
               }
             >
@@ -207,7 +207,7 @@ class Sidebar extends Component {
             </li>
           ) : // <li
           //   className={
-          //     this.isPathActive("/report") ? "nav-item active" : "nav-item"
+          //     this.isPathActive("/report") ? "nav-item active activetab" : "nav-item"
           //   }
           // >
           //   <div
@@ -262,7 +262,9 @@ class Sidebar extends Component {
   }
 
   isPathActive(path) {
-    return this.props.location.pathname.startsWith(path);
+    console.log(path);
+    console.log(this.props.location.pathname);
+    return this.props.location.pathname.endsWith(path);
   }
 
   componentDidMount() {
@@ -271,6 +273,9 @@ class Sidebar extends Component {
     const body = document.querySelector("body");
     document.querySelectorAll(".sidebar .nav-item").forEach((el) => {
       el.addEventListener("mouseover", function () {
+        // console.log(el);
+        // console.log(body);
+        // console.log(body.classList);
         if (body.classList.contains("sidebar-icon-only")) {
           el.classList.add("hover-open");
         }
