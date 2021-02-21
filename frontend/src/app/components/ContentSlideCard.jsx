@@ -13,12 +13,12 @@ class ContentSlideCard extends Component {
             <div className="float-center">
               {/* <p className="mb-0 text-right text-dark"></p> */}
               <div className="fluid-container">
-                <h3 className="font-weight-medium text-right mb-0 mt-3 text-dark">
+                <h4 className="font-weight-medium text-right mb-0 mt-3 text-dark">
                   <Link className="nav-link" to="/postsfeed">
                     {/* <i className="mdi mdi-image menu-icon"></i> */}
                     <span className="menu-title">Posts Feed</span>
                   </Link>
-                </h3>
+                </h4>
               </div>
             </div>
           </div>
@@ -30,12 +30,12 @@ class ContentSlideCard extends Component {
               <div className="float-right">
                 {/* <p className="mb-0 text-right text-dark"></p> */}
                 <div className="fluid-container">
-                  <h3 className="font-weight-medium text-left mb-0 mt-3 text-dark">
+                  <h4 className="font-weight-medium text-left mb-0 mt-3 text-dark">
                     <Link className="nav-link" to="/report/post-stats">
                       {/* <i className="mdi mdi-image menu-icon"></i> */}
                       <span className="menu-title">Campaign Report</span>
                     </Link>
-                  </h3>
+                  </h4>
                 </div>
               </div>
             </div>
