@@ -2,6 +2,7 @@ from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 
 import requests
+from datetime import datetime
 
 from youngun.apps.content.models import Post, PostVisibility, InstagramPost, TwitterPost, FacebookPost
 from youngun.apps.content.tasks import fill_in_post, fill_tw_post, fill_fb_post, fill_in_post_graphapi
@@ -24,6 +25,7 @@ def fetch_insta_embed_code(sender, instance, *args, **kwargs):
             }
 
             res = requests.get(fetch_url, params=params, headers=headers)
+            instance.upload_date = datetime.now()
             if res.status_code == 404:
                 instance.visibility = PostVisibility.PRIVATE
 
@@ -47,6 +49,7 @@ def fetch_twitter_embed_code(sender, instance, *args, **kwargs):
             }
 
             res = requests.get(fetch_url, params=params)
+            instance.upload_date = datetime.now()
             if res.status_code == 404:
                 instance.visibility = PostVisibility.PRIVATE
 
