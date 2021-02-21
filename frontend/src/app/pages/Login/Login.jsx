@@ -41,10 +41,11 @@ export class Login extends Component {
                   <img
                     src={require("../../../assets/images/youngunnew.jpg")}
                     alt="logo"
+                    style={{ width: "70%", height: "41%" }}
                   />
                 </div>
-                <h4>Hello! let's get started</h4>
-                <h6 className="font-weight-light">Sign in to continue.</h6>
+                <h4>Hey!</h4>
+                <h6 className="font-weight-light">Use your work email ID to proceed :)</h6>
                 <Form className="pt-3" onSubmit={this.onSendOTPBtnClick}>
                   <Form.Group className="d-flex search-field">
                     <Form.Control
@@ -53,6 +54,9 @@ export class Login extends Component {
                       placeholder="Email"
                       size="lg"
                       className="h-auto"
+                      style ={{
+                        backgroundColor: "white"
+                      }}
                       value={this.state.email}
                       onChange={this.onChangeHandler}
                     />

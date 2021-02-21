@@ -42,6 +42,7 @@ export class VerifyOtp extends Component {
                   <img
                     src={require("../../../assets/images/youngunnew.jpg")}
                     alt="logo"
+                    style={{ width: "80%", height: "61%" }}
                   />
                 </div>
                 {/* {this.context.maskedData ? (
@@ -61,6 +62,9 @@ export class VerifyOtp extends Component {
                       placeholder="Email"
                       size="lg"
                       className="h-auto text-muted"
+                      style ={{
+                        backgroundColor: "white"
+                      }}
                       value={this.state.email}
                       onChange={this.onChangeHandler}
                       disabled
@@ -73,6 +77,9 @@ export class VerifyOtp extends Component {
                       placeholder="OTP"
                       size="lg"
                       className="h-auto"
+                      style ={{
+                        backgroundColor: "white"
+                      }}
                       value={this.state.otptoken}
                       onChange={this.onChangeHandler}
                     />
