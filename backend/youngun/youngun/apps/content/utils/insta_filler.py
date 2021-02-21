@@ -38,9 +38,9 @@ def insta_post_filler(post_pk):
                         par_post.caption = f_post["caption"]
                     par_post.social_id = f_post["id"]
 
-                    dt = dateutil.parser.parse(f_post["timestamp"])
-                    par_post.upload_date = dt.astimezone(
-                        pytz.timezone("Asia/Kolkata"))
+                    # dt = dateutil.parser.parse(f_post["timestamp"])
+                    # par_post.upload_date = dt.astimezone(
+                    #     pytz.timezone("Asia/Kolkata"))
 
                     data_engagement = f_post["like_count"] + \
                         f_post["comments_count"]

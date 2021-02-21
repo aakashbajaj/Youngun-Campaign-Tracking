@@ -1,6 +1,6 @@
 from youngun.apps.content.models import Post, InstagramPost, TwitterPost, FacebookPost, PostVisibility
 from youngun.apps.content.utils.post_filler import in_post_filler, tw_post_filler, fb_post_filler
-from youngun.apps.content.utils.post_update import tw_post_updater, insta_post_update
+from youngun.apps.content.utils.post_update import tw_post_updater
 from youngun.apps.content.utils.insta_filler import insta_post_filler
 from youngun.apps.campaigns.models import Campaign
 from youngun.apps.campaigns.tasks import update_all_active_camp_engagement_data
