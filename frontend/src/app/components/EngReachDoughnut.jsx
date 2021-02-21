@@ -188,7 +188,7 @@ export default class EngReachDoughnut extends Component {
                 Post Distribution
               </h4> */}
               <div className="row proBanner">
-              <div className="col-1"></div>
+              {/* <div className="col-sm-2"></div> */}
                 <div className="col-8">
                   <span className="mt-2 d-flex purchase-popup align-items-center">
                     <div
