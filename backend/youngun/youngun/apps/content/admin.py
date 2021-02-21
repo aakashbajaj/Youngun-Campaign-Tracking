@@ -168,6 +168,10 @@ class FacebookPostAdmin(admin.ModelAdmin, ExportCsvMixin):
         ('campaign__name', custom_titled_filter("Campaign")),
     ]
 
+    # list_editable = [
+    #     'upload_date'
+    # ]
+
     save_on_top = True
 
     actions = ['export_as_csv']
@@ -248,6 +252,10 @@ class TwitterPostAdmin(admin.ModelAdmin, ExportCsvMixin):
     list_filter = [
         ('campaign__name', custom_titled_filter("Campaign")),
         'post_username'
+    ]
+
+    list_editable = [
+        'upload_date'
     ]
 
     save_on_top = True
