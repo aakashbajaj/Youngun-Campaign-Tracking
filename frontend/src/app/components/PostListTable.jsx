@@ -32,10 +32,10 @@ export default class PostListTable extends Component {
         day: "numeric",
         month: "long",
       };
-      console.log(post);
-      console.log(
-        new Date(post.upload_date).toLocaleDateString(undefined, options)
-      );
+      // console.log(post);
+      // console.log(
+      //   new Date(post.upload_date).toLocaleDateString(undefined, options)
+      // );
       return (
         <tr key={idx}>
           <td>{idx + 1}</td>
@@ -58,7 +58,7 @@ export default class PostListTable extends Component {
       );
     });
 
-    console.log(postsList);
+    // console.log(postsList);
 
     return (
       <div className="card">
