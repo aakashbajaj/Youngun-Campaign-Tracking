@@ -113,6 +113,11 @@ class InstagramPostAdmin(admin.ModelAdmin, ExportCsvMixin):
         'visibility',
         'post_username'
     ]
+
+    list_editable = [
+        'upload_date'
+    ]
+
     search_fields = ('post_username', 'url')
 
     save_on_top = True
