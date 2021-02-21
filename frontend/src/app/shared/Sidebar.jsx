@@ -101,7 +101,7 @@ class Sidebar extends Component {
             <img
               src={require("../../assets/images/youngunnew.jpg")}
               alt="logo"
-              style={{ width: "50%", height: "31%" }}
+              style={{ width: "80%", height: "61%" }}
             />
           </div>
           <a className="sidebar-brand brand-logo-mini pt-3" href="index.html">
