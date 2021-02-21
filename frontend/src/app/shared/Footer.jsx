@@ -13,7 +13,7 @@ class Footer extends Component {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Youngun India
+                Memetics Media Private Limited
               </a>
               . All rights reserved.
             </span>
