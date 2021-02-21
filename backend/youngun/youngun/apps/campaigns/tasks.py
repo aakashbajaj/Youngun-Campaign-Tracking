@@ -35,17 +35,17 @@ def update_all_active_camp_engagement_data():
                 Sum('post_engagement'))['post_engagement__sum']
 
             in_reach = camp.posts.filter(platform="in").aggregate(Sum('post_reach'))[
-                'post_reach__sum'] + camp.posts.all().aggregate(Sum('total_views'))['total_views__sum']
+                'post_reach__sum'] + camp.posts.filter(platform="in").aggregate(Sum('total_views'))['total_views__sum']
             tw_reach = camp.posts.filter(platform="tw").aggregate(Sum('post_reach'))[
-                'post_reach__sum'] + camp.posts.all().aggregate(Sum('total_views'))['total_views__sum']
+                'post_reach__sum'] + camp.posts.filter(platform="tw").aggregate(Sum('total_views'))['total_views__sum']
             fb_reach = camp.posts.filter(platform="fb").aggregate(Sum('post_reach'))[
-                'post_reach__sum'] + camp.posts.all().aggregate(Sum('total_views'))['total_views__sum']
+                'post_reach__sum'] + camp.posts.filter(platform="fb").aggregate(Sum('total_views'))['total_views__sum']
 
             in_engagement = camp.posts.filter(platform="in").aggregate(
                 Sum('post_engagement'))['post_engagement__sum']
-            tw_engagement = camp.posts.filter(platform="fb").aggregate(
+            tw_engagement = camp.posts.filter(platform="tw").aggregate(
                 Sum('post_engagement'))['post_engagement__sum']
-            fb_engagement = camp.posts.filter(platform="tw").aggregate(
+            fb_engagement = camp.posts.filter(platform="fb").aggregate(
                 Sum('post_engagement'))['post_engagement__sum']
 
             camp.total_post_engagement = camp_engagement
