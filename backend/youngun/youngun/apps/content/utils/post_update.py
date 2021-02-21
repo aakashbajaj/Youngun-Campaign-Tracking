@@ -25,8 +25,8 @@ def tw_post_updater(post_pk):
         post.comments = data["comments"]
         post.post_username = data["username"]
         post.caption = data["caption"]
-        post.upload_date = datetime.strptime(
-            data["timestamp"], "%Y-%m-%d %H:%M:%S")
+        # post.upload_date = datetime.strptime(
+        #     data["timestamp"], "%Y-%m-%d %H:%M:%S")
         post.account_name = data["account_name"]
         post.post_shares = data["retweets"]
 
