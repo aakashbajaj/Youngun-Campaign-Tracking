@@ -110,7 +110,7 @@
           width: $sidebar-icon-size;
           line-height: 1;
           font-size: 18px;
-          color: lighten($sidebar-light-menu-icon-color, 30%);
+          color: lighten(black, 20%);
 
           .rtl & {
             margin-right: 0;
@@ -119,7 +119,7 @@
         }
 
         .menu-title {
-          color: inherit;
+          color: black;
           display: inline-block;
           font-size: $sidebar-menu-font-size;
           line-height: 1;
@@ -142,7 +142,7 @@
 
           .menu-title,
           i {
-            color: inherit;
+            color: black;
           }
         }
       }
