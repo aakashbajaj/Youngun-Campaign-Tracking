@@ -84,8 +84,6 @@ def fetch_in_post(sender, instance, *args, **kwargs):
             if not instance.pre_fetched:
                 fill_in_post_graphapi(instance.pk)
 
-    
-
 @receiver(post_save, sender=TwitterPost)
 def fetch_tw_post(sender, instance, *args, **kwargs):
     if instance and instance.platform == "tw":
@@ -100,13 +98,13 @@ def fetch_tw_post(sender, instance, *args, **kwargs):
 #             fill_fb_post(instance.pk)
 
 
-@receiver(post_save, sender=Post)
-def fetch_insta_post(sender, instance, *args, **kwargs):
-    if instance:
-        if not instance.pre_fetched:
-            # if instance.platform == "in":
-            #     fill_in_post(instance.pk)
-            if instance.platform == "tw":
-                fill_tw_post(instance.pk)
-            # if instance.platform == "fb":
-            #     fill_fb_post(instance.pk)
+# @receiver(post_save, sender=Post)
+# def fetch_insta_post(sender, instance, *args, **kwargs):
+#     if instance:
+#         if not instance.pre_fetched:
+#             # if instance.platform == "in":
+#             #     fill_in_post(instance.pk)
+#             if instance.platform == "tw":
+#                 fill_tw_post(instance.pk)
+#             # if instance.platform == "fb":
+#             #     fill_fb_post(instance.pk)

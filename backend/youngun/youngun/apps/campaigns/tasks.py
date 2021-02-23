@@ -40,7 +40,7 @@ def update_all_active_camp_engagement_data():
                     'post_reach__sum'] + camp.posts.filter(platform="in").aggregate(Sum('total_views'))['total_views__sum']
                 
                 in_engagement = camp.posts.filter(platform="in").aggregate(
-                Sum('post_engagement'))['post_engagement__sum']
+                    Sum('post_engagement'))['post_engagement__sum']
                 
                 camp.in_engagement = in_engagement
                 camp.in_reach = in_reach
