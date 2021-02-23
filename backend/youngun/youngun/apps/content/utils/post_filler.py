@@ -142,3 +142,21 @@ def tw_post_filler(post_pk):
 def fb_post_filler(post_pk):
     post = FacebookPost.objects.get(pk=post_pk)
     data = fb_post.get_fb_post_details(post.url)
+
+
+def tw_eng_reach_fill(post_pk):
+    post = TwitterPost.objects.get(pk=post_pk)
+
+    data_engagement = post.likes + post.comments + post.post_shares
+    total_engagement = data_engagement
+
+    if post.post_type == 'a':
+        total_engagement = math.ceil(data_engagement/0.76)
+
+    elif post.post_type == 'v':
+        pass
+
+    post.post_engagement = total_engagement
+    post.post_reach = math.ceil(total_engagement/0.042)
+
+    post.save()

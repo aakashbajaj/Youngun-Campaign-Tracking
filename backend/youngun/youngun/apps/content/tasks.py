@@ -1,7 +1,7 @@
 from youngun.apps.content.models import Post, InstagramPost, TwitterPost, FacebookPost, PostVisibility
-from youngun.apps.content.utils.post_filler import in_post_filler, tw_post_filler, fb_post_filler
+from youngun.apps.content.utils.post_filler import in_post_filler, tw_post_filler, fb_post_filler, tw_eng_reach_fill
 from youngun.apps.content.utils.post_update import tw_post_updater
-from youngun.apps.content.utils.insta_filler import insta_post_filler
+from youngun.apps.content.utils.insta_filler import insta_post_filler, insta_eng_reach_fill
 from youngun.apps.campaigns.models import Campaign
 from youngun.apps.campaigns.tasks import update_all_active_camp_engagement_data
 
@@ -54,6 +54,28 @@ def update_all_tweets_metrics():
     async_task("youngun.apps.content.tasks.update_tw_post_metric",
                pk_list, q_options=opts)
 
+# Engagement/Reach Update Calls
+
+def update_all_tweets_eng_reach():
+    results = TwitterPost.objects.filter(campaign__status="active")
+    pk_list = [x for x in results.values_list('pk', flat=True)]
+
+    print("Trigger All Twitter Eng/Reach Update")
+
+    opts = {'group': 'update_all_tweets_eng_reach'}
+    async_task("youngun.apps.content.tasks.update_tw_post_eng_reach",
+               pk_list, q_options=opts)
+
+def update_all_insta_eng_reach():
+    results = InstagramPost.objects.filter(campaign__status="active")
+    pk_list = [x for x in results.values_list('pk', flat=True)]
+
+    print("Trigger All Instagram Eng/Reach Update")
+
+    opts = {'group': 'update_all_insta_eng_reach'}
+    async_task("youngun.apps.content.tasks.update_in_post_eng_reach",
+               pk_list, q_options=opts)
+
 
 def update_latest_insta_metrics():
     today_min = datetime.datetime.combine(
@@ -87,9 +109,7 @@ def update_tw_post_metric(post_pk_list):
         time.sleep(4)
 
     # call fn to update campaign engagement metric
-    update_all_active_camp_engagement_data()
-
-
+    # update_all_active_camp_engagement_data()
 
 def update_in_post_metric(post_pk_list):
     for post_pk in post_pk_list:
@@ -97,7 +117,22 @@ def update_in_post_metric(post_pk_list):
         time.sleep(4)
 
     # call fn to update campaign engagement metric
-    update_all_active_camp_engagement_data()
+    # update_all_active_camp_engagement_data()
+
+def update_in_post_eng_reach(post_pk_list):
+    print("Start All Instagram Eng/Reach Update")
+    for post_pk in post_pk_list:
+        insta_eng_reach_fill(post_pk)
+
+    print("Complete All Instagram Eng/Reach Update")
+
+def update_tw_post_eng_reach(post_pk_list):
+    print("Start All Twitter Eng/Reach Update")
+    for post_pk in post_pk_list:
+        tw_eng_reach_fill(post_pk)
+
+    print("Complete All Twitter Eng/Reach Update")
+
 
 
 
@@ -197,3 +232,13 @@ def update_insights_in_post_graphapi(post_pk):
     opts = {'group': "graphapi-single-post-metric-update"}
     async_task("youngun.apps.content.utils.insta_filler.insta_post_insight_update",
                post_pk, q_options=opts)
+
+# def update_in_post_eng_reach(post_pk):
+#     opts = {'group': "in-post-eng-reach-update"}
+#     async_task("youngun.apps.content.utils.insta_filler.insta_eng_reach_fill",
+#                post_pk, q_options=opts)
+
+# def update_tw_post_eng_reach(post_pk):
+#     opts = {'group': "tw-post-eng-reach-update"}
+#     async_task("youngun.apps.content.utils.post_filler.tw_eng_reach_fill",
+#                post_pk, q_options=opts)

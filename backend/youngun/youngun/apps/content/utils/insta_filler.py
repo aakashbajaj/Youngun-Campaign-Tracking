@@ -93,73 +93,92 @@ def insta_post_filler(post_pk):
     return data
 
 
-def insta_post_fill(post_pk):
+def insta_eng_reach_fill(post_pk):
     par_post = InstagramPost.objects.get(pk=post_pk)
-    data = get_business_discovery_user(par_post.post_username)
 
-    print("Business Discovery data fetched!")
+    data_engagement = par_post.likes + par_post.comments
 
-    if "error" not in data:
-        print("start search")
-        fetched_post_list = data["media"]["data"]
+    par_post.post_engagement = data_engagement
 
-        print("No. of posts:")
-        print(len(fetched_post_list))
+    if par_post.post_type == "a":
+        par_post.post_reach = math.ceil(data_engagement/0.12)
 
-        for f_post in fetched_post_list:
-            if f_post["permalink"] == par_post.url:
-                print("FOUND!!")
-                print(f_post)
-                par_post.alive = True
-                par_post.likes = f_post["like_count"]
-                par_post.comments = f_post["comments_count"]
-                if "caption" in f_post:
-                    par_post.caption = f_post["caption"]
-                par_post.social_id = f_post["id"]
+    elif par_post.post_type == "v":
+        par_post.total_views = math.ceil(data_engagement*10.4)
 
-                dt = dateutil.parser.parse(f_post["timestamp"])
-                par_post.upload_date = dt.astimezone(
-                    pytz.timezone("Asia/Kolkata"))
+    elif par_post.post_type == "p":
+        par_post.post_reach = math.ceil(data_engagement/0.12)
 
-                par_post.medias.all().delete()
-
-                if f_post["media_type"] == "CAROUSEL_ALBUM":
-                    par_post.post_type = "a"
-                    nodes = f_post["children"]["data"]
-                    for node in nodes:
-                        if node["media_type"] == "VIDEO":
-                            media_obj = Media.objects.create(
-                                parent_post=par_post, url=node["media_url"], key=node["id"], media_type="video")
-                        else:
-                            media_obj = Media.objects.create(
-                                parent_post=par_post, url=node["media_url"], key=node["id"], media_type="post")
-
-                else:
-                    if f_post["media_type"] == "VIDEO":
-                        par_post.post_type = "v"
-                        if "media_url" in f_post:
-                            media_obj = Media.objects.create(
-                                parent_post=par_post, url=f_post["media_url"], key=f_post["id"], media_type="video")
-                        else:
-                            media_obj = Media.objects.create(
-                                parent_post=par_post, url="", key=f_post["id"], media_type="video")
-                    else:
-                        par_post.post_type = "p"
-                        media_obj = Media.objects.create(
-                            parent_post=par_post, url=f_post["media_url"], key=f_post["id"], media_type="post")
-
-            else:
-                pass
-
-    else:
-        print("failed")
-        par_post.alive = False
-        # sendlogs(data)
-
-    par_post.pre_fetched = True
     par_post.save()
 
-    return data
+
+# def insta_post_fill(post_pk):
+#     par_post = InstagramPost.objects.get(pk=post_pk)
+#     data = get_business_discovery_user(par_post.post_username)
+
+#     print("Business Discovery data fetched!")
+
+#     if "error" not in data:
+#         print("start search")
+#         fetched_post_list = data["media"]["data"]
+
+#         print("No. of posts:")
+#         print(len(fetched_post_list))
+
+#         for f_post in fetched_post_list:
+#             if f_post["permalink"] == par_post.url:
+#                 print("FOUND!!")
+#                 print(f_post)
+#                 par_post.alive = True
+#                 par_post.likes = f_post["like_count"]
+#                 par_post.comments = f_post["comments_count"]
+#                 if "caption" in f_post:
+#                     par_post.caption = f_post["caption"]
+#                 par_post.social_id = f_post["id"]
+
+#                 dt = dateutil.parser.parse(f_post["timestamp"])
+#                 par_post.upload_date = dt.astimezone(
+#                     pytz.timezone("Asia/Kolkata"))
+
+#                 par_post.medias.all().delete()
+
+#                 if f_post["media_type"] == "CAROUSEL_ALBUM":
+#                     par_post.post_type = "a"
+#                     nodes = f_post["children"]["data"]
+#                     for node in nodes:
+#                         if node["media_type"] == "VIDEO":
+#                             media_obj = Media.objects.create(
+#                                 parent_post=par_post, url=node["media_url"], key=node["id"], media_type="video")
+#                         else:
+#                             media_obj = Media.objects.create(
+#                                 parent_post=par_post, url=node["media_url"], key=node["id"], media_type="post")
+
+#                 else:
+#                     if f_post["media_type"] == "VIDEO":
+#                         par_post.post_type = "v"
+#                         if "media_url" in f_post:
+#                             media_obj = Media.objects.create(
+#                                 parent_post=par_post, url=f_post["media_url"], key=f_post["id"], media_type="video")
+#                         else:
+#                             media_obj = Media.objects.create(
+#                                 parent_post=par_post, url="", key=f_post["id"], media_type="video")
+#                     else:
+#                         par_post.post_type = "p"
+#                         media_obj = Media.objects.create(
+#                             parent_post=par_post, url=f_post["media_url"], key=f_post["id"], media_type="post")
+
+#             else:
+#                 pass
+
+#     else:
+#         print("failed")
+#         par_post.alive = False
+#         # sendlogs(data)
+
+#     par_post.pre_fetched = True
+#     par_post.save()
+
+#     return data
 
 
 # def insta_post_update(post_pk):
