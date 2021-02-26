@@ -70,6 +70,10 @@ def save_facebook_info(sender, instance, *args, **kwargs):
 
         instance.embed_code = ""
 
+        if not instance.pre_fetched:
+            instance.upload_date = datetime.now()
+            instance.pre_fetched = True
+
 
 # @receiver(post_save, sender=InstagramPost)
 # def fetch_in_post(sender, instance, *args, **kwargs):
