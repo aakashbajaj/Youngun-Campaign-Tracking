@@ -5,11 +5,15 @@ import math
 from youngun.apps.content.helpers.graphapi.business_discv import get_business_discovery_user
 from youngun.apps.content.helpers.graphapi.igmedia import get_ig_media_data
 from youngun.apps.content.helpers.graphapi.iginsights import get_ig_media_insights_data
-from youngun.apps.content.models import InstagramPost, FacebookPost, TwitterPost, Post, Media
+from youngun.apps.content.models import InstagramPost, FacebookPost, TwitterPost, Post, Media, PostVisibility
 
 
 def insta_post_filler(post_pk):
     par_post = InstagramPost.objects.get(pk=post_pk)
+
+    if par_post.visibility == PostVisibility.PRIVATE:
+        return 
+
     data = get_business_discovery_user(par_post.post_username)
 
     print("Business Discovery data fetched!")
@@ -80,11 +84,13 @@ def insta_post_filler(post_pk):
                     break
 
         else:
+            par_post.visibility = PostVisibility.PRIVATE
             break
 
     if not found_post:
         print("failed")
         par_post.alive = False
+        par_post.visibility = PostVisibility.PRIVATE
         # sendlogs(data)
 
     par_post.pre_fetched = True

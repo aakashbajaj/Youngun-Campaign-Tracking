@@ -82,7 +82,7 @@ def update_latest_insta_metrics():
         datetime.date.today(), datetime.time.min)
     days_3_ago = today_min - datetime.timedelta(days=3)
     results = InstagramPost.objects.filter(
-        campaign__status="active").filter(upload_date__gte=days_3_ago)
+        campaign__status="active").filter(visibility=PostVisibility.PUBLIC).filter(upload_date__gte=days_3_ago)
     pk_list = [x for x in results.values_list('pk', flat=True)]
 
     opts = {'group': 'update_latest_insta_metrics'}
@@ -91,7 +91,7 @@ def update_latest_insta_metrics():
 
 
 def update_all_insta_metrics():
-    results = InstagramPost.objects.filter(campaign__status="active")
+    results = InstagramPost.objects.filter(campaign__status="active").filter(visibility=PostVisibility.PUBLIC)
     pk_list = [x for x in results.values_list('pk', flat=True)]
 
     print("Trigger All Insta Update")
@@ -114,7 +114,7 @@ def update_tw_post_metric(post_pk_list):
 def update_in_post_metric(post_pk_list):
     for post_pk in post_pk_list:
         insta_post_filler(post_pk)
-        time.sleep(4)
+        time.sleep(300)
 
     # call fn to update campaign engagement metric
     # update_all_active_camp_engagement_data()

@@ -25,7 +25,7 @@ def fetch_insta_embed_code(sender, instance, *args, **kwargs):
             }
 
             res = requests.get(fetch_url, params=params, headers=headers)
-            instance.upload_date = datetime.now()
+
             if res.status_code == 404:
                 instance.visibility = PostVisibility.PRIVATE
 
@@ -33,6 +33,13 @@ def fetch_insta_embed_code(sender, instance, *args, **kwargs):
                 fetched_embed = res.json()["html"]
                 instance.embed_code = fetched_embed
                 instance.post_username = res.json()["author_name"]
+                instance.visibility = PostVisibility.PUBLIC
+
+                if "instagram.com/reel/" in fetched_embed:
+                    instance.visibility = PostVisibility.PRIVATE
+
+            if "/reel/" in instance.url:
+                instance.visibility = PostVisibility.PRIVATE
 
 
 @receiver(pre_save, sender=TwitterPost)
@@ -82,24 +89,29 @@ def save_facebook_info(sender, instance, *args, **kwargs):
 #             fill_in_post(instance.pk)
 
 @receiver(post_save, sender=InstagramPost)
-def fetch_in_post(sender, instance, *args, **kwargs):
+def fetch_in_post(sender, instance, created, *args, **kwargs):
     if instance and instance.platform == "in":
-        if instance.campaign.campaign_module == "v2":
-            if not instance.pre_fetched:
-                fill_in_post_graphapi(instance.pk)
+        if created:
+            instance.upload_date = datetime.now()
+            
 
 @receiver(post_save, sender=TwitterPost)
-def fetch_tw_post(sender, instance, *args, **kwargs):
+def fetch_tw_post(sender, instance, created, *args, **kwargs):
     if instance and instance.platform == "tw":
         if not instance.pre_fetched:
             fill_tw_post(instance.pk)
+        
+        if created:
+            instance.upload_date = datetime.now()
 
 
-# @receiver(post_save, sender=FacebookPost)
-# def fetch_fb_post(sender, instance, *args, **kwargs):
-#     if instance and instance.platform == "fb":
-#         if not instance.pre_fetched:
-#             fill_fb_post(instance.pk)
+@receiver(post_save, sender=FacebookPost)
+def fetch_fb_post(sender, instance, created, *args, **kwargs):
+    if instance and instance.platform == "fb":
+        # if not instance.pre_fetched:
+        #     fill_fb_post(instance.pk)
+        if created:
+            instance.upload_date = datetime.now()
 
 
 # @receiver(post_save, sender=Post)
