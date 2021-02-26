@@ -26,10 +26,9 @@ def fetch_insta_embed_code(sender, instance, *args, **kwargs):
 
             res = requests.get(fetch_url, params=params, headers=headers)
 
-            if res.status_code == 404:
-                instance.visibility = PostVisibility.PRIVATE
+            
 
-            elif res.status_code == 200:
+            if res.status_code == 200:
                 fetched_embed = res.json()["html"]
                 instance.embed_code = fetched_embed
                 instance.post_username = res.json()["author_name"]
@@ -37,6 +36,9 @@ def fetch_insta_embed_code(sender, instance, *args, **kwargs):
 
                 if "instagram.com/reel/" in fetched_embed:
                     instance.visibility = PostVisibility.PRIVATE
+
+            else:
+                instance.visibility = PostVisibility.PRIVATE
 
             if "/reel/" in instance.url:
                 instance.visibility = PostVisibility.PRIVATE
