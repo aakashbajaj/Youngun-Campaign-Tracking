@@ -49,13 +49,13 @@ export default class FBFeed extends Component {
                   <div
                     className="fb-post"
                     data-href={`${post.url}`}
-                    data-width="400"
+                    data-width="300"
                   />
                 ) : (
                   <div
                     class="fb-video"
                     data-href={`${post.url}`}
-                    data-width="400"
+                    data-width="300"
                     data-allowfullscreen="true"
                     data-autoplay="false"
                     data-show-captions="true"
