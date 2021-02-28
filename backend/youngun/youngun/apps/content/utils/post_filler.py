@@ -141,7 +141,7 @@ def tw_post_filler(post_pk):
 
 def fb_post_filler(post_pk):
     post = FacebookPost.objects.get(pk=post_pk)
-    data = fb_post.get_fb_post_details(post.url)
+    # data = fb_post.get_fb_post_details(post.url)
 
 
 def tw_eng_reach_fill(post_pk):
