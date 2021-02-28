@@ -70,6 +70,7 @@ class InstagramPostAdmin(admin.ModelAdmin, ExportCsvMixin):
     exclude = ('platform', 'post_type')
     list_display = (
         'url',
+        'link_to_post',
         'campaign',
         # 'link_to_camp',
         'upload_date',
@@ -115,7 +116,8 @@ class InstagramPostAdmin(admin.ModelAdmin, ExportCsvMixin):
     ]
 
     list_editable = [
-        'upload_date'
+        'upload_date',
+        'visibility'
     ]
 
     search_fields = ('post_username', 'url')
@@ -127,6 +129,9 @@ class InstagramPostAdmin(admin.ModelAdmin, ExportCsvMixin):
     ]
 
     actions = ['export_as_csv']
+
+    def link_to_post(self, obj):
+        return format_html('<a href='+ obj.url +' target="_blank" rel="noopener noreferrer">View Post</a>')
 
     def link_to_camp(self, obj):
         link = reverse("admin:campaigns_campaign_change",
@@ -153,7 +158,7 @@ class InstagramPostAdmin(admin.ModelAdmin, ExportCsvMixin):
 @admin.register(FacebookPost)
 class FacebookPostAdmin(admin.ModelAdmin, ExportCsvMixin):
     exclude = ('platform', 'embed_code')
-    list_display = ('url', 'campaign', 'post_type', 'link_to_camp', 'date', 'likes', 'comments',
+    list_display = ('url', 'link_to_post', 'campaign', 'post_type', 'link_to_camp', 'date', 'likes', 'comments',
                     'post_shares', 'post_saves', 'post_reach')
 
     readonly_fields = ('date', 'link_to_camp')
@@ -175,6 +180,9 @@ class FacebookPostAdmin(admin.ModelAdmin, ExportCsvMixin):
     save_on_top = True
 
     actions = ['export_as_csv']
+
+    def link_to_post(self, obj):
+        return format_html('<a href='+ obj.url +' target="_blank" rel="noopener noreferrer">Open Post</a>')
 
     def link_to_camp(self, obj):
         link = reverse("admin:campaigns_campaign_change",
@@ -209,6 +217,7 @@ class TwitterPostAdmin(admin.ModelAdmin, ExportCsvMixin):
 
     list_display = (
         'url',
+        'link_to_post',
         'campaign',
         # 'link_to_camp',
         'upload_date',
@@ -265,6 +274,9 @@ class TwitterPostAdmin(admin.ModelAdmin, ExportCsvMixin):
     ]
 
     actions = ['export_as_csv']
+
+    def link_to_post(self, obj):
+        return format_html('<a href='+ obj.url +' target="_blank" rel="noopener noreferrer">Open Post</a>')
 
     def link_to_camp(self, obj):
         link = reverse("admin:campaigns_campaign_change",
