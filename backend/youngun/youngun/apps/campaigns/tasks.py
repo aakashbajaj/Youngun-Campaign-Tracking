@@ -115,25 +115,30 @@ def bulk_upload_csv(posts_list, campaign_id):
 def upload_posts_lists(posts_list, campaign_id):
     cnt = 0
     for post in posts_list:
-        p_obj, created = Post.objects.get_or_create(
-            campaign=Campaign.objects.get(id=campaign_id), url=post)
-        if created:
-            cnt = cnt + 1
+        
+        try:
+            p_obj, created = Post.objects.get_or_create(
+                campaign=Campaign.objects.get(id=campaign_id), url=post)
+            if created:
+                cnt = cnt + 1
 
-        if "facebook.com" in post:
-            p_obj.platform = "fb"
-            if "/video" in post:
-                p_obj.post_type = "video"
-            else:
-                p_obj.post_type = "post"
-        elif "instagram.com" in post:
-            p_obj.platform = "in"
-            p_obj.embed_code = ""
-        elif "twitter.com" in post:
-            p_obj.platform = "tw"
-            p_obj.embed_code = ""
+            if "facebook.com" in post:
+                p_obj.platform = "fb"
+                if "/video" in post:
+                    p_obj.post_type = "video"
+                else:
+                    p_obj.post_type = "post"
+            elif "instagram.com" in post:
+                p_obj.platform = "in"
+                p_obj.embed_code = ""
+            elif "twitter.com" in post:
+                p_obj.platform = "tw"
+                p_obj.embed_code = ""
 
-        p_obj.save()
+            p_obj.save()
+        
+        except:
+            print("Failed to add " + post + " in " + campaign_id)
 
 
 # def update_live_cnts():

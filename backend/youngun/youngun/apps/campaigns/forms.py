@@ -91,6 +91,8 @@ class ImportPostForm(forms.ModelForm):
             parsed_fl = fld.decode("utf-8")
             posts_list = parsed_fl.split("\n")
             posts_list = [x for x in posts_list if x]
+            posts_list = [x.replace("\n", "") for x in posts_list]
+            posts_list = [x.replace("\r", "") for x in posts_list]
             print(posts_list)
 
             bulk_upload_csv(posts_list, self.instance.id)
