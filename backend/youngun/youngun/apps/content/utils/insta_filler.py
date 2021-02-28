@@ -14,8 +14,8 @@ def insta_post_filler(post_pk):
     if par_post.visibility == PostVisibility.PRIVATE:
         return
 
-    print(par_post.url)
-    print(par_post.post_username)
+    print(par_post.url + "/$$$$\" + par_post.post_username)
+    # print(par_post.post_username)
 
     # return
 
