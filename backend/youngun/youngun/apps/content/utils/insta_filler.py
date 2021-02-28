@@ -12,7 +12,12 @@ def insta_post_filler(post_pk):
     par_post = InstagramPost.objects.get(pk=post_pk)
 
     if par_post.visibility == PostVisibility.PRIVATE:
-        return 
+        return
+
+    print(par_post.url)
+    print(par_post.post_username)
+
+    # return
 
     data = get_business_discovery_user(par_post.post_username)
 
