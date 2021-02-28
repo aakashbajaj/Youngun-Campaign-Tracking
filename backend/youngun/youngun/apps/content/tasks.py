@@ -85,6 +85,8 @@ def update_latest_insta_metrics():
         campaign__status="active").filter(visibility=PostVisibility.PUBLIC).filter(upload_date__gte=days_3_ago)
     pk_list = [x for x in results.values_list('pk', flat=True)]
 
+    print("Trigger Latest Insta Update")
+
     opts = {'group': 'update_latest_insta_metrics'}
     async_task("youngun.apps.content.tasks.update_in_post_metric",
                pk_list, q_options=opts)
@@ -113,8 +115,14 @@ def update_tw_post_metric(post_pk_list):
 
 def update_in_post_metric(post_pk_list):
     for post_pk in post_pk_list:
+        print("In loop!!")
         insta_post_filler(post_pk)
-        time.sleep(300)
+        print(post_pk_list)
+        print(post_pk)
+        print("Done 1")
+        time.sleep(60)
+
+    print("Update Complete!!")
 
     # call fn to update campaign engagement metric
     # update_all_active_camp_engagement_data()
@@ -164,19 +172,19 @@ def extract_username_from_posts():
 def update_camp_post_metrics(camp_pk, camp_name):
     print(f"Processing {camp_name}")
     camp = Campaign.objects.get(pk=camp_pk)
-    for post in camp.posts.all():
-        # Instagram post
-        if post.platform == "in":
-            insta_post_filler(post.pk)
-            # insta_post_insight_update(post.pk)
+    # for post in camp.posts.all():
+    #     # Instagram post
+    #     if post.platform == "in":
+    #         insta_post_filler(post.pk)
+    #         # insta_post_insight_update(post.pk)
 
-        # Twitter Post
-        if post.platform == "tw":
-            tw_post_filler(post.pk)
+    #     # Twitter Post
+    #     if post.platform == "tw":
+    #         tw_post_filler(post.pk)
 
-        # Facebook Post
-        if post.platform == "fb":
-            fb_post_filler(post.pk)
+    #     # Facebook Post
+    #     if post.platform == "fb":
+    #         fb_post_filler(post.pk)
 
     return f"Success: {camp.name}"
 
