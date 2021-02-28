@@ -26,13 +26,10 @@ def fetch_insta_embed_code(sender, instance, *args, **kwargs):
 
             res = requests.get(fetch_url, params=params, headers=headers)
 
-            
-
             if res.status_code == 200:
                 fetched_embed = res.json()["html"]
                 instance.embed_code = fetched_embed
                 instance.post_username = res.json()["author_name"]
-                instance.visibility = PostVisibility.PUBLIC
 
                 if "instagram.com/reel/" in fetched_embed:
                     instance.visibility = PostVisibility.PRIVATE
@@ -91,9 +88,25 @@ def save_facebook_info(sender, instance, *args, **kwargs):
 #             fill_in_post(instance.pk)
 
 @receiver(post_save, sender=Post)
-def set_upload_date(sender, instance, created, *args, **kwargs):
+@receiver(post_save, sender=InstagramPost)
+def set_upload_date_in(sender, instance, created, *args, **kwargs):
     if created:
         instance.upload_date = datetime.now()
+        instance.save()
+
+@receiver(post_save, sender=Post)
+@receiver(post_save, sender=TwitterPost)
+def set_upload_date_tw(sender, instance, created, *args, **kwargs):
+    if created:
+        instance.upload_date = datetime.now()
+        instance.save()
+
+@receiver(post_save, sender=Post)
+@receiver(post_save, sender=FacebookPost)
+def set_upload_date_fb(sender, instance, created, *args, **kwargs):
+    if created:
+        instance.upload_date = datetime.now()
+        instance.save()
         
             
 
