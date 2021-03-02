@@ -12,6 +12,13 @@ def insta_post_filler(post_pk):
     par_post = InstagramPost.objects.get(pk=post_pk)
 
     if par_post.visibility == PostVisibility.PRIVATE:
+        par_post.alive = False
+        par_post.save()
+        return
+
+    if par_post.post_username == None:
+        par_post.alive = False
+        par_post.save()
         return
 
     print(par_post.url + "=$$$$=" + par_post.post_username)
