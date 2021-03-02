@@ -79,7 +79,11 @@ class InstagramPostAdmin(admin.ModelAdmin, ExportCsvMixin):
         'alive',
         'visibility',
         'likes',
-        'comments'
+        'comments',
+        'post_shares',
+        'total_views',
+        'post_engagement',
+        'post_reach'
     )
 
     readonly_fields = ('date', 'link_to_camp')
@@ -117,7 +121,9 @@ class InstagramPostAdmin(admin.ModelAdmin, ExportCsvMixin):
 
     list_editable = [
         'upload_date',
-        'visibility'
+        'visibility',
+        'likes',
+        'comments'
     ]
 
     search_fields = ('post_username', 'url')
@@ -264,7 +270,9 @@ class TwitterPostAdmin(admin.ModelAdmin, ExportCsvMixin):
     ]
 
     list_editable = [
-        'upload_date'
+        'upload_date',
+        'likes',
+        'comments'
     ]
 
     save_on_top = True
