@@ -40,6 +40,14 @@ def fetch_insta_embed_code(sender, instance, *args, **kwargs):
             if "/reel/" in instance.url:
                 instance.visibility = PostVisibility.PRIVATE
 
+            if "?" in post_url:
+                post_url = post_url.split("?")[0]
+
+            if not post_url[-1] == "/":
+                post_url = post_url + "/" 
+
+            instance.url = post_url
+
 
 @receiver(pre_save, sender=TwitterPost)
 @receiver(pre_save, sender=Post)
@@ -61,6 +69,8 @@ def fetch_twitter_embed_code(sender, instance, *args, **kwargs):
 
             elif res.status_code == 200:
                 instance.embed_code = res.json()["html"]
+
+            
 
 
 @receiver(pre_save, sender=FacebookPost)
