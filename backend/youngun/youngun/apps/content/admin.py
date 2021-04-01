@@ -70,12 +70,12 @@ class InstagramPostAdmin(admin.ModelAdmin, ExportCsvMixin):
     exclude = ('platform', 'post_type')
     list_display = (
         'url',
-        'link_to_post',
         'campaign',
         # 'link_to_camp',
         'upload_date',
         'post_username',
         # 'pre_fetched',
+        'link_to_post',
         'alive',
         'visibility',
         'likes',
@@ -105,7 +105,7 @@ class InstagramPostAdmin(admin.ModelAdmin, ExportCsvMixin):
         'post_saves',
         'post_reach',
         'total_views',
-        'visibility',
+        # 'visibility',
         'embed_code'
     )
     # list_display_links = ('campaign', )
@@ -123,7 +123,11 @@ class InstagramPostAdmin(admin.ModelAdmin, ExportCsvMixin):
         'upload_date',
         'visibility',
         'likes',
-        'comments'
+        'comments',
+        'post_shares',
+        'total_views',
+        'post_engagement',
+        'post_reach'
     ]
 
     search_fields = ('post_username', 'url')
@@ -223,12 +227,13 @@ class TwitterPostAdmin(admin.ModelAdmin, ExportCsvMixin):
 
     list_display = (
         'url',
-        'link_to_post',
         'campaign',
         # 'link_to_camp',
         'upload_date',
         'post_username',
+        'link_to_post',
         'alive',
+        'visibility',
         # 'pre_fetched',
         'likes',
         'comments',
@@ -236,7 +241,6 @@ class TwitterPostAdmin(admin.ModelAdmin, ExportCsvMixin):
         'total_views',
         'post_engagement',
         'post_reach',
-        'visibility'
     )
 
     fields = (
@@ -266,13 +270,18 @@ class TwitterPostAdmin(admin.ModelAdmin, ExportCsvMixin):
 
     list_filter = [
         ('campaign__name', custom_titled_filter("Campaign")),
+        'visibility',
         'post_username'
     ]
 
     list_editable = [
         'upload_date',
         'likes',
-        'comments'
+        'comments',
+        'post_shares',
+        'total_views',
+        'post_engagement',
+        'post_reach',
     ]
 
     save_on_top = True
