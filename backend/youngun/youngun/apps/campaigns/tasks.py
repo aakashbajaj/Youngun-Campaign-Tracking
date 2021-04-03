@@ -9,12 +9,12 @@ from youngun.apps.content.models import Post
 from youngun.apps.content.models import InstagramStory, FacebookStory, TwitterStory
 
 
-def update_v2_active_camp_metrics():
-    opts = {'group': 'update_v2_active_camp_metrics'}
-    for camp in Campaign.objects.all():
-        if camp.status == "active" and camp.campaign_module == "v2":
-            async_task("youngun.apps.content.tasks.update_camp_post_metrics",
-                       camp.pk, camp.name, q_options=opts)
+# def update_v2_active_camp_metrics():
+#     opts = {'group': 'update_v2_active_camp_metrics'}
+#     for camp in Campaign.objects.all():
+#         if camp.status == "active" and camp.campaign_module == "v2":
+#             async_task("youngun.apps.content.tasks.update_v2_active_camp_metrics",
+#                        camp.pk, camp.name, q_options=opts)
 
 
 def trigger_update_campaign_report_metrics():
