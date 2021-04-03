@@ -79,6 +79,7 @@ REST_FRAMEWORK = {
 
 Q_CLUSTER = {
     "name": "youngun",
+    "workers": 4,
     "orm": "default",
     "max_attempts": 1,
     "retry": 100000,
