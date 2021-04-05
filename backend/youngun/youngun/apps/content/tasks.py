@@ -31,6 +31,7 @@ def update_all_camp_metrics():
             "youngun.apps.content.tasks.update_camp_post_metrics", camp.pk, camp.name, q_options=opts)
 
 
+
 def update_latest_tweets_metrics():
     today_min = datetime.datetime.combine(
         datetime.date.today(), datetime.time.min)
@@ -52,6 +53,18 @@ def update_all_tweets_metrics():
 
     opts = {'group': 'update_all_tweets_metrics'}
     async_task("youngun.apps.content.tasks.update_tw_post_metric",
+               pk_list, q_options=opts)
+
+# Tweets data - images etc update
+
+def update_all_tweets_data():
+    results = TwitterPost.objects.filter(campaign__status="active")
+    pk_list = [x for x in results.values_list('pk', flat=True)]
+
+    print("Trigger All Twitter Data Refresh")
+
+    opts = {'group': 'update_all_tweets_data'}
+    async_task("youngun.apps.content.tasks.update_tw_post_data",
                pk_list, q_options=opts)
 
 # Engagement/Reach Update Calls
@@ -104,7 +117,6 @@ def update_all_insta_metrics():
 
 # Worker Tasks
 
-
 def update_tw_post_metric(post_pk_list):
     for post_pk in post_pk_list:
         tw_post_updater(post_pk)
@@ -112,6 +124,12 @@ def update_tw_post_metric(post_pk_list):
 
     # call fn to update campaign engagement metric
     # update_all_active_camp_engagement_data()
+
+def update_tw_post_data(post_pk_list):
+    for post_pk in post_pk_list:
+        tw_post_filler(post_pk)
+        time.sleep(4)
+
 
 def update_in_post_metric(post_pk_list):
     for post_pk in post_pk_list:

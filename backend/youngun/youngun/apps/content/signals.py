@@ -120,11 +120,11 @@ def set_upload_date_fb(sender, instance, created, *args, **kwargs):
         
             
 
-# @receiver(post_save, sender=TwitterPost)
-# def fetch_tw_post(sender, instance, created, *args, **kwargs):
-#     if instance and instance.platform == "tw":
-#         if not instance.pre_fetched:
-#             fill_tw_post(instance.pk)
+@receiver(post_save, sender=TwitterPost)
+def fetch_tw_post(sender, instance, created, *args, **kwargs):
+    if instance and instance.platform == "tw":
+        if not instance.pre_fetched:
+            fill_tw_post(instance.pk)
         
 #         if created:
 #             instance.upload_date = datetime.now()
