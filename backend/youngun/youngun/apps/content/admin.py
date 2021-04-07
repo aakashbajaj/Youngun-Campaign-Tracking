@@ -4,7 +4,13 @@ from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 from django.utils.html import format_html
 
-from .models import Media, InstagramPost, FacebookPost, TwitterPost, Post, Story, InstagramStory, FacebookStory, TwitterStory
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.contrib import messages
+
+from youngun.apps.content.forms import QuoteRTForm
+
+from youngun.apps.content.models import Media, InstagramPost, FacebookPost, TwitterPost, Post, Story, InstagramStory, FacebookStory, TwitterStory
 from youngun.apps.campaigns.models import Campaign
 
 from youngun.apps.content.mixins.exportcsv import ExportCsvMixin
@@ -290,7 +296,32 @@ class TwitterPostAdmin(admin.ModelAdmin, ExportCsvMixin):
         MediaInline
     ]
 
-    actions = ['export_as_csv']
+    actions = ['export_as_csv', 'add_quote_rt']
+
+    def add_quote_rt(self, request, queryset):
+        
+        if "apply" in request.POST:
+
+            imgurl = request.POST["imgurl"]
+
+            for post in queryset:
+                media_obj, _ = Media.objects.get_or_create(parent_post=post, key="111111", media_type="post")
+                media_obj.url = imgurl
+                media_obj.save()
+
+            self.message_user(request, "Added Quote RT image on {} tweets".format(queryset.count()))
+            
+            return HttpResponseRedirect(request.get_full_path())
+
+        form = QuoteRTForm(initial={'_selected_action': queryset.values_list('id', flat=True)})
+
+        return render(
+            request,
+            'admin/quote_rt_form.html',
+            context = {'posts': queryset, 'form': form}
+        )
+
+    add_quote_rt.short_description = "Add Quote RT"
 
     def link_to_post(self, obj):
         return format_html('<a href='+ obj.url +' target="_blank" rel="noopener noreferrer">Open Post</a>')
