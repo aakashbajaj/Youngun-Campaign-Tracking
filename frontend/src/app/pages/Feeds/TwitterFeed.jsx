@@ -7,7 +7,11 @@ import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 // import InfiniteScroll from "react-infinite-scroll-component";
 // import Tweet from "../../components/Tweet";
 
-import TweetEmbed from 'react-tweet-embed'
+import TweetEmbed from 'react-tweet-embed';
+
+import Pagination from "react-js-pagination";
+// require("bootstrap/less/bootstrap.less");
+// import "bootstrap/dist/"
 
 export default class TwitterFeed extends Component {
   static contextType = CampaignContext;
@@ -17,9 +21,9 @@ export default class TwitterFeed extends Component {
   }
 
   state = {
-    allTwitterPosts: [],
-    displayTwitterPosts: [],
-    hasMore: true,
+    totalPages: -1,
+    totalItemsCount: 60,
+    activePage: 1
   };
 
   // showMorePosts = () => {
@@ -57,6 +61,11 @@ export default class TwitterFeed extends Component {
     // window.twttr.widgets.load();
   }
 
+  handlePageChange(pageNumber) {
+    console.log(`active page is ${pageNumber}`);
+    this.setState({ activePage: pageNumber });
+  }
+
   render() {
     var twitterposts = [];
     if (
@@ -70,6 +79,13 @@ export default class TwitterFeed extends Component {
         twitterposts = this.context.liveCampaignFeed[
           this.context.currentCampaignInView
         ].twitter;
+
+        if (this.state.totalPages < 0) {
+          this.setState({
+            totalItemsCount: twitterposts.length,
+            totalPages: Math.ceil((twitterposts.length) / 15)
+          })
+        }
       }
 
       else {
@@ -115,7 +131,12 @@ export default class TwitterFeed extends Component {
     //   return null;
     // });
 
-    var postsOnPage = twitterposts.map((post, idx) => {
+    console.log(twitterposts);
+
+    var firstIdx = (this.state.activePage - 1)*15;
+    var lastIdx = firstIdx + 14;
+
+    var postsOnPage = twitterposts.slice(firstIdx, lastIdx).map((post, idx) => {
       if (post.embed_code !== "") {
 
         var matches = post.url.match(/\d+$/);
@@ -167,8 +188,13 @@ export default class TwitterFeed extends Component {
       return null;
     });
 
-    if (!twitterposts || twitterposts.length === 0) {
+    if (!twitterposts) {
       return <Spinner />;
+    }
+    else if (twitterposts.length === 0) {
+      return (<div>
+        <p>No posts to display</p>
+      </div>);
     }
 
     // if (
@@ -178,12 +204,49 @@ export default class TwitterFeed extends Component {
     //   return <Spinner />;
     // }
 
+    var lastPageText;
+
+    if (this.state.totalPages > 0) {
+      lastPageText = "» " + this.state.totalPages;
+    }
+    else {
+      lastPageText = "»";
+    }
+
     return (
-      <ResponsiveMasonry
-        columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}
-      >
-        <Masonry gutter={20}>{postsOnPage}</Masonry>
-      </ResponsiveMasonry>
+      <div>
+        <div
+          style={{
+            width: "100%",
+            // border: "1px solid red"
+          }}
+        >
+          <div
+            style={{
+              display: "table",
+              margin: "0 auto",
+              // border: "1px solid black"
+            }}
+          >
+            <Pagination
+              activePage={this.state.activePage}
+              itemsCountPerPage={15}
+              totalItemsCount={this.state.totalItemsCount}
+              pageRangeDisplayed={5}
+              onChange={this.handlePageChange.bind(this)}
+              itemClass="page-item"
+              linkClass="page-link"
+              firstPageText="1 «"
+              lastPageText={lastPageText}
+            />
+          </div>
+        </div>
+        <ResponsiveMasonry
+          columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}
+        >
+          <Masonry gutter={20}>{postsOnPage}</Masonry>
+        </ResponsiveMasonry>
+      </div>
     );
 
     // return (
