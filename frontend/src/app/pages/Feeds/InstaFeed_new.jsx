@@ -41,14 +41,23 @@ export default class InstaFeed extends Component {
     var instaposts = [];
     if (
       this.context.currentCampaignInView &&
-      this.context.liveCampaignFeed[this.context.currentCampaignInView] !==
-        null &&
       this.context.liveCampaignFeed[this.context.currentCampaignInView]
-        .instagram
     ) {
-      instaposts = this.context.liveCampaignFeed[
-        this.context.currentCampaignInView
-      ].instagram;
+
+      if (this.context.liveCampaignFeed[this.context.currentCampaignInView]
+        .instagram) {
+        instaposts = this.context.liveCampaignFeed[
+          this.context.currentCampaignInView
+        ].instagram;
+      }
+
+      else{
+        return <Spinner />;
+      }
+
+    }
+    else{
+      return <Spinner />;
     }
 
     if (!instaposts) {
@@ -60,7 +69,7 @@ export default class InstaFeed extends Component {
         return (
           <div
             key={idx}
-            // className="col-xl-4 col-lg-4 col-md-6 col-sm-12 grid-margin stretch-card"
+          // className="col-xl-4 col-lg-4 col-md-6 col-sm-12 grid-margin stretch-card"
           >
             <div dangerouslySetInnerHTML={this.createMarkup(post.embed_code)} />
           </div>
@@ -72,10 +81,10 @@ export default class InstaFeed extends Component {
         return (
           <div
             key={idx}
-            // className="col-xl-4 col-lg-4 col-md-6 col-sm-12 grid-margin img-responsive stretch-card"
-            // style={{
-            //   textAlign: "center",
-            // }}
+          // className="col-xl-4 col-lg-4 col-md-6 col-sm-12 grid-margin img-responsive stretch-card"
+          // style={{
+          //   textAlign: "center",
+          // }}
           >
             <a href={post.url} target="_blank" rel="noopener noreferrer">
               <img
