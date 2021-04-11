@@ -19,7 +19,7 @@ class InstagramPostDisplaySerializer(ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['id', 'url', 'date', 'embed_code',
+        fields = ['id', 'url', 'date', 'upload_date', 'embed_code',
                   'alt_google_photo_url', 'media_objs']
 
 
