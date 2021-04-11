@@ -46,11 +46,11 @@ export default class TwitterFeed extends Component {
     // console.log("in TW CDM");
     // window.twttr.widgets.load();
 
-    this.setState({
-      displayTwitterPosts: this.context.liveCampaignFeed[
-        this.context.currentCampaignInView
-      ].twitter.slice(0, 9),
-    });
+    // this.setState({
+    //   displayTwitterPosts: this.context.liveCampaignFeed[
+    //     this.context.currentCampaignInView
+    //   ].twitter.slice(0, 9),
+    // });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -60,15 +60,26 @@ export default class TwitterFeed extends Component {
   render() {
     var twitterposts = [];
     if (
-      this.context.currentCampaignInView !== null &&
-      this.context.liveCampaignFeed[this.context.currentCampaignInView] !==
-      null &&
+      this.context.currentCampaignInView &&
       this.context.liveCampaignFeed[this.context.currentCampaignInView]
-        .twitter !== null
     ) {
-      twitterposts = this.context.liveCampaignFeed[
-        this.context.currentCampaignInView
-      ].twitter;
+
+      if (this.context.liveCampaignFeed[this.context.currentCampaignInView]
+        .twitter) {
+
+        twitterposts = this.context.liveCampaignFeed[
+          this.context.currentCampaignInView
+        ].twitter;
+      }
+
+      else {
+        return <Spinner />;
+      }
+
+    }
+
+    else {
+      return <Spinner />;
     }
 
     // var postsOnPage = this.state.displayTwitterPosts.map((post, idx) => {
@@ -160,12 +171,12 @@ export default class TwitterFeed extends Component {
       return <Spinner />;
     }
 
-    if (
-      !this.state.displayTwitterPosts ||
-      this.state.displayTwitterPosts.length === 0
-    ) {
-      return <Spinner />;
-    }
+    // if (
+    //   !this.state.displayTwitterPosts ||
+    //   this.state.displayTwitterPosts.length === 0
+    // ) {
+    //   return <Spinner />;
+    // }
 
     return (
       <ResponsiveMasonry
