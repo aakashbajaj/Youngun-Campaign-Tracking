@@ -5,7 +5,9 @@ import Spinner from "../../shared/Spinner";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 
 // import InfiniteScroll from "react-infinite-scroll-component";
-import Tweet from "../../components/Tweet";
+// import Tweet from "../../components/Tweet";
+
+import TweetEmbed from 'react-tweet-embed'
 
 export default class TwitterFeed extends Component {
   static contextType = CampaignContext;
@@ -60,7 +62,7 @@ export default class TwitterFeed extends Component {
     if (
       this.context.currentCampaignInView !== null &&
       this.context.liveCampaignFeed[this.context.currentCampaignInView] !==
-        null &&
+      null &&
       this.context.liveCampaignFeed[this.context.currentCampaignInView]
         .twitter !== null
     ) {
@@ -104,22 +106,36 @@ export default class TwitterFeed extends Component {
 
     var postsOnPage = twitterposts.map((post, idx) => {
       if (post.embed_code !== "") {
-        return (
-          <div key={idx}>
-            <Tweet
-              post_url={post.url}
-              profile_img_url={post.prof_img_url}
-              account_name={post.account_name}
-              account_username={post.post_username}
-              caption={post.caption}
-              comment_cnt={post.comments}
-              retweet_cnt={post.post_shares}
-              like_cnt={post.likes}
-              upload_date={post.upload_date}
-              media_objs={post.media_objs}
-            />
-          </div>
-        );
+
+        var matches = post.url.match(/\d+$/);
+
+        if (matches) {
+          var post_id = matches[0];
+          return (
+            <div key={idx}>
+              <TweetEmbed id={post_id} />
+            </div>
+          );
+        } else {
+          return null;
+        }
+
+        // return (
+        //   <div key={idx}>
+        //     <Tweet
+        //       post_url={post.url}
+        //       profile_img_url={post.prof_img_url}
+        //       account_name={post.account_name}
+        //       account_username={post.post_username}
+        //       caption={post.caption}
+        //       comment_cnt={post.comments}
+        //       retweet_cnt={post.post_shares}
+        //       like_cnt={post.likes}
+        //       upload_date={post.upload_date}
+        //       media_objs={post.media_objs}
+        //     />
+        //   </div>
+        // );
       } else if (
         post.alt_google_photo_url !== "" &&
         post.alt_google_photo_url !== null
