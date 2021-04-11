@@ -1,5 +1,4 @@
 from django.apps import AppConfig
 
-
 class UsermanagerConfig(AppConfig):
-    name = 'usermanager'
+    name = 'youngun.apps.usermanager'
