@@ -5,7 +5,15 @@ import Spinner from "../../shared/Spinner";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 
 // import InfiniteScroll from "react-infinite-scroll-component";
-import Tweet from "../../components/Tweet";
+
+// import Tweet from "../../components/Tweet";
+// import { Tweet } from "react-static-tweets";
+
+// import { Tweet } from "react-fake-tweet";
+// import 'react-fake-tweet/dist/index.css'
+
+import TweetEmbed from 'react-tweet-embed'
+
 
 export default class TwitterFeed extends Component {
   static contextType = CampaignContext;
@@ -104,22 +112,71 @@ export default class TwitterFeed extends Component {
 
     var postsOnPage = twitterposts.map((post, idx) => {
       if (post.embed_code !== "") {
-        return (
-          <div key={idx}>
-            <Tweet
-              post_url={post.url}
-              profile_img_url={post.prof_img_url}
-              account_name={post.account_name}
-              account_username={post.post_username}
-              caption={post.caption}
-              comment_cnt={post.comments}
-              retweet_cnt={post.post_shares}
-              like_cnt={post.likes}
-              upload_date={post.upload_date}
-              media_objs={post.media_objs}
-            />
-          </div>
-        );
+        
+        
+        var matches = post.url.match(/\d+$/);
+        // if (matches) {
+        //   var post_id = matches[0];
+        //   return (
+        //     <div key={idx}>
+        //       <Tweet id={post_id} />
+        //     </div>
+        //   );
+        // } else {
+        //   return null;
+        // }
+
+
+        
+        // return (
+        //   <div key={idx}>
+        //     <Tweet
+        //       post_url={post.url}
+        //       profile_img_url={post.prof_img_url}
+        //       account_name={post.account_name}
+        //       account_username={post.post_username}
+        //       caption={post.caption}
+        //       comment_cnt={post.comments}
+        //       retweet_cnt={post.post_shares}
+        //       like_cnt={post.likes}
+        //       upload_date={post.upload_date}
+        //       media_objs={post.media_objs}
+        //     />
+        //     <Tweet  />
+        //   </div>
+        // );
+
+
+        // return (
+        //   <Tweet 
+        //     config={{
+        //       user:{
+        //         avatar: post.prof_img_url,
+        //         nickname: post.post_username,
+        //         name: post.account_name
+        //       },
+        //       text: post.caption,
+        //       // date: post.upload_date,
+        //       date: Date.now(),
+        //       retweets: post.post_shares,
+        //       likes: post.likes
+        //     }}
+        //   />
+        // );
+
+        if (matches) {
+          var post_id = matches[0];
+          return (
+            <div key={idx}>
+              <TweetEmbed id={post_id} />
+            </div>
+          );
+        } else {
+          return null;
+        }
+
+
+
       } else if (
         post.alt_google_photo_url !== "" &&
         post.alt_google_photo_url !== null
@@ -152,9 +209,7 @@ export default class TwitterFeed extends Component {
     }
 
     return (
-      <ResponsiveMasonry
-        columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}
-      >
+      <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
         <Masonry gutter={20}>{postsOnPage}</Masonry>
       </ResponsiveMasonry>
     );

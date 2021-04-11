@@ -132,3 +132,4 @@ backend/.vscode/settings.json
 static/
 .vscode/settings.json
 backend/youngun/secrets_prod.json
+frontend/.vscode/settings.json
