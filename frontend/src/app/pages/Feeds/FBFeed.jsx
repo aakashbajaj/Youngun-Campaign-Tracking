@@ -20,15 +20,24 @@ export default class FBFeed extends Component {
   render() {
     var fbposts = [];
     if (
-      this.context.currentCampaignInView !== null &&
-      this.context.liveCampaignFeed[this.context.currentCampaignInView] !==
-        null &&
+      this.context.currentCampaignInView &&
       this.context.liveCampaignFeed[this.context.currentCampaignInView]
-        .facebook !== null
     ) {
-      fbposts = this.context.liveCampaignFeed[
-        this.context.currentCampaignInView
-      ].facebook;
+
+      if (this.context.liveCampaignFeed[this.context.currentCampaignInView].facebook) {
+        fbposts = this.context.liveCampaignFeed[
+          this.context.currentCampaignInView
+        ].facebook;
+      }
+
+      else {
+        return <Spinner />;
+      }
+
+    }
+
+    else {
+      return <Spinner />;
     }
 
     if (!fbposts) {
@@ -43,7 +52,7 @@ export default class FBFeed extends Component {
               <div
                 key={idx}
                 className="col-xl-4 col-lg-4 col-md-6 col-sm-12 grid-margin stretch-card"
-                // className="card"
+              // className="card"
               >
                 {post.post_type === "p" ? (
                   <div
