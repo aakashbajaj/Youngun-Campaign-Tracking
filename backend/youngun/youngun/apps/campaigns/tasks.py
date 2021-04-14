@@ -114,11 +114,15 @@ def bulk_upload_csv(posts_list, campaign_id):
 
 def upload_posts_lists(posts_list, campaign_id):
     cnt = 0
+
+    camp_to_add = Campaign.objects.get(id=campaign_id)
+
+
     for post in posts_list:
         
         try:
             p_obj, created = Post.objects.get_or_create(
-                campaign=Campaign.objects.get(id=campaign_id), url=post)
+                campaign=camp_to_add, url=post)
             if created:
                 cnt = cnt + 1
 
@@ -138,7 +142,10 @@ def upload_posts_lists(posts_list, campaign_id):
             p_obj.save()
         
         except:
-            print("Failed to add " + post + " in " + campaign_id)
+            print("Failed to add " + post + " in " + str(camp_to_add.name))
+
+
+    return posts_list
 
 
 # def update_live_cnts():
