@@ -138,7 +138,7 @@ def upload_posts_lists(posts_list, campaign_id):
             p_obj.save()
         
         except:
-            print("Failed to add " + post.url + " in " + campaign_id)
+            print("Failed to add " + post + " in " + campaign_id)
 
 
 # def update_live_cnts():
