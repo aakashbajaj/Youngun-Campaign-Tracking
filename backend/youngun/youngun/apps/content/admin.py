@@ -84,6 +84,7 @@ class InstagramPostAdmin(admin.ModelAdmin, ExportCsvMixin):
         'link_to_post',
         'alive',
         'visibility',
+        'post_type',
         'likes',
         'comments',
         'post_shares',
@@ -104,6 +105,7 @@ class InstagramPostAdmin(admin.ModelAdmin, ExportCsvMixin):
         'alt_google_photo_url',
         'pre_fetched',
         'caption',
+        'post_type',
         'likes',
         'comments',
         'post_engagement',
@@ -122,12 +124,14 @@ class InstagramPostAdmin(admin.ModelAdmin, ExportCsvMixin):
     list_filter = [
         ('campaign__name', custom_titled_filter("Campaign")),
         'visibility',
-        'post_username'
+        'post_type',
+        'post_username',
     ]
 
     list_editable = [
         'upload_date',
         'visibility',
+        'post_type',
         'likes',
         'comments',
         'post_shares',
