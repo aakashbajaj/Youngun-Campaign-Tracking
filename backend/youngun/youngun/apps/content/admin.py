@@ -296,7 +296,7 @@ class TwitterPostAdmin(admin.ModelAdmin, ExportCsvMixin):
     #               'post_shares', 'post_saves', 'post_reach', 'embed_code', 'visibility', 'alt_google_photo_url')
 
     list_filter = [
-        CampaignNameFilter
+        CampaignNameFilter,
         'visibility',
         'post_username'
     ]
