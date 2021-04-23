@@ -14,6 +14,7 @@ from youngun.apps.content.models import Media, InstagramPost, FacebookPost, Twit
 from youngun.apps.campaigns.models import Campaign
 
 from youngun.apps.content.mixins.exportcsv import ExportCsvMixin
+from youngun.apps.content.mixins.campaignlistfilter import CampaignNameFilter
 
 # class CampaignFilter(admin.SimpleListFilter):
 #     title = _("Campiagn")
@@ -42,7 +43,7 @@ class StoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'campaign', 'platform', 'date')
 
     list_filter = [
-        ('campaign__name', custom_titled_filter("Campaign")),
+        CampaignNameFilter
     ]
 
     save_on_top = True
@@ -66,7 +67,7 @@ class PostAdmin(admin.ModelAdmin, ExportCsvMixin):
 
     list_filter = [
         'platform',
-        ('campaign__name', custom_titled_filter("Campaign")),
+        CampaignNameFilter
     ]
 
     inlines = [
@@ -135,8 +136,11 @@ class InstagramPostAdmin(admin.ModelAdmin, ExportCsvMixin):
     # add_fields = ('url', 'campaign', 'date', 'likes', 'comments',
     #               'post_shares', 'post_saves', 'post_reach', 'embed_code', 'visibility', 'alt_google_photo_url')
 
+    # list_filter = (CampaignNameFilter, )
+
     list_filter = [
-        ('campaign__name', custom_titled_filter("Campaign")),
+        # ('campaign__name', custom_titled_filter("Campaign")),
+        CampaignNameFilter,
         'visibility',
         'post_type',
         'post_username',
@@ -180,13 +184,6 @@ class InstagramPostAdmin(admin.ModelAdmin, ExportCsvMixin):
 
     link_to_camp.short_description = "Campaign URLs"
 
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "campaign":
-            if not request.user.is_superuser:
-                kwargs["queryset"] = Campaign.objects.filter(
-                    staff_profiles=request.user.usermanager_staffprofile)
-        return super().formfield_for_foreignkey(db_field, request, **kwargs)
-
     def get_queryset(self, request):
         qs = super(InstagramPostAdmin, self).get_queryset(request)
         if request.user.is_superuser or request.user.groups.filter(name="MasterAdmin").exists():
@@ -210,7 +207,7 @@ class FacebookPostAdmin(admin.ModelAdmin, ExportCsvMixin):
     #               'post_shares', 'post_saves', 'post_reach', 'embed_code', 'visibility', 'alt_google_photo_url')
 
     list_filter = [
-        ('campaign__name', custom_titled_filter("Campaign")),
+        CampaignNameFilter
     ]
 
     # list_editable = [
@@ -236,13 +233,6 @@ class FacebookPostAdmin(admin.ModelAdmin, ExportCsvMixin):
         return format_html('<a href="{}">{}</a><br/><br/><a href="{}">{}</a><br/><br/><a href="{}">{}</a><br/>', link, "Campaign Admin", link_live, "Live Details", link_report, "Report Data")
 
     link_to_camp.short_description = "Campaign URLs"
-
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "campaign":
-            if not request.user.is_superuser:
-                kwargs["queryset"] = Campaign.objects.filter(
-                    staff_profiles=request.user.usermanager_staffprofile)
-        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
     def get_queryset(self, request):
         qs = super(FacebookPostAdmin, self).get_queryset(request)
@@ -306,7 +296,7 @@ class TwitterPostAdmin(admin.ModelAdmin, ExportCsvMixin):
     #               'post_shares', 'post_saves', 'post_reach', 'embed_code', 'visibility', 'alt_google_photo_url')
 
     list_filter = [
-        ('campaign__name', custom_titled_filter("Campaign")),
+        CampaignNameFilter
         'visibility',
         'post_username'
     ]
@@ -370,13 +360,6 @@ class TwitterPostAdmin(admin.ModelAdmin, ExportCsvMixin):
 
     link_to_camp.short_description = "Campaign URLs"
 
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "campaign":
-            if not request.user.is_superuser:
-                kwargs["queryset"] = Campaign.objects.filter(
-                    staff_profiles=request.user.usermanager_staffprofile)
-        return super().formfield_for_foreignkey(db_field, request, **kwargs)
-
     def get_queryset(self, request):
         qs = super(TwitterPostAdmin, self).get_queryset(request)
         if request.user.is_superuser or request.user.groups.filter(name="MasterAdmin").exists():
@@ -391,7 +374,7 @@ class InstagramStoryAdmin(admin.ModelAdmin, ExportCsvMixin):
     list_display = ('url', 'campaign', 'date')
 
     list_filter = [
-        ('campaign__name', custom_titled_filter("Campaign")),
+        CampaignNameFilter
     ]
 
     save_on_top = True
@@ -410,13 +393,6 @@ class InstagramStoryAdmin(admin.ModelAdmin, ExportCsvMixin):
         return format_html('<a href="{}">{}</a><br/><br/><a href="{}">{}</a><br/><br/><a href="{}">{}</a><br/>', link, "Campaign Admin", link_live, "Live Details", link_report, "Report Data")
 
     link_to_camp.short_description = "Campaign URLs"
-
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "campaign":
-            if not request.user.is_superuser:
-                kwargs["queryset"] = Campaign.objects.filter(
-                    staff_profiles=request.user.usermanager_staffprofile)
-        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
     def get_queryset(self, request):
         qs = super(InstagramStoryAdmin, self).get_queryset(request)
@@ -432,7 +408,7 @@ class FacebookStoryAdmin(admin.ModelAdmin, ExportCsvMixin):
     list_display = ('url', 'campaign', 'date')
 
     list_filter = [
-        ('campaign__name', custom_titled_filter("Campaign")),
+        CampaignNameFilter
     ]
 
     save_on_top = True
@@ -451,13 +427,6 @@ class FacebookStoryAdmin(admin.ModelAdmin, ExportCsvMixin):
         return format_html('<a href="{}">{}</a><br/><br/><a href="{}">{}</a><br/><br/><a href="{}">{}</a><br/>', link, "Campaign Admin", link_live, "Live Details", link_report, "Report Data")
 
     link_to_camp.short_description = "Campaign URLs"
-
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "campaign":
-            if not request.user.is_superuser:
-                kwargs["queryset"] = Campaign.objects.filter(
-                    staff_profiles=request.user.usermanager_staffprofile)
-        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
     def get_queryset(self, request):
         qs = super(FacebookStoryAdmin, self).get_queryset(request)
@@ -473,7 +442,7 @@ class TwitterStoryAdmin(admin.ModelAdmin, ExportCsvMixin):
     list_display = ('url', 'campaign', 'date')
 
     list_filter = [
-        ('campaign__name', custom_titled_filter("Campaign")),
+        CampaignNameFilter
     ]
 
     actions = ['export_as_csv']
@@ -492,13 +461,6 @@ class TwitterStoryAdmin(admin.ModelAdmin, ExportCsvMixin):
         return format_html('<a href="{}">{}</a><br/><br/><a href="{}">{}</a><br/><br/><a href="{}">{}</a><br/>', link, "Campaign Admin", link_live, "Live Details", link_report, "Report Data")
 
     link_to_camp.short_description = "Campaign URLs"
-
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "campaign":
-            if not request.user.is_superuser:
-                kwargs["queryset"] = Campaign.objects.filter(
-                    staff_profiles=request.user.usermanager_staffprofile)
-        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
     def get_queryset(self, request):
         qs = super(TwitterStoryAdmin, self).get_queryset(request)
