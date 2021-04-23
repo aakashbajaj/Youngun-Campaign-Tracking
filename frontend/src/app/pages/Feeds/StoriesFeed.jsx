@@ -37,20 +37,24 @@ export default class StoriesFeed extends Component {
     evt.preventDefault();
     this.setState({ curr_platform: evt.target.id });
   };
-
   render() {
+
     var stories = [];
     if (
       this.context.currentCampaignInView &&
-      this.context.liveCampaignFeed[this.context.currentCampaignInView] !==
-        null &&
-      this.context.liveCampaignFeed[this.context.currentCampaignInView][
-        this.state.curr_platform + "_stories"
-      ] !== null
-    ) {
-      stories = this.context.liveCampaignFeed[
-        this.context.currentCampaignInView
-      ][this.state.curr_platform + "_stories"];
+      this.context.liveCampaignFeed[this.context.currentCampaignInView]
+      ) 
+    {
+      if (this.context.liveCampaignFeed[this.context.currentCampaignInView][this.state.curr_platform + "_stories"]) {
+        stories = this.context.liveCampaignFeed[this.context.currentCampaignInView][this.state.curr_platform + "_stories"];
+      }
+      else{
+        return <Spinner />;  
+      }
+    }
+
+    else{
+      return <Spinner />;
     }
 
     if (!stories) {
@@ -58,7 +62,7 @@ export default class StoriesFeed extends Component {
     } else if (stories === []) {
       return <div>Nothing to show</div>;
     }
-    // const iframe_str = `<iframe src=${stories_url}></iframe>`;
+
     return (
       <div>
         <div className="page-header">
