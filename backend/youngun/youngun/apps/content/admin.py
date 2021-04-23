@@ -47,6 +47,13 @@ class StoryAdmin(admin.ModelAdmin):
 
     save_on_top = True
 
+    def get_queryset(self, request):
+        qs = super(StoryAdmin, self).get_queryset(request)
+        if request.user.is_superuser or request.user.groups.filter(name="MasterAdmin").exists():
+            return qs
+        
+        return qs.filter(campaign__staff_profiles=request.user.profile)
+
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin, ExportCsvMixin):
@@ -69,6 +76,13 @@ class PostAdmin(admin.ModelAdmin, ExportCsvMixin):
     actions = ['export_as_csv']
 
     save_on_top = True
+
+    def get_queryset(self, request):
+        qs = super(PostAdmin, self).get_queryset(request)
+        if request.user.is_superuser or request.user.groups.filter(name="MasterAdmin").exists():
+            return qs
+        
+        return qs.filter(campaign__staff_profiles=request.user.profile)
 
 
 @admin.register(InstagramPost)
@@ -167,12 +181,18 @@ class InstagramPostAdmin(admin.ModelAdmin, ExportCsvMixin):
     link_to_camp.short_description = "Campaign URLs"
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        print(request)
         if db_field.name == "campaign":
             if not request.user.is_superuser:
                 kwargs["queryset"] = Campaign.objects.filter(
                     staff_profiles=request.user.usermanager_staffprofile)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+    def get_queryset(self, request):
+        qs = super(InstagramPostAdmin, self).get_queryset(request)
+        if request.user.is_superuser or request.user.groups.filter(name="MasterAdmin").exists():
+            return qs
+        
+        return qs.filter(campaign__staff_profiles=request.user.profile)
 
 
 @admin.register(FacebookPost)
@@ -223,6 +243,13 @@ class FacebookPostAdmin(admin.ModelAdmin, ExportCsvMixin):
                 kwargs["queryset"] = Campaign.objects.filter(
                     staff_profiles=request.user.usermanager_staffprofile)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+    def get_queryset(self, request):
+        qs = super(FacebookPostAdmin, self).get_queryset(request)
+        if request.user.is_superuser or request.user.groups.filter(name="MasterAdmin").exists():
+            return qs
+        
+        return qs.filter(campaign__staff_profiles=request.user.profile)
 
 
 @admin.register(TwitterPost)
@@ -350,6 +377,13 @@ class TwitterPostAdmin(admin.ModelAdmin, ExportCsvMixin):
                     staff_profiles=request.user.usermanager_staffprofile)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
+    def get_queryset(self, request):
+        qs = super(TwitterPostAdmin, self).get_queryset(request)
+        if request.user.is_superuser or request.user.groups.filter(name="MasterAdmin").exists():
+            return qs
+        
+        return qs.filter(campaign__staff_profiles=request.user.profile)
+
 
 @admin.register(InstagramStory)
 class InstagramStoryAdmin(admin.ModelAdmin, ExportCsvMixin):
@@ -383,6 +417,13 @@ class InstagramStoryAdmin(admin.ModelAdmin, ExportCsvMixin):
                 kwargs["queryset"] = Campaign.objects.filter(
                     staff_profiles=request.user.usermanager_staffprofile)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+    def get_queryset(self, request):
+        qs = super(InstagramStoryAdmin, self).get_queryset(request)
+        if request.user.is_superuser or request.user.groups.filter(name="MasterAdmin").exists():
+            return qs
+        
+        return qs.filter(campaign__staff_profiles=request.user.profile)
 
 
 @admin.register(FacebookStory)
@@ -418,6 +459,13 @@ class FacebookStoryAdmin(admin.ModelAdmin, ExportCsvMixin):
                     staff_profiles=request.user.usermanager_staffprofile)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
+    def get_queryset(self, request):
+        qs = super(FacebookStoryAdmin, self).get_queryset(request)
+        if request.user.is_superuser or request.user.groups.filter(name="MasterAdmin").exists():
+            return qs
+        
+        return qs.filter(campaign__staff_profiles=request.user.profile)
+
 
 @admin.register(TwitterStory)
 class TwitterStoryAdmin(admin.ModelAdmin, ExportCsvMixin):
@@ -451,3 +499,10 @@ class TwitterStoryAdmin(admin.ModelAdmin, ExportCsvMixin):
                 kwargs["queryset"] = Campaign.objects.filter(
                     staff_profiles=request.user.usermanager_staffprofile)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+    def get_queryset(self, request):
+        qs = super(TwitterStoryAdmin, self).get_queryset(request)
+        if request.user.is_superuser or request.user.groups.filter(name="MasterAdmin").exists():
+            return qs
+        
+        return qs.filter(campaign__staff_profiles=request.user.profile)
