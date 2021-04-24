@@ -88,7 +88,7 @@ class PostAdmin(admin.ModelAdmin, ExportCsvMixin):
 
 @admin.register(InstagramPost)
 class InstagramPostAdmin(admin.ModelAdmin, ExportCsvMixin):
-    exclude = ('platform', 'post_type')
+    exclude = ('platform', )
     list_display = (
         'url',
         'campaign',
@@ -244,7 +244,7 @@ class FacebookPostAdmin(admin.ModelAdmin, ExportCsvMixin):
 
 @admin.register(TwitterPost)
 class TwitterPostAdmin(admin.ModelAdmin, ExportCsvMixin):
-    exclude = ('platform', 'post_type')
+    exclude = ('platform', )
     # list_display = ('url', 'campaign', 'link_to_camp', 'upload_date',
     #                 'visibility', 'pre_fetched', 'alive', 'likes', 'comments')
 
