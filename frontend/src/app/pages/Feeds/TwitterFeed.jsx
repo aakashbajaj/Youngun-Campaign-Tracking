@@ -62,7 +62,7 @@ export default class TwitterFeed extends Component {
   }
 
   handlePageChange(pageNumber) {
-    console.log(`active page is ${pageNumber}`);
+    // console.log(`active page is ${pageNumber}`);
     this.setState({ activePage: pageNumber });
   }
 
@@ -134,7 +134,7 @@ export default class TwitterFeed extends Component {
     console.log(twitterposts);
 
     var firstIdx = (this.state.activePage - 1)*15;
-    var lastIdx = firstIdx + 14;
+    var lastIdx = firstIdx + 15;
 
     var postsOnPage = twitterposts.slice(firstIdx, lastIdx).map((post, idx) => {
       if (post.embed_code !== "") {
