@@ -82,7 +82,7 @@ class Sidebar extends Component {
               .live_stories_cnt > 0
           )
             showStories = true;
-          console.log(showStories);
+          // console.log(showStories);
         }
       }
     }
@@ -262,8 +262,8 @@ class Sidebar extends Component {
   }
 
   isPathActive(path) {
-    console.log(path);
-    console.log(this.props.location.pathname);
+    // console.log(path);
+    // console.log(this.props.location.pathname);
     return this.props.location.pathname.endsWith(path);
   }
 

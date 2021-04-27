@@ -36,7 +36,7 @@ export default class GlobalState extends Component {
   async fetchAllData() {
     try {
       const userInfo = await API.get("/api/profile/");
-      console.log(userInfo.data);
+      // console.log(userInfo.data);
       this.setState({ user: userInfo.data.profile });
     } catch (error) {
       console.log(error.response);
@@ -46,7 +46,7 @@ export default class GlobalState extends Component {
 
     const resp = await API.get("/api/campaigns/");
 
-    console.log(resp.data.campaigns);
+    // console.log(resp.data.campaigns);
     const campaigns = resp.data.campaigns;
     var campData = {};
     var firstCampaign = null;
@@ -59,8 +59,8 @@ export default class GlobalState extends Component {
 
         API.get(`/api/campaigns/${campaign.slug}/metrics`)
           .then((resp) => {
-            console.log("Metrics Data:");
-            console.log(resp.data);
+            // console.log("Metrics Data:");
+            // console.log(resp.data);
             this.addLiveCampaignData(campaign.slug, resp.data.campaign);
           })
           .catch((err) => {
@@ -69,8 +69,8 @@ export default class GlobalState extends Component {
 
         API.get(`/api/campaigns/${campaign.slug}/feed`)
           .then((resp) => {
-            console.log("Feed Data:");
-            console.log(resp.data);
+            // console.log("Feed Data:");
+            // console.log(resp.data);
             this.addLiveCampaignFeed(campaign.slug, resp.data.campaign);
           })
           .catch((err) => {
@@ -79,8 +79,8 @@ export default class GlobalState extends Component {
 
         API.get(`/api/campaigns/${campaign.slug}/report`)
           .then((resp) => {
-            console.log("Report Data:");
-            console.log(resp.data);
+            // console.log("Report Data:");
+            // console.log(resp.data);
             this.addCampaignReportData(campaign.slug, resp.data.campaign);
           })
           .catch((err) => {
@@ -156,7 +156,7 @@ export default class GlobalState extends Component {
   getInvitedUsersData = () => {
     API.get("/api/profile/myinvites/")
       .then((resp) => {
-        console.log(resp.data);
+        // console.log(resp.data);
         this.setState({ invited_profiles: resp.data.invited_profile });
       })
       .catch((err) => {
@@ -180,7 +180,7 @@ export default class GlobalState extends Component {
     };
     API.post("/api/profile/inviteuser/", data)
       .then((resp) => {
-        console.log(resp.data);
+        // console.log(resp.data);
         this.getInvitedUsersData();
       })
       .catch((err) => {
@@ -272,7 +272,7 @@ export default class GlobalState extends Component {
       this.setState(newState);
 
       var resp = await API.post("/api/users/login/", data);
-      console.log(resp.data);
+      // console.log(resp.data);
 
       this.setState({ maskedData: resp.data });
       cb();
@@ -295,7 +295,7 @@ export default class GlobalState extends Component {
 
   verifyOTPToken = async (otptoken, cb) => {
     try {
-      console.log(this.state);
+      // console.log(this.state);
 
       const data = {
         tempid: this.state.maskedData.tempid,
@@ -304,8 +304,8 @@ export default class GlobalState extends Component {
       this.setState({ sendingOTP: false });
 
       const resp = await API.post("/api/users/verify/", data);
-      console.log(resp);
-      console.log(resp.data["token"]);
+      // console.log(resp);
+      // console.log(resp.data["token"]);
 
       this.authenticate(resp.data["token"]);
       cb();
@@ -342,10 +342,10 @@ export default class GlobalState extends Component {
       };
       this.setState(newState);
 
-      console.log(formData);
+      // console.log(formData);
       const resp = await API.post("/otpauth/email/", formData);
 
-      console.log(resp);
+      // console.log(resp);
 
       cb();
     } catch (err) {
@@ -368,7 +368,7 @@ export default class GlobalState extends Component {
 
   verify = async (otptoken, cb) => {
     try {
-      console.log(this.state);
+      // console.log(this.state);
 
       var formData = new FormData();
       formData.append("email", this.state.userEmail);
@@ -376,8 +376,8 @@ export default class GlobalState extends Component {
       this.setState({ sendingOTP: false });
 
       const resp = await API.post("/otpauth/token/", formData);
-      console.log(resp);
-      console.log(resp.data["token"]);
+      // console.log(resp);
+      // console.log(resp.data["token"]);
       // set token in localStorage
       // localStorage.setItem("campaigntoken", resp.data["token"]);
       Cookie.set("djangotoken", resp.data["token"], { expires: 1 });

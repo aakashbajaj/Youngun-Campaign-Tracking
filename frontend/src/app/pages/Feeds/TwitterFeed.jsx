@@ -131,7 +131,7 @@ export default class TwitterFeed extends Component {
     //   return null;
     // });
 
-    console.log(twitterposts);
+    // console.log(twitterposts);
 
     var firstIdx = (this.state.activePage - 1)*15;
     var lastIdx = firstIdx + 15;

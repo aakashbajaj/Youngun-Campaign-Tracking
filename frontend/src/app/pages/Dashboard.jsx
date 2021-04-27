@@ -121,9 +121,9 @@ export class Dashboard extends Component {
     } else {
       liveCampMetrics = this.currentCampLiveMetrics;
     }
-    console.log(liveCampMetrics);
+    // console.log(liveCampMetrics);
     if (this.context.campaignCount === 0) {
-      console.log(this.context.campaignCount);
+      // console.log(this.context.campaignCount);
       return <h5>No Data To Show</h5>;
     } else if (!liveCampMetrics) {
       return <Spinner />;
