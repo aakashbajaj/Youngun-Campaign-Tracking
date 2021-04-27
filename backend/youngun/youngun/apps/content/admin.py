@@ -10,6 +10,8 @@ from django.contrib import messages
 
 from youngun.apps.content.forms import QuoteRTForm
 
+from rangefilter.filters import DateRangeFilter, DateTimeRangeFilter
+
 from youngun.apps.content.models import Media, InstagramPost, FacebookPost, TwitterPost, Post, Story, InstagramStory, FacebookStory, TwitterStory
 from youngun.apps.campaigns.models import Campaign
 
@@ -141,6 +143,7 @@ class InstagramPostAdmin(admin.ModelAdmin, ExportCsvMixin):
     list_filter = [
         # ('campaign__name', custom_titled_filter("Campaign")),
         CampaignNameFilter,
+        ('upload_date', DateRangeFilter),
         'visibility',
         'post_type',
         'post_username',
@@ -167,6 +170,9 @@ class InstagramPostAdmin(admin.ModelAdmin, ExportCsvMixin):
     ]
 
     actions = ['export_as_csv']
+
+    def get_rangefilter_upload_date_title(self, request, field_path):
+        return 'Upload Date'
 
     def link_to_post(self, obj):
         return format_html('<a href='+ obj.url +' target="_blank" rel="noopener noreferrer">View Post</a>')
@@ -298,6 +304,7 @@ class TwitterPostAdmin(admin.ModelAdmin, ExportCsvMixin):
 
     list_filter = [
         CampaignNameFilter,
+        ('upload_date', DateRangeFilter),
         'visibility',
         'post_username'
     ]
@@ -349,6 +356,9 @@ class TwitterPostAdmin(admin.ModelAdmin, ExportCsvMixin):
 
     def link_to_post(self, obj):
         return format_html('<a href='+ obj.url +' target="_blank" rel="noopener noreferrer">Open Post</a>')
+
+    def get_rangefilter_upload_date_title(self, request, field_path):
+        return 'Upload Date'
 
     def link_to_camp(self, obj):
         link = reverse("admin:campaigns_campaign_change",
