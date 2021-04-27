@@ -77,7 +77,7 @@ class PostAdmin(admin.ModelAdmin, ExportCsvMixin):
         MediaInline
     ]
 
-    actions = ['export_as_csv']
+    actions = ['export_as_csv','export_only_post_links_csv']
 
     save_on_top = True
 
@@ -170,7 +170,7 @@ class InstagramPostAdmin(admin.ModelAdmin, ExportCsvMixin):
         MediaInline
     ]
 
-    actions = ['export_as_csv']
+    actions = ['export_as_csv','export_only_post_links_csv']
 
     def get_rangefilter_upload_date_title(self, request, field_path):
         return 'Upload Date'
@@ -224,7 +224,7 @@ class FacebookPostAdmin(admin.ModelAdmin, ExportCsvMixin):
 
     save_on_top = True
 
-    actions = ['export_as_csv']
+    actions = ['export_as_csv','export_only_post_links_csv']
     search_fields = ('post_username', 'url')
 
     def link_to_post(self, obj):
@@ -329,7 +329,7 @@ class TwitterPostAdmin(admin.ModelAdmin, ExportCsvMixin):
         MediaInline
     ]
 
-    actions = ['export_as_csv', 'add_quote_rt']
+    actions = ['export_as_csv', 'add_quote_rt', 'export_only_post_links_csv']
 
     def add_quote_rt(self, request, queryset):
         
@@ -394,7 +394,7 @@ class InstagramStoryAdmin(admin.ModelAdmin, ExportCsvMixin):
 
     save_on_top = True
 
-    actions = ['export_as_csv']
+    actions = ['export_as_csv', 'export_only_post_links_csv']
 
     def link_to_camp(self, obj):
         link = reverse("admin:campaigns_campaign_change",
@@ -428,7 +428,7 @@ class FacebookStoryAdmin(admin.ModelAdmin, ExportCsvMixin):
 
     save_on_top = True
 
-    actions = ['export_as_csv']
+    actions = ['export_as_csv','export_only_post_links_csv']
 
     def link_to_camp(self, obj):
         link = reverse("admin:campaigns_campaign_change",
@@ -460,7 +460,7 @@ class TwitterStoryAdmin(admin.ModelAdmin, ExportCsvMixin):
         CampaignNameFilter
     ]
 
-    actions = ['export_as_csv']
+    actions = ['export_as_csv', 'export_only_post_links_csv']
 
     save_on_top = True
 
