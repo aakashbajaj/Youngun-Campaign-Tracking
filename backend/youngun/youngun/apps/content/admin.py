@@ -69,7 +69,8 @@ class PostAdmin(admin.ModelAdmin, ExportCsvMixin):
 
     list_filter = [
         'platform',
-        CampaignNameFilter
+        CampaignNameFilter,
+        ('upload_date', DateTimeRangeFilter)
     ]
 
     inlines = [
@@ -143,7 +144,7 @@ class InstagramPostAdmin(admin.ModelAdmin, ExportCsvMixin):
     list_filter = [
         # ('campaign__name', custom_titled_filter("Campaign")),
         CampaignNameFilter,
-        ('upload_date', DateRangeFilter),
+        ('upload_date', DateTimeRangeFilter),
         'visibility',
         'post_type',
         'post_username',
@@ -213,7 +214,8 @@ class FacebookPostAdmin(admin.ModelAdmin, ExportCsvMixin):
     #               'post_shares', 'post_saves', 'post_reach', 'embed_code', 'visibility', 'alt_google_photo_url')
 
     list_filter = [
-        CampaignNameFilter
+        CampaignNameFilter,
+        ('upload_date', DateTimeRangeFilter)
     ]
 
     # list_editable = [
@@ -304,7 +306,7 @@ class TwitterPostAdmin(admin.ModelAdmin, ExportCsvMixin):
 
     list_filter = [
         CampaignNameFilter,
-        ('upload_date', DateRangeFilter),
+        ('upload_date', DateTimeRangeFilter),
         'visibility',
         'post_username'
     ]
