@@ -217,6 +217,7 @@ class FacebookPostAdmin(admin.ModelAdmin, ExportCsvMixin):
     save_on_top = True
 
     actions = ['export_as_csv']
+    search_fields = ('post_username', 'url')
 
     def link_to_post(self, obj):
         return format_html('<a href='+ obj.url +' target="_blank" rel="noopener noreferrer">Open Post</a>')
@@ -312,6 +313,8 @@ class TwitterPostAdmin(admin.ModelAdmin, ExportCsvMixin):
     ]
 
     save_on_top = True
+
+    search_fields = ('post_username', 'url')
 
     inlines = [
         MediaInline
