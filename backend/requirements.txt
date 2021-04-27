@@ -11,3 +11,4 @@ boto3
 psycopg2-binary
 django-otp
 qrcode
+django-admin-rangefilter
