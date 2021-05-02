@@ -145,7 +145,7 @@ export default class TwitterFeed extends Component {
         var matches = post.url.match(/\d+$/);
 
         console.log(matches);
-        console.log(matches[0]);
+        // console.log(matches[0]);
 
         return (
           <div
