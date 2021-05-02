@@ -144,6 +144,17 @@ export default class TwitterFeed extends Component {
 
         var matches = post.url.match(/\d+$/);
 
+        console.log(matches);
+        console.log(matches[0]);
+
+        return (
+          <div
+            key={idx}>
+              <div dangerouslySetInnerHTML={this.createMarkup(post.embed_code)} />
+            </div>
+        );
+
+
         if (matches) {
           var post_id = matches[0];
           return (
