@@ -155,16 +155,16 @@ export default class TwitterFeed extends Component {
         );
 
 
-        if (matches) {
-          var post_id = matches[0];
-          return (
-            <div key={idx}>
-              <TweetEmbed id={post_id} />
-            </div>
-          );
-        } else {
-          return null;
-        }
+        // if (matches) {
+        //   var post_id = matches[0];
+        //   return (
+        //     <div key={idx}>
+        //       <TweetEmbed id={post_id} />
+        //     </div>
+        //   );
+        // } else {
+        //   return null;
+        // }
 
         // return (
         //   <div key={idx}>
