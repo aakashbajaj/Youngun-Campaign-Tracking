@@ -47,8 +47,8 @@ export default class TwitterFeed extends Component {
   // };
 
   componentDidMount() {
-    // console.log("in TW CDM");
-    // window.twttr.widgets.load();
+    console.log("in TW CDM");
+    window.twttr.widgets.load();
 
     // this.setState({
     //   displayTwitterPosts: this.context.liveCampaignFeed[
@@ -58,7 +58,7 @@ export default class TwitterFeed extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // window.twttr.widgets.load();
+    window.twttr.widgets.load();
   }
 
   handlePageChange(pageNumber) {
