@@ -188,6 +188,8 @@ export default class TwitterFeed extends Component {
       return null;
     });
 
+    console.log(postsOnPage);
+
     if (!twitterposts) {
       return <Spinner />;
     }
