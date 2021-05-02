@@ -139,6 +139,9 @@ export default class TwitterFeed extends Component {
     var postsOnPage = twitterposts.slice(firstIdx, lastIdx).map((post, idx) => {
       if (post.embed_code !== "") {
 
+        console.log("picked");
+        console.log(post.url + " " + post.post_username);
+
         var matches = post.url.match(/\d+$/);
 
         if (matches) {
@@ -188,6 +191,9 @@ export default class TwitterFeed extends Component {
       return null;
     });
 
+    console.log(twitterposts);
+    console.log(firstIdx);
+    console.log(lastIdx);
     console.log(postsOnPage);
 
     if (!twitterposts) {
