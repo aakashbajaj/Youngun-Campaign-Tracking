@@ -16,7 +16,7 @@ def fetch_insta_embed_code(sender, instance, *args, **kwargs):
     if instance and instance.platform == "in":
         if not instance.embed_code.startswith("<blockquote"):
             post_url = instance.url
-            fetch_url = "https://graph.facebook.com/v8.0/instagram_oembed"
+            fetch_url = "https://graph.facebook.com/v12.0/instagram_oembed"
             params = {
                 'url': post_url
             }
